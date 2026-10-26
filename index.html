@@ -1437,6 +1437,17 @@
     ctx.restore();
   }
 
+  function safeDraw(fn) {
+    ctx.save();
+    try {
+      fn();
+    } catch (err) {
+      console.warn("Render non-fatal caught:", err);
+    } finally {
+      ctx.restore();
+    }
+  }
+
   let animTime = 0;
 
   function updateAndRender() {
@@ -1596,101 +1607,125 @@
 
         let enemyDestroyed = false;
 
-        // Draw Enemy: Sprite or Canvas Vector
+        // Draw Enemy: Sprite or Canvas Vector (Protected by safeDraw)
         if (e.type === 'shark') {
           e.tailWiggle = (e.tailWiggle || 0) + 0.18;
-          ctx.save();
-          ctx.translate(e.x, e.y);
-          if (sprites['shark_predator'] && sprites['shark_predator'].complete && sprites['shark_predator'].naturalWidth > 0) {
-            ctx.drawImage(sprites['shark_predator'], -32, -18, 64, 36);
-          } else {
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2);
-            ctx.fillStyle = '#2f4858';
-            ctx.fill();
+          safeDraw(() => {
+            ctx.translate(e.x, e.y);
+            let spriteDrawn = false;
+            const spr = sprites['shark_predator'];
+            if (spr && spr.complete && spr.naturalWidth > 0) {
+              try {
+                ctx.drawImage(spr, -32, -18, 64, 36);
+                spriteDrawn = true;
+              } catch (err) {
+                spriteDrawn = false;
+              }
+            }
+            if (!spriteDrawn) {
+              ctx.beginPath();
+              ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2);
+              ctx.fillStyle = '#2f4858';
+              ctx.fill();
 
-            ctx.beginPath();
-            ctx.ellipse(0, 4, 20, 5, 0, 0, Math.PI);
-            ctx.fillStyle = '#c8d9e6';
-            ctx.fill();
+              ctx.beginPath();
+              ctx.ellipse(0, 4, 20, 5, 0, 0, Math.PI);
+              ctx.fillStyle = '#c8d9e6';
+              ctx.fill();
 
-            ctx.beginPath();
-            ctx.moveTo(-4, -12); ctx.lineTo(5, -20); ctx.lineTo(7, -12);
-            ctx.fillStyle = '#1e303d';
-            ctx.fill();
+              ctx.beginPath();
+              ctx.moveTo(-4, -12); ctx.lineTo(5, -20); ctx.lineTo(7, -12);
+              ctx.fillStyle = '#1e303d';
+              ctx.fill();
 
-            const tailY = Math.sin(e.tailWiggle) * 7;
-            ctx.beginPath();
-            ctx.moveTo(20, 0); ctx.lineTo(30, -9 + tailY); ctx.lineTo(26, tailY); ctx.lineTo(30, 9 + tailY);
-            ctx.fillStyle = '#1e303d';
-            ctx.fill();
+              const tailY = Math.sin(e.tailWiggle) * 7;
+              ctx.beginPath();
+              ctx.moveTo(20, 0); ctx.lineTo(30, -9 + tailY); ctx.lineTo(26, tailY); ctx.lineTo(30, 9 + tailY);
+              ctx.fillStyle = '#1e303d';
+              ctx.fill();
 
-            ctx.fillStyle = '#ff2200';
-            ctx.beginPath();
-            ctx.arc(-15, -2, 2.5, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          ctx.restore();
+              ctx.fillStyle = '#ff2200';
+              ctx.beginPath();
+              ctx.arc(-15, -2, 2.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
         } else if (e.type === 'jellyfish') {
           e.pulseAnim = (e.pulseAnim || 0) + 0.08;
-          ctx.save();
-          ctx.translate(e.x, e.y);
-          if (sprites['bioluminescent_jellyfish'] && sprites['bioluminescent_jellyfish'].complete && sprites['bioluminescent_jellyfish'].naturalWidth > 0) {
-            ctx.drawImage(sprites['bioluminescent_jellyfish'], -24, -24, 48, 48);
-          } else {
-            ctx.fillStyle = 'rgba(160, 60, 255, 0.75)';
-            ctx.shadowColor = '#cc44ff';
-            ctx.shadowBlur = 12;
-            ctx.beginPath();
-            ctx.arc(0, -2, 17, Math.PI * 0.9, Math.PI * 2.1);
-            ctx.fill();
-
-            ctx.strokeStyle = 'rgba(0, 240, 255, 0.7)';
-            ctx.lineWidth = 1.6;
-            for (let t = -10; t <= 10; t += 5) {
-              ctx.beginPath();
-              ctx.moveTo(t, 2);
-              ctx.quadraticCurveTo(t + Math.sin(e.pulseAnim + t) * 6, 14, t, 22);
-              ctx.stroke();
+          safeDraw(() => {
+            ctx.translate(e.x, e.y);
+            let spriteDrawn = false;
+            const spr = sprites['bioluminescent_jellyfish'];
+            if (spr && spr.complete && spr.naturalWidth > 0) {
+              try {
+                ctx.drawImage(spr, -24, -24, 48, 48);
+                spriteDrawn = true;
+              } catch (err) {
+                spriteDrawn = false;
+              }
             }
-          }
-          ctx.restore();
+            if (!spriteDrawn) {
+              ctx.fillStyle = 'rgba(160, 60, 255, 0.75)';
+              ctx.shadowColor = '#cc44ff';
+              ctx.shadowBlur = 12;
+              ctx.beginPath();
+              ctx.arc(0, -2, 17, Math.PI * 0.9, Math.PI * 2.1);
+              ctx.fill();
+
+              ctx.strokeStyle = 'rgba(0, 240, 255, 0.7)';
+              ctx.lineWidth = 1.6;
+              for (let t = -10; t <= 10; t += 5) {
+                ctx.beginPath();
+                ctx.moveTo(t, 2);
+                ctx.quadraticCurveTo(t + Math.sin(e.pulseAnim + t) * 6, 14, t, 22);
+                ctx.stroke();
+              }
+            }
+          });
         } else {
           // Anglerfish with glowing lure
           e.lureGlow = (e.lureGlow || 0) + 0.1;
-          ctx.save();
-          ctx.translate(e.x, e.y);
-          if (sprites['angler_fish'] && sprites['angler_fish'].complete && sprites['angler_fish'].naturalWidth > 0) {
-            ctx.drawImage(sprites['angler_fish'], -28, -20, 56, 40);
-          } else {
-            ctx.fillStyle = '#1c2833';
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 22, 14, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Teeth
-            ctx.fillStyle = '#fff';
-            for (let ti = -16; ti <= -4; ti += 4) {
-              ctx.fillRect(ti, 3, 2, 4);
+          safeDraw(() => {
+            ctx.translate(e.x, e.y);
+            let spriteDrawn = false;
+            const spr = sprites['angler_fish'];
+            if (spr && spr.complete && spr.naturalWidth > 0) {
+              try {
+                ctx.drawImage(spr, -28, -20, 56, 40);
+                spriteDrawn = true;
+              } catch (err) {
+                spriteDrawn = false;
+              }
             }
+            if (!spriteDrawn) {
+              ctx.fillStyle = '#1c2833';
+              ctx.beginPath();
+              ctx.ellipse(0, 0, 22, 14, 0, 0, Math.PI * 2);
+              ctx.fill();
 
-            // Glowing Lure bulb
-            ctx.strokeStyle = '#00f0ff';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            ctx.moveTo(-10, -10);
-            ctx.quadraticCurveTo(-18, -24, -22, -18);
-            ctx.stroke();
+              // Teeth
+              ctx.fillStyle = '#fff';
+              for (let ti = -16; ti <= -4; ti += 4) {
+                ctx.fillRect(ti, 3, 2, 4);
+              }
 
-            const lureBright = Math.sin(e.lureGlow) * 0.3 + 0.7;
-            ctx.fillStyle = `rgba(0, 240, 255, ${lureBright})`;
-            ctx.shadowColor = '#00f0ff';
-            ctx.shadowBlur = 14;
-            ctx.beginPath();
-            ctx.arc(-22, -18, 4.5, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          ctx.restore();
+              // Glowing Lure bulb
+              ctx.strokeStyle = '#00f0ff';
+              ctx.lineWidth = 1.5;
+              ctx.beginPath();
+              ctx.moveTo(-10, -10);
+              ctx.quadraticCurveTo(-18, -24, -22, -18);
+              ctx.stroke();
+
+              const lureBright = Math.sin(e.lureGlow) * 0.3 + 0.7;
+              ctx.fillStyle = `rgba(0, 240, 255, ${lureBright})`;
+              ctx.shadowColor = '#00f0ff';
+              ctx.shadowBlur = 14;
+              ctx.beginPath();
+              ctx.arc(-22, -18, 4.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
         }
 
         // Bullet collisions with Enemy
@@ -1805,43 +1840,63 @@
         boss.y += boss.vy;
         if (boss.y < 90 || boss.y > canvas.height - 130) boss.vy *= -1;
 
-        ctx.save();
-        ctx.translate(boss.x, boss.y);
-
-        // Draw Boss Sprite or Procedural Kraken Leviathan
-        if (sprites['leviathan_boss'] && sprites['leviathan_boss'].complete && sprites['leviathan_boss'].naturalWidth > 0) {
-          ctx.drawImage(sprites['leviathan_boss'], -75, -45, 150, 90);
-        } else {
-          // Imposing Deep-Sea Kraken Body
-          ctx.fillStyle = '#6b0022';
-          ctx.shadowColor = '#ff0055';
-          ctx.shadowBlur = 24;
-          ctx.beginPath();
-          ctx.arc(0, 0, boss.radius, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Animated writhing tentacles
-          ctx.strokeStyle = '#990033';
-          ctx.lineWidth = 5;
-          for (let t = -3; t <= 3; t++) {
-            const wave = Math.sin(boss.animTime * 3 + t) * 16;
-            ctx.beginPath();
-            ctx.moveTo(t * 10, boss.radius * 0.7);
-            ctx.quadraticCurveTo(t * 12 + wave, boss.radius + 20, t * 10 + wave * 0.8, boss.radius + 38);
-            ctx.stroke();
+        safeDraw(() => {
+          ctx.translate(boss.x, boss.y);
+          let bossDrawn = false;
+          const spr = sprites['leviathan_boss'];
+          if (spr && spr.complete && spr.naturalWidth > 0) {
+            try {
+              ctx.drawImage(spr, -75, -45, 150, 90);
+              bossDrawn = true;
+            } catch (err) {
+              bossDrawn = false;
+            }
           }
+          if (!bossDrawn) {
+            // Imposing Deep-Sea Kraken / Leviathan Dreadnought
+            const pulse = Math.sin(boss.animTime * 2) * 3;
+            ctx.fillStyle = '#5c001e';
+            ctx.shadowColor = '#ff0055';
+            ctx.shadowBlur = 24;
+            ctx.beginPath();
+            ctx.arc(0, 0, boss.radius + pulse * 0.4, 0, Math.PI * 2);
+            ctx.fill();
 
-          // Glowing Menacing Eyes
-          ctx.fillStyle = '#ffcc00';
-          ctx.beginPath();
-          ctx.arc(-22, -10, 15, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#000';
-          ctx.beginPath();
-          ctx.arc(-24, -10, 6, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.restore();
+            // Glowing Bio-Mechanical Core
+            const coreGrad = ctx.createRadialGradient(0, 0, 4, 0, 0, boss.radius * 0.55);
+            coreGrad.addColorStop(0, '#ffffff');
+            coreGrad.addColorStop(0.35, '#00f0ff');
+            coreGrad.addColorStop(0.7, '#ff0055');
+            coreGrad.addColorStop(1, 'rgba(255, 0, 85, 0)');
+            ctx.fillStyle = coreGrad;
+            ctx.beginPath();
+            ctx.arc(0, 0, boss.radius * 0.55, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Animated writhing tentacles
+            ctx.strokeStyle = '#990033';
+            ctx.lineWidth = 5;
+            for (let t = -3; t <= 3; t++) {
+              const wave = Math.sin(boss.animTime * 3 + t) * 16;
+              ctx.beginPath();
+              ctx.moveTo(t * 10, boss.radius * 0.6);
+              ctx.quadraticCurveTo(t * 12 + wave, boss.radius + 20, t * 10 + wave * 0.8, boss.radius + 38);
+              ctx.stroke();
+            }
+
+            // Glowing Menacing Yellow Eyes
+            ctx.fillStyle = '#ffcc00';
+            ctx.shadowColor = '#ffea00';
+            ctx.shadowBlur = 12;
+            ctx.beginPath();
+            ctx.arc(-22, -10, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.arc(-24, -10, 6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
 
         // Boss Bullets Hit Detection
         for (let j = bullets.length - 1; j >= 0; j--) {
@@ -1887,10 +1942,12 @@
         }
       }
 
-      // 1. Draw Compact Godot Yellow Submarine (Scaled ~45px width x 20px height)
-      if (player.invulnerableTimer === 0 || Math.floor(animTime * 15) % 2 === 0) {
-        drawCompactGodotYellowSubmarine(player.x, player.y, animTime);
-      }
+      // 1. Draw Compact Godot Yellow Submarine (Scaled ~45px width x 20px height, protected by safeDraw)
+      safeDraw(() => {
+        if (player.invulnerableTimer === 0 || Math.floor(animTime * 15) % 2 === 0) {
+          drawCompactGodotYellowSubmarine(player.x, player.y, animTime);
+        }
+      });
     } catch (err) {
       console.error("Game loop non-fatal error caught:", err);
     }
