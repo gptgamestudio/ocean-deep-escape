@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "users": {
+      "$userId": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "leaderboard": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["score", "zone"]
+    }
+  }
+}

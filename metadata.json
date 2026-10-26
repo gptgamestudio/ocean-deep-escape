@@ -1,0 +1,6 @@
+{
+  "name": "Ocean Deep Escape",
+  "description": "Immerse yourself in Ocean Deep Escape: an intense 16:9 landscape 3D deep-sea submarine survival action game. Pilot your abyssal vessel across 500 perilous oceanic zones, battle territorial apex predators and the colossal Leviathan Prime, manage 500 HP hull integrity and oxygen reserves, utilize tactile sonar harpoons and underwater boost thrusters, and compete on global real-time leaderboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "418843029770",
+    "firebase_url": "https://ocean-deep-escape-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ocean-deep-escape",
+    "storage_bucket": "ocean-deep-escape.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418843029770:android:08640af8783eeb5033caf3",
+        "android_client_info": {
+          "package_name": "com.gpt.OceanDeepEscape"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418843029770-vhtsi5ds09vh4b9isghqi80e25f3fdp6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gpt.OceanDeepEscape",
+            "certificate_hash": "6a90cc6bcc066a2c64568deab63d117fe992ba57"
+          }
+        },
+        {
+          "client_id": "418843029770-leeboqq58amevmtcp6s12i0pb6lbdsdo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdNUOL_NDNAHfiNHNxNbp7p4tvAOoFoaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418843029770-leeboqq58amevmtcp6s12i0pb6lbdsdo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

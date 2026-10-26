@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95 75" width="95" height="75">
+    <defs>
+        <radialGradient id="escaGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="30%" stop-color="#00F0FF"/>
+            <stop offset="100%" stop-color="#00F0FF" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    <!-- Esca Antenna & Glowing Lure -->
+    <path d="M50 32 C65 10 75 12 85 24" fill="none" stroke="#4A3B32" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="85" cy="24" r="10" fill="url(#escaGlow)"/>
+    <circle cx="85" cy="24" r="3.5" fill="#FFFFFF"/>
+    <!-- Tail -->
+    <path d="M22 45 L4 32 L12 45 L4 58 Z" fill="#1E1311"/>
+    <!-- Monstrous Round Body -->
+    <path d="M20 45 C28 26 55 26 70 38 L84 50 L68 64 C45 68 25 60 20 45 Z" fill="#2A1B18" stroke="#140D0C" stroke-width="1.5"/>
+    <!-- Needle Fangs -->
+    <line x1="68" y1="52" x2="67" y2="42" stroke="#FFFFFF" stroke-width="1.5"/>
+    <line x1="72" y1="53" x2="71" y2="40" stroke="#FFFFFF" stroke-width="1.5"/>
+    <line x1="76" y1="54" x2="75" y2="41" stroke="#FFFFFF" stroke-width="1.5"/>
+    <line x1="80" y1="53" x2="79" y2="44" stroke="#FFFFFF" stroke-width="1.5"/>
+    <!-- Spooky Milky Eye -->
+    <circle cx="62" cy="38" r="4" fill="#90E0EF"/>
+    <circle cx="63" cy="38" r="1.8" fill="#03045E"/>
+</svg>

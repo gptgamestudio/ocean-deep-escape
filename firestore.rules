@@ -1,0 +1,41 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for zero-trust authorization
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profile, saved progress, and custom settings
+    // Strictly private: readable and writable ONLY by the authenticated owner
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // Recursive rule for any user subcollections (e.g. inventory, logs)
+      match /{allSubcollections=**} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Global Leaderboard
+    // Publicly readable for rankings; write restricted to authenticated owner
+    match /leaderboard/{userId} {
+      allow read: if true;
+      allow create, update: if isOwner(userId)
+        && request.resource.data.score is number
+        && request.resource.data.score >= 0;
+      allow delete: if false;
+    }
+
+    // Default zero-trust fallback: deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

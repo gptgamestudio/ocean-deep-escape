@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 96" width="180" height="96">
+    <defs>
+        <linearGradient id="bossPlate" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7209B7"/>
+            <stop offset="50%" stop-color="#2B0938"/>
+            <stop offset="100%" stop-color="#0F0014"/>
+        </linearGradient>
+        <radialGradient id="bossCore" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="30%" stop-color="#00F0FF"/>
+            <stop offset="70%" stop-color="#FF0055"/>
+            <stop offset="100%" stop-color="#FF0055" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    <!-- Spiked Tail Plates -->
+    <path d="M35 48 L8 24 L22 48 L8 72 Z" fill="#2C1938" stroke="#FF0055" stroke-width="1.5"/>
+    <path d="M50 48 L25 28 L38 48 L25 68 Z" fill="#3F1952" stroke="#FF0055" stroke-width="1.5"/>
+    <!-- Colossal Armored Carapace -->
+    <path d="M40 48 C60 14 110 10 145 28 L176 48 L145 68 C110 86 60 82 40 48 Z" fill="url(#bossPlate)" stroke="#FF0055" stroke-width="2.5"/>
+    <!-- Armored Dorsal Spikes -->
+    <polygon points="80,18 90,4 100,16" fill="#FF0055"/>
+    <polygon points="105,16 115,2 125,18" fill="#FF0055"/>
+    <!-- Glowing Hydrothermal Energy Core -->
+    <circle cx="95" cy="48" r="22" fill="url(#bossCore)"/>
+    <circle cx="95" cy="48" r="18" fill="none" stroke="#FFD166" stroke-width="2" stroke-dasharray="6,4"/>
+    <!-- Mandibles & Fierce Eye -->
+    <circle cx="152" cy="40" r="4.5" fill="#FFD166"/>
+    <circle cx="153" cy="40" r="2.2" fill="#000000"/>
+    <path d="M165 44 L178 48 L165 52 Z" fill="#FF0055"/>
+</svg>

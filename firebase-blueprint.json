@@ -1,0 +1,43 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile containing expedition stats and progress",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "highScore": { "type": "integer" },
+        "maxUnlockedLevel": { "type": "integer" },
+        "pearlsCollected": { "type": "integer" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["displayName", "highScore", "maxUnlockedLevel"]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Public deep ocean expedition high score ranking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "playerName": { "type": "string" },
+        "score": { "type": "integer" },
+        "level": { "type": "integer" },
+        "depth": { "type": "integer" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["userId", "playerName", "score", "level"]
+    }
+  },
+  "firestore": {
+    "collections": {
+      "users": {
+        "entity": "UserProfile",
+        "description": "Private user expedition progress and settings"
+      },
+      "leaderboard": {
+        "entity": "LeaderboardEntry",
+        "description": "Global leaderboard rankings"
+      }
+    }
+  }
+}

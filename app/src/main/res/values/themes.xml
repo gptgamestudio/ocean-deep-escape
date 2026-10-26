@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.OceanDeepEscape" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">#000B18</item>
+        <item name="android:navigationBarColor">#000B18</item>
+        <item name="android:windowBackground">#000B18</item>
+    </style>
+</resources>
