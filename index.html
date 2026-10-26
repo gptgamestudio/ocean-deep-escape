@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Ocean Deep Escape - 3D Submarine Survival (500 Levels)</title>
-    <meta name="description" content="Ocean Deep Escape: 500 Abyssal Zones Submarine Survival. Explore vast underwater biomes for 5 minutes, battle Apex Leviathans, and earn AdMob rewards.">
-    <meta name="theme-color" content="#01060f">
-    <link rel="canonical" href="https://gptgamestudio.github.io/ocean-deep-escape./">
+    <title>Ocean Deep Escape - Godot 3D Abyssal Submarine Survival</title>
+    <meta name="description" content="Ocean Deep Escape: 500 Abyssal Zones Godot 3D Submarine Survival. Explore underwater biomes, defeat Apex Predators and the Leviathan Prime boss.">
+    <meta name="theme-color" content="#020b18">
+    <link rel="canonical" href="https://gptgamestudio.github.io/ocean-deep-escape/">
     <meta name="google-site-verification" content="googlea3797afede2989e5">
 
     <style>
@@ -36,7 +36,7 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            background: #010814;
+            background: #020b18;
             overflow: hidden;
         }
 
@@ -46,111 +46,146 @@
             height: 100%;
         }
 
+        /* =========================================================================
+           TOP IN-GAME HUD (MATCHES SCREENSHOT 2)
+           ========================================================================= */
         #top-hud {
             position: absolute;
             top: 8px;
-            left: 10px;
-            right: 10px;
-            display: flex;
+            left: 12px;
+            right: 12px;
+            display: none; /* Shown during PLAYING / PAUSED */
             align-items: center;
             justify-content: space-between;
-            z-index: 25;
+            z-index: 30;
             pointer-events: none;
         }
 
-        #status-bar-left {
+        #pilot-info-badge {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(2, 16, 32, 0.92);
-            border: 1.5px solid var(--accent-color, #00d2ff);
-            border-radius: 8px;
-            padding: 5px 12px;
-            box-shadow: 0 4px 14px rgba(0, 210, 255, 0.3);
+            border: 1.5px solid #00d2ff;
+            border-radius: 18px;
+            padding: 5px 14px;
+            box-shadow: 0 0 14px rgba(0, 210, 255, 0.35);
             pointer-events: auto;
         }
 
-        #status-text {
-            color: var(--accent-color, #00f0ff);
-            font-size: 11px;
+        #pilot-status-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 8px #00ff88;
+        }
+
+        #pilot-hud-text {
+            color: #ffffff;
+            font-size: 13px;
             font-weight: 900;
             letter-spacing: 0.5px;
         }
 
-        .hud-btn {
-            background: rgba(0, 32, 54, 0.88);
-            border: 1.5px solid var(--accent-color, #00d2ff);
-            color: var(--accent-color, #00d2ff);
-            border-radius: 8px;
-            padding: 5px 12px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            pointer-events: auto;
-            transition: all 0.2s;
+        #pilot-hud-text span.cyan { color: #00f0ff; }
+        #pilot-hud-text span.yellow { color: #ffd166; }
+        #pilot-hud-text span.red { color: #ff0055; }
+
+        /* CENTER FLOATING ALERT BANNER (MATCHES SCREENSHOT 2: -1 LIFE!) */
+        #floating-alert-banner {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30, 0, 12, 0.94);
+            border: 2px solid #ff0055;
+            border-radius: 20px;
+            padding: 6px 18px;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+            color: #ffd166;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            z-index: 35;
+            pointer-events: none;
+            animation: pulseAlert 0.8s infinite alternate;
         }
-        .hud-btn:active {
+
+        @keyframes pulseAlert {
+            from { transform: translateX(-50%) scale(0.97); }
+            to { transform: translateX(-50%) scale(1.03); }
+        }
+
+        .hud-actions-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: auto;
+        }
+
+        .hud-top-btn {
+            background: rgba(0, 32, 54, 0.9);
+            border: 1.5px solid #00d2ff;
+            color: #00f0ff;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.25);
+            transition: transform 0.1s, background 0.2s;
+        }
+        .hud-top-btn:active {
+            transform: scale(0.94);
             background: #00d2ff;
             color: #01060f;
         }
 
-        #minimap-container {
+        /* 5-MINUTE MINIMAP PROGRESS BAR */
+        #minimap-progress-bar {
             position: absolute;
-            bottom: 50px;
+            top: 52px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             gap: 2px;
-            width: 44%;
-            max-width: 380px;
-            z-index: 20;
+            width: 36%;
+            max-width: 320px;
+            z-index: 25;
             pointer-events: none;
         }
 
-        #biome-name-badge {
-            font-size: 10px;
-            font-weight: 800;
-            color: #e0faff;
-            letter-spacing: 0.8px;
-            text-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
-        }
-
-        #minimap-bar {
+        #minimap-track {
             width: 100%;
-            height: 7px;
+            height: 6px;
             background: rgba(0, 20, 38, 0.85);
-            border: 1px solid var(--accent-color, #0077aa);
-            border-radius: 5px;
+            border: 1px solid #0077aa;
+            border-radius: 4px;
             overflow: hidden;
         }
 
         #minimap-fill {
-            height: 100%;
             width: 0%;
+            height: 100%;
             background: linear-gradient(90deg, #00d2ff, #00ff88);
-            transition: width 0.1s linear;
         }
 
-        #admob-banner {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 42px;
-            background: rgba(0, 0, 0, 0.94);
-            border-top: 1px solid rgba(0, 210, 255, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: #00d2ff;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            z-index: 40;
+        #biome-ticker {
+            font-size: 10px;
+            font-weight: 800;
+            color: #a0f0ff;
+            text-shadow: 0 0 6px rgba(0, 210, 255, 0.8);
         }
 
+        /* =========================================================================
+           TOUCH CONTROLS (MATCHES SCREENSHOT 2)
+           ========================================================================= */
         #touch-controls {
             position: absolute;
             top: 0;
@@ -158,18 +193,20 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 30;
+            z-index: 25;
+            display: none;
         }
 
         #joystick-zone {
             position: absolute;
-            bottom: 55px;
-            left: 15px;
-            width: 95px;
-            height: 95px;
-            background: radial-gradient(circle, rgba(15, 25, 35, 0.88) 0%, rgba(5, 10, 15, 0.95) 100%);
-            border: 2px solid rgba(0, 240, 255, 0.45);
+            bottom: 72px;
+            left: 24px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 30, 50, 0.6) 0%, rgba(2, 10, 20, 0.85) 100%);
+            border: 2px solid #00f0ff;
+            box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -177,113 +214,485 @@
             touch-action: none;
         }
 
+        #joystick-reticle-h {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgba(0, 240, 255, 0.3);
+            pointer-events: none;
+        }
+        #joystick-reticle-v {
+            position: absolute;
+            height: 100%;
+            width: 1px;
+            background: rgba(0, 240, 255, 0.3);
+            pointer-events: none;
+        }
+
         #joystick-knob {
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, #00d2ff 0%, #004d73 100%);
-            border: 2px solid #ffffff;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
+            background: radial-gradient(circle, #00f0ff 0%, #005c8a 100%);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 14px rgba(0, 240, 255, 0.8);
             transform: translate(0px, 0px);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+            pointer-events: none;
         }
 
         #action-zone {
             position: absolute;
-            bottom: 55px;
-            right: 15px;
+            bottom: 72px;
+            right: 24px;
             display: flex;
-            gap: 12px;
+            align-items: center;
+            gap: 16px;
             pointer-events: auto;
         }
 
         .action-button {
-            width: 54px;
-            height: 54px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.45);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            font-weight: 900;
-            color: #ffffff;
             cursor: pointer;
             touch-action: none;
             transition: transform 0.1s;
         }
         .action-button:active {
-            transform: scale(0.92);
+            transform: scale(0.9);
         }
 
-        #btn-torpedo { background: radial-gradient(circle, #e6004c 0%, #66001f 100%); border-color: #ff3366; box-shadow: 0 0 12px rgba(255, 0, 85, 0.4); }
-        #btn-boost { background: radial-gradient(circle, #ff9900 0%, #804c00 100%); border-color: #ffcc00; box-shadow: 0 0 12px rgba(255, 183, 3, 0.4); }
+        #btn-boost {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #00a8e8 0%, #003459 100%);
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 14px rgba(0, 210, 255, 0.45);
+            color: #ffffff;
+            font-size: 22px;
+        }
 
-        .game-overlay {
+        #btn-torpedo {
+            width: 62px;
+            height: 62px;
+            background: radial-gradient(circle, #ff0055 0%, #7a0026 100%);
+            border: 2.5px solid #ff3377;
+            box-shadow: 0 0 18px rgba(255, 0, 85, 0.55);
+            color: #ffffff;
+            font-size: 26px;
+        }
+
+        /* =========================================================================
+           BOTTOM BAR (MATCHES SCREENSHOT 1 & SCREENSHOT 2)
+           ========================================================================= */
+        #bottom-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 58px;
+            background: #030e1c;
+            border-top: 1px solid #003854;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 14px;
+            z-index: 40;
+        }
+
+        /* Left AdMob Banner Container */
+        #admob-banner-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 48px;
+            background: #000000;
+            border-radius: 6px;
+            padding: 3px 10px;
+            border: 1px solid #004d73;
+            max-width: 320px;
+            cursor: pointer;
+        }
+
+        .ad-badge {
+            background: #ffd166;
+            color: #000000;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .ad-copy-title {
+            color: #00d2ff;
+            font-size: 11px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ad-copy-sub {
+            color: #8da4c4;
+            font-size: 9px;
+            white-space: nowrap;
+        }
+
+        /* Center Hearts Status (10 Hearts + 10/10) */
+        #hud-hearts-container {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .heart-icon {
+            font-size: 12px;
+            color: #ff0055;
+            text-shadow: 0 0 4px rgba(255, 0, 85, 0.6);
+            transition: opacity 0.2s;
+        }
+        .heart-icon.lost {
+            opacity: 0.18;
+            color: #888888;
+            text-shadow: none;
+        }
+
+        #hud-hearts-fraction {
+            color: #ff7597;
+            font-size: 12px;
+            font-weight: 900;
+            margin-left: 6px;
+        }
+
+        /* Right Lives Pill / Box */
+        #hud-lives-pill {
+            background: #2a0010;
+            border: 1px solid #ff0055;
+            border-radius: 6px;
+            padding: 4px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            min-width: 58px;
+        }
+
+        #hud-lives-pill.low {
+            background: #4a0010;
+            border-color: #ff2255;
+            animation: pulseAlert 0.8s infinite alternate;
+        }
+
+        #hud-lives-val {
+            color: #ff7597;
+            font-size: 11px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        #hud-lives-lbl {
+            color: #ff7597;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        /* Telemetry Stats for Welcome / Play */
+        #bottom-telemetry {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        #bottom-telemetry .zone { color: #ffd166; }
+        #bottom-telemetry .depth { color: #00f0ff; }
+        #bottom-telemetry .score { color: #64dfdf; }
+
+        /* =========================================================================
+           1. WELCOME LANDING SCREEN (MATCHES SCREENSHOT 1 - MOVABLE UP AND DOWN)
+           ========================================================================= */
+        #welcome-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(2, 10, 22, 0.94);
+            height: calc(100% - 58px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 50;
-            padding: 16px;
+            background: radial-gradient(circle at 50% 40%, rgba(0, 31, 63, 0.95) 0%, rgba(0, 8, 20, 0.98) 100%);
+            overflow-y: auto; /* MOVABLE UP AND DOWN ON ANY MOBILE SCREEN */
+            -webkit-overflow-scrolling: touch;
+            padding: 16px 12px;
+        }
+
+        #welcome-scroll-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 560px;
+            margin: auto;
+            padding: 10px 0;
+        }
+
+        .game-main-title {
+            color: #00f0ff;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+            margin-bottom: 2px;
+        }
+
+        .game-subtitle {
+            color: #64dfdf;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+            margin-bottom: 16px;
+            text-shadow: 0 0 10px rgba(100, 223, 223, 0.5);
+        }
+
+        .callsign-label {
+            color: #00f0ff;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        #pilotCallsignInput {
+            width: 90%;
+            max-width: 380px;
+            background: #081b29;
+            border: 1.8px solid #00d2ff;
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 900;
+            text-align: center;
+            outline: none;
+            box-shadow: 0 0 16px rgba(0, 210, 255, 0.25);
+            margin-bottom: 12px;
+            letter-spacing: 0.8px;
+        }
+        #pilotCallsignInput:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        #btn-enter-game {
+            width: 90%;
+            max-width: 380px;
+            background: #00f0ff;
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            box-shadow: 0 0 22px rgba(0, 240, 255, 0.5);
+            transition: transform 0.1s, background 0.2s;
+            margin-bottom: 12px;
+        }
+        #btn-enter-game:active {
+            transform: scale(0.97);
+            background: #00ff88;
+        }
+
+        .briefing-box {
+            background: rgba(0, 20, 40, 0.7);
+            border: 1px solid #005580;
+            border-radius: 8px;
+            padding: 6px 16px;
+            color: #ccd7e4;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            max-width: 90%;
+        }
+
+        .dashboard-link {
+            color: #64dfdf;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+            transition: color 0.2s;
+        }
+        .dashboard-link:hover {
+            color: #00f0ff;
+        }
+
+        /* =========================================================================
+           2. DEATH / HULL BREACH DIALOG (MATCHES SCREENSHOT 3)
+           ========================================================================= */
+        #gameover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 58px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            background: rgba(2, 8, 16, 0.94);
+            padding: 14px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .hull-breach-card {
+            background: #041220;
+            border: 2px solid #ff0055;
+            border-radius: 18px;
+            padding: 18px 24px;
+            max-width: 490px;
+            width: 95%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 0 32px rgba(255, 0, 85, 0.45);
             text-align: center;
         }
 
-        .modal-card {
-            background: #041426;
+        .breach-title {
+            color: #ff0055;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px rgba(255, 0, 85, 0.7);
+        }
+
+        .lives-saved-badge {
+            background: rgba(0, 30, 20, 0.85);
+            border: 1.5px solid #00ff88;
+            border-radius: 20px;
+            padding: 6px 18px;
+            color: #00ff88;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .scene-review-box {
+            background: #020c18;
+            border: 1.5px solid #005580;
+            border-radius: 10px;
+            padding: 12px 14px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .review-carousel-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #ffd166;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-arrow-btn {
+            background: transparent;
+            border: none;
+            color: #00f0ff;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            padding: 0 8px;
+        }
+
+        .killer-predator-text {
+            color: #ff0055;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .killer-predator-sub {
+            color: #8da4c4;
+            font-size: 11px;
+        }
+
+        .breach-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .breach-btn-respawn {
+            background: #00f0ff;
+            color: #020b18;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .breach-btn-ad {
+            background: #ff0055;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            flex: 1;
+            min-width: 160px;
+            box-shadow: 0 0 16px rgba(255, 0, 85, 0.4);
+        }
+
+        /* DASHBOARD MODAL */
+        #dashboard-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 58px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 55;
+            background: rgba(1, 6, 15, 0.96);
+            padding: 14px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .dashboard-card {
+            background: #031424;
             border: 2px solid #00d2ff;
             border-radius: 14px;
             padding: 18px 22px;
             max-width: 480px;
-            width: 92%;
+            width: 95%;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            align-items: center;
-            box-shadow: 0 8px 32px rgba(0, 210, 255, 0.25);
-        }
-
-        .primary-btn {
-            background: #00ff88;
-            color: #001828;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 13px;
-            font-weight: 900;
-            cursor: pointer;
-            min-width: 220px;
-            letter-spacing: 0.5px;
-            transition: transform 0.1s, opacity 0.2s;
-        }
-        .primary-btn:active {
-            transform: scale(0.96);
-            opacity: 0.9;
-        }
-
-        #boss-alert-banner {
-            position: absolute;
-            top: 55px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 0, 85, 0.92);
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: 900;
-            padding: 6px 18px;
-            border-radius: 20px;
-            display: none;
-            z-index: 28;
-            box-shadow: 0 0 18px rgba(255, 0, 85, 0.7);
-            animation: pulseBanner 1s infinite alternate;
-        }
-        @keyframes pulseBanner {
-            from { transform: translateX(-50%) scale(0.96); }
-            to { transform: translateX(-50%) scale(1.04); }
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+            text-align: center;
         }
     </style>
 </head>
@@ -292,286 +701,234 @@
     <div id="game-wrapper">
         <canvas id="gameCanvas"></canvas>
 
-        <div id="boss-alert-banner">⚠️ 5-MINUTE EXPEDITION COMPLETE: APEX BOSS ENGAGED!</div>
-
+        <!-- TOP HUD STATUS (MATCHES SCREENSHOT 2) -->
         <div id="top-hud">
-            <div id="status-bar-left">
-                <span id="status-text">ZONE 1 | LVL 1 | ⏱️ 00:00 | ❤️ 5 LIVES | 💙 10/10 HEARTS</span>
+            <div id="pilot-info-badge">
+                <div id="pilot-status-dot"></div>
+                <div id="pilot-hud-text">
+                    <span id="hud-name" class="cyan">benjie1977</span> 
+                    <span id="hud-level" class="yellow">LVL 1</span> 
+                    <span class="red">❤️</span> 
+                    <span id="hud-hearts-top" class="cyan">10/10</span>
+                </div>
             </div>
-            <div>
-                <button class="hud-btn" onclick="openDashboard()">🏠 MENU</button>
+
+            <!-- FLOATING DAMAGE / ALERT BANNER -->
+            <div id="floating-alert-banner">
+                <span>💔 -1 LIFE! 1 LIVES REMAINING</span>
+            </div>
+
+            <div class="hud-actions-right">
+                <button class="hud-top-btn" id="soundToggle" onclick="toggleAudio()">🔊 AUDIO: ON</button>
+                <button class="hud-top-btn" onclick="openDashboardModal()">🏠 DASHBOARD</button>
+                <button class="hud-top-btn" onclick="togglePauseGame()">⏸️</button>
             </div>
         </div>
 
-        <div id="minimap-container">
-            <div id="biome-name-badge">🌊 ZONE 1: SUNLIT TWILIGHT SHALLOWS</div>
-            <div id="minimap-bar">
+        <!-- 5-MINUTE MINIMAP PROGRESS -->
+        <div id="minimap-progress-bar">
+            <div id="biome-ticker">🌊 ZONE 1: SUNLIT TWILIGHT SHALLOWS (5-MIN RUN)</div>
+            <div id="minimap-track">
                 <div id="minimap-fill"></div>
             </div>
         </div>
 
-        <div id="admob-banner">
-            [AdMob Banner ID: pub-9786472984542330] - Sponsored Deep Ocean Space
-        </div>
-
+        <!-- TOUCH CONTROLS (MATCHES SCREENSHOT 2) -->
         <div id="touch-controls">
-            <div id="joystick-zone"><div id="joystick-knob"></div></div>
+            <div id="joystick-zone">
+                <div id="joystick-reticle-h"></div>
+                <div id="joystick-reticle-v"></div>
+                <div id="joystick-knob"></div>
+            </div>
             <div id="action-zone">
                 <button class="action-button" id="btn-boost">⚡</button>
                 <button class="action-button" id="btn-torpedo">🎯</button>
             </div>
         </div>
 
-        <div id="menu-overlay" class="game-overlay">
-            <div class="modal-card">
-                <h2 style="color: #00f0ff; letter-spacing: 1px;">OCEAN DEEP ESCAPE</h2>
-                <p style="font-size: 11px; color: #a4bed8; line-height: 1.5;">
-                    • 500 Abyssal Zones with 7 Beautiful Dynamic Biome Colors!<br>
-                    • Continuous 5-Minute Deep Ocean Expedition before Boss Battle!<br>
-                    • 1 Watch Ad = 5 Live Credits (10 Hearts per Life)!
-                </p>
-                <button class="primary-btn" id="start-game-btn" onclick="startGameSession()">START EXPLORING (5-MIN EXPEDITION)</button>
-                <button class="primary-btn" style="background: #00d2ff; color: #020b18;" onclick="watchAdForLives()">📺 WATCH AD (+5 LIVE CREDITS)</button>
+        <!-- 1. FIRST SCREEN: WELCOME LANDING (MATCHES SCREENSHOT 1 - MOVABLE UP & DOWN) -->
+        <div id="welcome-overlay">
+            <div id="welcome-scroll-container">
+                <h1 class="game-main-title">OCEAN DEEP ESCAPE</h1>
+                <div class="game-subtitle">GODOT 3D ABYSSAL SUBMARINE SURVIVAL</div>
+
+                <div class="callsign-label">PILOT CALLSIGN / USERNAME</div>
+                <input id="pilotCallsignInput" type="text" value="benjie1977" maxlength="18" placeholder="benjie1977">
+
+                <button id="btn-enter-game" onclick="enterGameSession()">ENTER THE GAME / DASHBOARD</button>
+
+                <div class="briefing-box">
+                    BRIEFING: 500 Abyssal Zones • Defeat Apex Boss • Unlimited Harpoons
+                </div>
+
+                <div class="dashboard-link" onclick="openDashboardModal()">
+                    ⚙️ VIEW EXPEDITION DASHBOARD & CLOUD SYNC
+                </div>
             </div>
         </div>
 
-        <div id="game-over-overlay" class="game-overlay" style="display: none;">
-            <div class="modal-card" style="border-color: #ff3366;">
-                <h2 style="color: #ff3366;" id="death-title">💔 HEART DEPLETED</h2>
-                <p style="font-size: 11px; color: #a4bed8;" id="death-desc">Lost 1 Heart. Lives remaining: 5</p>
-                <button class="primary-btn" style="background: #ffd166; color: #020b18;" onclick="respawnOrRetry()">RETRY ZONE</button>
-                <button class="primary-btn" style="background: #00d2ff; color: #020b18;" onclick="watchAdForLives()">📺 WATCH AD (+5 LIVES)</button>
+        <!-- 2. DEATH / HULL BREACH OVERLAY (MATCHES SCREENSHOT 3) -->
+        <div id="gameover-overlay">
+            <div class="hull-breach-card">
+                <div class="breach-title">HULL BREACH: -1 LIFE LOST</div>
+                <div class="lives-saved-badge" id="breach-lives-badge">❤️ 0/10 LIVES REMAINING • SAVED AT LEVEL 1</div>
+
+                <div class="scene-review-box">
+                    <div class="review-carousel-nav">
+                        <button class="nav-arrow-btn" onclick="prevDeathReviewStep()">❮</button>
+                        <span id="death-review-step-lbl">DEATH SCENE REVIEW (1/4)</span>
+                        <button class="nav-arrow-btn" onclick="nextDeathReviewStep()">❯</button>
+                    </div>
+                    <div class="killer-predator-text" id="death-killer-name">KILLER PREDATOR: Apex Deep Predator</div>
+                    <div class="killer-predator-sub" id="death-killer-coords">Depth: 510m • Location: Sector X: 2400 • Hull Rupture</div>
+                </div>
+
+                <div class="breach-actions">
+                    <button class="breach-btn-respawn" id="btn-breach-respawn" onclick="respawnSubmarine()">🔄 RESPAWN & CONTINUE</button>
+                    <button class="breach-btn-ad" onclick="watchAdForLives()">📺 WATCH AD (+5 LIVES)</button>
+                </div>
             </div>
         </div>
 
-        <div id="victory-overlay" class="game-overlay" style="display: none;">
-            <div class="modal-card" style="border-color: #00ff88;">
-                <h2 style="color: #00ff88;">🏆 APEX LEVIATHAN DEFEATED!</h2>
-                <p style="font-size: 12px; color: #a4bed8;">Abyssal escape portal is now active. Ready for next zone?</p>
-                <button class="primary-btn" onclick="advanceToNextLevel()">ENTER ESCAPE PORTAL (NEXT LEVEL)</button>
+        <!-- DASHBOARD & CLOUD SYNC MODAL -->
+        <div id="dashboard-overlay">
+            <div class="dashboard-card">
+                <h2 style="color: #00f0ff;">EXPEDITION DASHBOARD</h2>
+                <div style="font-size: 12px; color: #a0c4ff; line-height: 1.6;">
+                    • Current Zone: <span id="dash-zone" style="color: #ffd166; font-weight: bold;">1/500</span><br>
+                    • Max Unlocked: <span id="dash-unlocked" style="color: #00ff88; font-weight: bold;">Zone 1</span><br>
+                    • High Score: <span id="dash-score" style="color: #00f0ff; font-weight: bold;">0</span><br>
+                    • Lives: <span id="dash-lives" style="color: #ff0055; font-weight: bold;">10 Lives (100 Hearts)</span>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: center; margin-top: 10px;">
+                    <button class="breach-btn-respawn" onclick="closeDashboardModal()">RETURN TO EXPEDITION</button>
+                    <button class="breach-btn-ad" style="background:#005580;" onclick="watchAdForLives()">📺 +5 LIVES AD</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM HUD STATUS BAR (MATCHES SCREENSHOT 1 & SCREENSHOT 2) -->
+        <div id="bottom-bar">
+            <!-- Left: AdMob Banner Container -->
+            <div id="admob-banner-container" onclick="watchAdForLives()">
+                <span class="ad-badge">AD</span>
+                <div>
+                    <div class="ad-copy-title" id="bottom-ad-title">📢 ADMOB SPONSORED: DEEP-SEA EXPEDITION RADAR</div>
+                    <div class="ad-copy-sub">Pinduoduo / Google AdMob • Tap to get +5 Live Credits</div>
+                </div>
+            </div>
+
+            <!-- Center: 10 Hearts Status (Hearts count down 10,9,8...) -->
+            <div id="hud-hearts-container">
+                <div id="hearts-row">
+                    <span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span><span class="heart-icon">❤️</span>
+                </div>
+                <span id="hud-hearts-fraction">10/10</span>
+            </div>
+
+            <!-- Right: Lives Pill Box (or Telemetry in Welcome) -->
+            <div id="hud-lives-pill" onclick="watchAdForLives()">
+                <div id="hud-lives-val">❤️ 10</div>
+                <div id="hud-lives-lbl">LIVES</div>
+            </div>
+
+            <div id="bottom-telemetry" style="display: none;">
+                <span class="zone" id="b-zone">ZONE 1/500</span>
+                <span class="depth" id="b-depth">510m</span>
+                <span class="score" id="b-score">SCORE: 0</span>
             </div>
         </div>
     </div>
 
     <script>
-        function makeSvgImage(svg) {
-            const img = new Image();
-            img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
-            return img;
-        }
-
-        const SPRITES = {
-            patrolSub: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50">
-                    <defs>
-                        <linearGradient id="eHull" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#2C3E50"/>
-                            <stop offset="50%" stop-color="#1A252F"/>
-                            <stop offset="100%" stop-color="#0E161D"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M12 16 L2 6 L14 8 Z" fill="#1A252F"/>
-                    <path d="M12 34 L2 44 L14 42 Z" fill="#0E161D"/>
-                    <rect x="0" y="22" width="6" height="6" fill="#111"/>
-                    <ellipse cx="2" cy="25" rx="2" ry="8" fill="#B07D1E"/>
-                    <path d="M8 18 L38 16 L44 8 L62 8 L66 16 C84 17 96 23 100 25 C96 27 84 33 66 34 L8 34 C2 30 2 20 8 18 Z" fill="url(#eHull)" stroke="#00D2FF" stroke-width="1.2"/>
-                    <path d="M76 21 C86 22 92 24 94 25 C92 26 86 28 76 29 Z" fill="#00F0FF"/>
-                    <rect x="30" y="20" width="4" height="12" fill="#FFB703"/>
-                    <rect x="38" y="20" width="4" height="12" fill="#FFB703"/>
-                </svg>
-            `),
-            patrolSubAlert: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50">
-                    <defs>
-                        <linearGradient id="eHullAlert" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#4A1521"/>
-                            <stop offset="50%" stop-color="#2D0A13"/>
-                            <stop offset="100%" stop-color="#140206"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M12 16 L2 6 L14 8 Z" fill="#2D0A13"/>
-                    <path d="M12 34 L2 44 L14 42 Z" fill="#140206"/>
-                    <path d="M8 18 L38 16 L44 8 L62 8 L66 16 C84 17 96 23 100 25 C96 27 84 33 66 34 L8 34 C2 30 2 20 8 18 Z" fill="url(#eHullAlert)" stroke="#FF0055" stroke-width="1.8"/>
-                    <path d="M76 21 C86 22 92 24 94 25 C92 26 86 28 76 29 Z" fill="#FF0055"/>
-                    <circle cx="86" cy="25" r="2" fill="#FFFFFF"/>
-                </svg>
-            `),
-            shark: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 50" width="110" height="50">
-                    <defs>
-                        <linearGradient id="sharkGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#4A5C70"/>
-                            <stop offset="60%" stop-color="#2E3E50"/>
-                            <stop offset="100%" stop-color="#CCD7E4"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M25 25 L2 6 L12 25 L2 44 Z" fill="#3A4B5E"/>
-                    <path d="M48 16 L42 2 L56 4 L62 16 Z" fill="#283645"/>
-                    <path d="M60 30 L48 46 L62 44 L70 32 Z" fill="#334557"/>
-                    <path d="M22 25 C35 14 65 14 92 22 L108 25 C96 36 68 38 22 25 Z" fill="url(#sharkGrad)" stroke="#1F2A36" stroke-width="1"/>
-                    <circle cx="94" cy="22" r="3" fill="#FFB703"/>
-                    <circle cx="94.5" cy="22" r="1.3" fill="#000000"/>
-                    <path d="M90 28 L94 32 L98 28 L102 32 L106 28" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
-                </svg>
-            `),
-            angler: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95 75" width="95" height="75">
-                    <defs>
-                        <radialGradient id="escaGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#FFFFFF"/>
-                            <stop offset="30%" stop-color="#00F0FF"/>
-                            <stop offset="100%" stop-color="#00F0FF" stop-opacity="0"/>
-                        </radialGradient>
-                    </defs>
-                    <path d="M50 32 C65 10 75 12 85 24" fill="none" stroke="#4A3B32" stroke-width="2.5" stroke-linecap="round"/>
-                    <circle cx="85" cy="24" r="10" fill="url(#escaGlow)"/>
-                    <circle cx="85" cy="24" r="3.5" fill="#FFFFFF"/>
-                    <path d="M22 45 L4 32 L12 45 L4 58 Z" fill="#1E1311"/>
-                    <path d="M20 45 C28 26 55 26 70 38 L84 50 L68 64 C45 68 25 60 20 45 Z" fill="#2A1B18" stroke="#140D0C" stroke-width="1.5"/>
-                    <circle cx="62" cy="38" r="4" fill="#90E0EF"/>
-                </svg>
-            `),
-            kraken: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 70" width="120" height="70">
-                    <path d="M118 35 C100 20 75 22 55 26 L55 44 C75 48 100 50 118 35 Z" fill="#7209B7"/>
-                    <circle cx="60" cy="32" r="5" fill="#FFD166"/>
-                    <path d="M55 28 C35 22 18 38 4 30" fill="none" stroke="#7209B7" stroke-width="4.5" stroke-linecap="round"/>
-                    <circle cx="35" cy="26" r="1.5" fill="#4CC9F0"/>
-                </svg>
-            `),
-            eel: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45" width="130" height="45">
-                    <circle cx="10" cy="22" r="4" fill="#00F5D4"/>
-                    <circle cx="22" cy="18" r="5" fill="#00F5D4"/>
-                    <circle cx="36" cy="24" r="6" fill="#00F5D4"/>
-                    <circle cx="50" cy="19" r="7" fill="#00F5D4"/>
-                    <circle cx="66" cy="23" r="7.5" fill="#00F5D4"/>
-                    <circle cx="82" cy="19" r="8" fill="#00F5D4"/>
-                    <circle cx="98" cy="23" r="8.5" fill="#00F5D4"/>
-                    <path d="M102 16 C115 16 124 18 128 22 C124 26 115 28 102 28 Z" fill="#00B4D8"/>
-                    <circle cx="118" cy="19" r="2.5" fill="#FF0055"/>
-                </svg>
-            `),
-            turret: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
-                    <rect x="10" y="10" width="40" height="40" rx="8" fill="#1A2736" stroke="#FF9900" stroke-width="2.5"/>
-                    <circle cx="30" cy="30" r="15" fill="#2C3E50" stroke="#00D2FF" stroke-width="1.5"/>
-                    <circle cx="30" cy="30" r="10" fill="#FF0055"/>
-                    <circle cx="30" cy="30" r="4.5" fill="#FFD166"/>
-                </svg>
-            `),
-            boss: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 96" width="180" height="96">
-                    <path d="M35 48 L8 24 L22 48 L8 72 Z" fill="#2C1938" stroke="#FF0055" stroke-width="1.5"/>
-                    <path d="M40 48 C60 14 110 10 145 28 L176 48 L145 68 C110 86 60 82 40 48 Z" fill="#2B0938" stroke="#FF0055" stroke-width="2.5"/>
-                    <circle cx="95" cy="48" r="22" fill="#00F0FF"/>
-                    <circle cx="152" cy="40" r="4.5" fill="#FFD166"/>
-                </svg>
-            `),
-            portal: makeSvgImage(`
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#00FF88" stroke-width="4" stroke-dasharray="14,8"/>
-                    <circle cx="50" cy="50" r="32" fill="none" stroke="#00F0FF" stroke-width="3" stroke-dasharray="10,6"/>
-                    <circle cx="50" cy="50" r="16" fill="#00FF88"/>
-                </svg>
-            `)
-        };
-
-        function safeDrawImage(img, x, y, w, h) {
-            try {
-                if (img && img.complete && img.naturalWidth > 0) {
-                    ctx.drawImage(img, x, y, w, h);
-                    return true;
-                }
-            } catch (err) {}
-            return false;
-        }
-
-        const BIOMES = [
-            {
-                minLevel: 1, maxLevel: 50,
-                name: "SUNLIT TWILIGHT SHALLOWS",
-                waterTop: "#002b47", waterMid: "#001a2e", waterBottom: "#000a14",
-                trenchBorder: "#003b5c", accentColor: "#00d2ff",
-                causticColor: "rgba(100, 223, 223, 0.045)"
-            },
-            {
-                minLevel: 51, maxLevel: 120,
-                name: "MIDNIGHT SAPPHIRE TRENCH",
-                waterTop: "#010d28", waterMid: "#01081a", waterBottom: "#00030a",
-                trenchBorder: "#0d2b63", accentColor: "#3a86ff",
-                causticColor: "rgba(58, 134, 255, 0.045)"
-            },
-            {
-                minLevel: 121, maxLevel: 200,
-                name: "BIOLUMINESCENT CORAL RIFT",
-                waterTop: "#1a0429", waterMid: "#11021c", waterBottom: "#06000a",
-                trenchBorder: "#3d0b5e", accentColor: "#c77dff",
-                causticColor: "rgba(199, 125, 255, 0.05)"
-            },
-            {
-                minLevel: 201, maxLevel: 290,
-                name: "THERMAL HYDROTHERMAL VENTS",
-                waterTop: "#2e0909", waterMid: "#1c0404", waterBottom: "#0a0101",
-                trenchBorder: "#5e1515", accentColor: "#ff9e00",
-                causticColor: "rgba(255, 158, 0, 0.05)"
-            },
-            {
-                minLevel: 291, maxLevel: 380,
-                name: "PHOSPHOR EMERALD DEPTHS",
-                waterTop: "#022416", waterMid: "#01170e", waterBottom: "#000a06",
-                trenchBorder: "#0b4d32", accentColor: "#00f5d4",
-                causticColor: "rgba(0, 245, 212, 0.045)"
-            },
-            {
-                minLevel: 381, maxLevel: 450,
-                name: "GLACIAL FROST MARIANA",
-                waterTop: "#0a2238", waterMid: "#051524", waterBottom: "#01080f",
-                trenchBorder: "#1e4d75", accentColor: "#a0c4ff",
-                causticColor: "rgba(160, 196, 255, 0.055)"
-            },
-            {
-                minLevel: 451, maxLevel: 500,
-                name: "HADOPELAGIC LEVIATHAN VOID",
-                waterTop: "#0d0014", waterMid: "#06000a", waterBottom: "#000000",
-                trenchBorder: "#40001f", accentColor: "#ff0055",
-                causticColor: "rgba(255, 0, 85, 0.06)"
-            }
-        ];
-
-        function getBiome(lvl) {
-            return BIOMES.find(b => lvl >= b.minLevel && lvl <= b.maxLevel) || BIOMES[0];
-        }
-
-        function getLevelConfig(lvl) {
-            const level = Math.max(1, Math.min(500, lvl));
-            const biome = getBiome(level);
-            const worldWidth = 16000 + (level - 1) * 35;
-            const bossTriggerX = worldWidth - 1100;
-
-            return {
-                level,
-                biome,
-                worldWidth,
-                worldHeight: 720,
-                bossHp: 160 + level * 42,
-                warningRadius: 180 + Math.min(60, level * 0.12),
-                spawnInterval: Math.max(1.2, 3.2 - (level * 0.004)),
-                bossTriggerX,
-                targetExpeditionSeconds: 300
-            };
-        }
-
+        // =========================================================================
+        // 1. GAME STORAGE & STATE
+        // =========================================================================
         let currentLevel = parseInt(localStorage.getItem("ocean_current_level")) || 1;
-        let playerLives = parseInt(localStorage.getItem("ocean_player_lives")) || 5;
-        let playerHearts = parseInt(localStorage.getItem("ocean_player_hearts")) || 10;
-        let deathCountForInterstitial = 0;
-        let gameState = "MENU";
-        let hasActiveSession = false;
+        let playerLives = parseInt(localStorage.getItem("ocean_player_lives"));
+        if (isNaN(playerLives)) playerLives = 10; // Default 10 Lives as shown in Screenshot 1
+
+        let playerHearts = parseInt(localStorage.getItem("ocean_player_hearts"));
+        if (isNaN(playerHearts)) playerHearts = 10; // 10 Hearts per Life Credit
+
+        let playerName = localStorage.getItem("ocean_player_name") || "benjie1977";
+        let playerScore = parseInt(localStorage.getItem("ocean_player_score")) || 0;
+        let deathInspectionStep = 1;
+
+        let gameState = "WELCOME"; // "WELCOME", "PLAYING", "PAUSED", "GAME_OVER", "VICTORY"
         let levelElapsedTime = 0;
+        let alertBannerTimeout = null;
 
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
+
+        let audioEnabled = true;
+        let audioCtx = null;
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioClass) audioCtx = new AudioClass();
+            }
+            if (audioCtx && audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const btn = document.getElementById("soundToggle");
+            if (btn) {
+                btn.textContent = audioEnabled ? "🔊 AUDIO: ON" : "🔇 AUDIO: OFF";
+            }
+        }
+
+        function playSound(type) {
+            if (!audioEnabled) return;
+            try {
+                const actx = getAudioContext();
+                if (!actx) return;
+                const now = actx.currentTime;
+                const osc = actx.createOscillator();
+                const gain = actx.createGain();
+                osc.connect(gain);
+                gain.connect(actx.destination);
+
+                if (type === "torpedo") {
+                    osc.type = "sawtooth";
+                    osc.frequency.setValueAtTime(420, now);
+                    osc.frequency.exponentialRampToValueAtTime(140, now + 0.15);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.16);
+                } else if (type === "hit") {
+                    osc.type = "square";
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.exponentialRampToValueAtTime(60, now + 0.25);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.26);
+                } else if (type === "sonar") {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(950, now);
+                    osc.frequency.exponentialRampToValueAtTime(700, now + 0.3);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.linearRampToValueAtTime(0.001, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.36);
+                } else if (type === "pickup") {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(580, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.13);
+                }
+            } catch (e) {}
+        }
 
         function resizeCanvas() {
             canvas.width = 1280;
@@ -580,395 +937,329 @@
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        let config = getLevelConfig(currentLevel);
-        let player, enemies, turrets, boss, playerBullets, enemyBullets, creatures, bubbles, portal;
-        let keys = {};
-        let joystick = { active: false, dx: 0, dy: 0 };
-        let enemySpawnTimer = 0;
+        // =========================================================================
+        // 2. BIOMES (7 DISTINCT COLOR SYSTEMS ACROSS 500 LEVELS)
+        // =========================================================================
+        const BIOMES = [
+            { min: 1, max: 70, name: "SUNLIT TWILIGHT SHALLOWS", top: "#002b47", mid: "#001a2e", bot: "#000a14", caustic: "rgba(100,223,223,0.06)", accent: "#00d2ff" },
+            { min: 71, max: 140, name: "MIDNIGHT SAPPHIRE TRENCH", top: "#010d28", mid: "#01081a", bot: "#00030a", caustic: "rgba(58,134,255,0.06)", accent: "#3a86ff" },
+            { min: 141, max: 210, name: "BIOLUMINESCENT CORAL RIFT", top: "#1a0429", mid: "#11021c", bot: "#06000a", caustic: "rgba(199,125,255,0.07)", accent: "#c77dff" },
+            { min: 211, max: 300, name: "THERMAL HYDROTHERMAL VENTS", top: "#2e0909", mid: "#1c0404", bot: "#0a0101", caustic: "rgba(255,158,0,0.07)", accent: "#ff9e00" },
+            { min: 301, max: 380, name: "PHOSPHOR EMERALD DEPTHS", top: "#022416", mid: "#01170e", bot: "#000a06", caustic: "rgba(0,245,212,0.06)", accent: "#00f5d4" },
+            { min: 381, max: 450, name: "GLACIAL FROST MARIANA", top: "#0a2238", mid: "#051524", bot: "#01080f", caustic: "rgba(160,196,255,0.07)", accent: "#a0c4ff" },
+            { min: 451, max: 500, name: "HADOPELAGIC LEVIATHAN VOID", top: "#0d0014", mid: "#06000a", bot: "#000000", caustic: "rgba(255,0,85,0.08)", accent: "#ff0055" }
+        ];
 
-        function initLevel(lvl) {
-            config = getLevelConfig(lvl);
-            levelElapsedTime = 0;
-
-            document.documentElement.style.setProperty("--accent-color", config.biome.accentColor);
-            document.getElementById("biome-name-badge").textContent = `🌊 ZONE ${Math.ceil(lvl / 71)}: ${config.biome.name}`;
-
-            player = {
-                x: 180, y: 360, vx: 0, vy: 0,
-                speed: 260, boostSpeed: 420, isBoosting: false,
-                facingRight: true,
-                weaponLevel: Math.min(5, 1 + Math.floor(lvl / 100)),
-                invulnerable: 0
-            };
-
-            enemies = [];
-            turrets = [];
-            let turretX = 900;
-            while (turretX < config.worldWidth - 1200) {
-                turrets.push({ x: turretX, y: 55, hp: 4, shootTimer: 0 });
-                turrets.push({ x: turretX + 350, y: 655, hp: 4, shootTimer: 1.0 });
-                turretX += 750;
-            }
-
-            creatures = [];
-            const creatureTypes = ["SHARK", "ANGLER", "KRAKEN", "EEL"];
-            for (let i = 0; i < 28; i++) {
-                creatures.push({
-                    type: creatureTypes[i % creatureTypes.length],
-                    x: 1200 + i * 500 + Math.random() * 200,
-                    y: 100 + Math.random() * 520,
-                    vx: -40 - Math.random() * 30
-                });
-            }
-
-            boss = {
-                x: config.worldWidth - 650, y: 360,
-                hp: config.bossHp, maxHp: config.bossHp,
-                activated: false, shootTimer: 0,
-                dangerZoneRadius: 190, dirY: 1
-            };
-
-            portal = { x: config.worldWidth - 150, y: 360, open: false, radius: 55 };
-
-            playerBullets = [];
-            enemyBullets = [];
-            bubbles = [];
-            for (let i = 0; i < 50; i++) {
-                bubbles.push({
-                    x: Math.random() * config.worldWidth,
-                    y: Math.random() * 720,
-                    radius: 2 + Math.random() * 4,
-                    vy: 18 + Math.random() * 35,
-                    alpha: 0.15 + Math.random() * 0.35
-                });
-            }
-
-            updateHUD();
+        function getBiome(lvl) {
+            return BIOMES.find(b => lvl >= b.min && lvl <= b.max) || BIOMES[0];
         }
 
-        initLevel(currentLevel);
+        // =========================================================================
+        // 3. LEVEL INITIALIZATION (5-MINUTE EXPEDITION WORLD)
+        // =========================================================================
+        let player, enemies, collectibles, bubbles, boss, bullets;
+        let keys = {};
+        let joystick = { active: false, dx: 0, dy: 0 };
+        let worldWidth = 16000;
+        let bossTriggerX = 14800;
 
-        function updateHUD() {
-            const minutes = Math.floor(levelElapsedTime / 60);
-            const seconds = Math.floor(levelElapsedTime % 60);
-            const timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        function initLevelData(lvl) {
+            levelElapsedTime = 0;
+            worldWidth = 16000 + (lvl - 1) * 35;
+            bossTriggerX = worldWidth - 1200;
 
-            document.getElementById("status-text").textContent = 
-                `LVL ${currentLevel} | ⏱️ ${timeStr} | ❤️ ${playerLives} LIVES | 💙 ${playerHearts}/10 HEARTS`;
+            player = {
+                x: 220, y: 360,
+                speed: 280, boostSpeed: 440, isBoosting: false,
+                heading: 0, pitch: 0,
+                shields: 100, maxShields: 100,
+                invulnerable: 0,
+                facingRight: true
+            };
 
+            bullets = [];
+            enemies = [];
+
+            // Populate Enemies matching Screenshot 2 (Abyssal Deep Predators & Patrol Subs)
+            for (let i = 0; i < 35; i++) {
+                enemies.push({
+                    type: (i % 2 === 0) ? "APEX_PREDATOR" : "PATROL_SUB",
+                    x: 1000 + i * 420 + Math.random() * 200,
+                    y: 90 + Math.random() * 540,
+                    hp: 4,
+                    maxHp: 4,
+                    vx: -45 - Math.random() * 25,
+                    alerted: false,
+                    warningRadius: 200,
+                    shootTimer: Math.random() * 2
+                });
+            }
+
+            // Boss at end of 5-minute expedition
+            boss = {
+                x: worldWidth - 700, y: 360,
+                hp: 200 + lvl * 40, maxHp: 200 + lvl * 40,
+                active: false, dirY: 1
+            };
+
+            // Collectibles matching Screenshot 2 (Blue energy orbs, green bio-nodes, white pearls)
+            collectibles = [];
+            const colTypes = ["SHIELD", "BIO", "PEARL"];
+            for (let i = 0; i < 60; i++) {
+                collectibles.push({
+                    type: colTypes[i % colTypes.length],
+                    x: 600 + i * 260 + Math.random() * 150,
+                    y: 80 + Math.random() * 560,
+                    collected: false
+                });
+            }
+
+            // Underwater Bubbles
+            bubbles = [];
+            for (let i = 0; i < 60; i++) {
+                bubbles.push({
+                    x: Math.random() * worldWidth,
+                    y: Math.random() * 720,
+                    radius: 2 + Math.random() * 3.5,
+                    vy: 20 + Math.random() * 40,
+                    alpha: 0.15 + Math.random() * 0.3
+                });
+            }
+        }
+
+        initLevelData(currentLevel);
+
+        // =========================================================================
+        // 4. UI SYNCHRONIZATION (EXACT SCREENSHOTS 1, 2, 3 MATCH)
+        // =========================================================================
+        const pilotInput = document.getElementById("pilotCallsignInput");
+        pilotInput.value = playerName;
+        pilotInput.addEventListener("input", (e) => {
+            playerName = e.target.value.trim() || "benjie1977";
+            localStorage.setItem("ocean_player_name", playerName);
+            document.getElementById("hud-name").textContent = playerName;
+        });
+
+        function syncHUD() {
+            // Update Top HUD
+            document.getElementById("hud-name").textContent = playerName;
+            document.getElementById("hud-level").textContent = `LVL ${currentLevel}`;
+            document.getElementById("hud-hearts-top").textContent = `${playerHearts}/10`;
+
+            // Update Bottom Bar Hearts (10 small heart icons)
+            const heartsRow = document.getElementById("hearts-row");
+            heartsRow.innerHTML = "";
+            for (let i = 0; i < 10; i++) {
+                const span = document.createElement("span");
+                span.className = "heart-icon" + (i < playerHearts ? "" : " lost");
+                span.textContent = "❤️";
+                heartsRow.appendChild(span);
+            }
+            document.getElementById("hud-hearts-fraction").textContent = `${playerHearts}/10`;
+
+            // Update Bottom Bar Lives Pill
+            const livesPill = document.getElementById("hud-lives-pill");
+            const livesVal = document.getElementById("hud-lives-val");
+            const livesLbl = document.getElementById("hud-lives-lbl");
+
+            if (playerLives <= 0) {
+                livesPill.className = "low";
+                livesVal.textContent = "☠️ OUT OF";
+                livesLbl.textContent = "LIVES";
+            } else {
+                livesPill.className = (playerLives <= 2) ? "low" : "";
+                livesVal.textContent = `❤️ ${playerLives}`;
+                livesLbl.textContent = "LIVES";
+            }
+
+            // Telemetry in Welcome screen
+            const depth = Math.floor(player ? player.y * 0.85 : 510);
+            document.getElementById("b-zone").textContent = `ZONE ${currentLevel}/500`;
+            document.getElementById("b-depth").textContent = `${depth}m`;
+            document.getElementById("b-score").textContent = `SCORE: ${playerScore}`;
+
+            // Save state
             localStorage.setItem("ocean_current_level", currentLevel);
             localStorage.setItem("ocean_player_lives", playerLives);
             localStorage.setItem("ocean_player_hearts", playerHearts);
+        }
 
-            const startBtn = document.getElementById("start-game-btn");
-            if (startBtn) {
-                startBtn.textContent = hasActiveSession ? `▶ RETURN TO GAME (LVL ${currentLevel})` : "START EXPLORING (5-MIN EXPEDITION)";
+        syncHUD();
+
+        // =========================================================================
+        // 5. SCREEN TRANSITIONS (WELCOME -> PLAYING -> DEATH)
+        // =========================================================================
+        function enterGameSession() {
+            playerName = pilotInput.value.trim() || "benjie1977";
+            localStorage.setItem("ocean_player_name", playerName);
+            syncHUD();
+
+            document.getElementById("welcome-overlay").style.display = "none";
+            document.getElementById("top-hud").style.display = "flex";
+            document.getElementById("minimap-progress-bar").style.display = "flex";
+            document.getElementById("touch-controls").style.display = "block";
+            document.getElementById("bottom-ad-title").textContent = "📢 ADMOB: DEEP OCEAN RADAR [pub-9786472984542330]";
+
+            gameState = "PLAYING";
+        }
+
+        function openDashboardModal() {
+            document.getElementById("dash-zone").textContent = `${currentLevel}/500`;
+            document.getElementById("dash-unlocked").textContent = `Zone ${currentLevel}`;
+            document.getElementById("dash-score").textContent = `${playerScore}`;
+            document.getElementById("dash-lives").textContent = `${playerLives} Lives (${playerLives * 10 + playerHearts} Hearts)`;
+            document.getElementById("dashboard-overlay").style.display = "flex";
+        }
+
+        function closeDashboardModal() {
+            document.getElementById("dashboard-overlay").style.display = "none";
+        }
+
+        function togglePauseGame() {
+            if (gameState === "PLAYING") {
+                gameState = "PAUSED";
+                openDashboardModal();
+            } else if (gameState === "PAUSED") {
+                gameState = "PLAYING";
+                closeDashboardModal();
             }
+        }
+
+        function showFloatingAlert(msg) {
+            const banner = document.getElementById("floating-alert-banner");
+            banner.innerHTML = `<span>${msg}</span>`;
+            banner.style.display = "flex";
+            if (alertBannerTimeout) clearTimeout(alertBannerTimeout);
+            alertBannerTimeout = setTimeout(() => {
+                banner.style.display = "none";
+            }, 2600);
+        }
+
+        function onSubmarineDamaged(killerName) {
+            playSound("hit");
+            playerHearts -= 1; // Bawas 1 heart
+            if (playerHearts <= 0) {
+                playerLives -= 1; // Bawas 1 full life
+                playerHearts = 10; // Reset 10 hearts
+                showFloatingAlert(`💔 -1 LIFE! ${playerLives} LIVES REMAINING`);
+
+                if (playerLives <= 0) {
+                    playerLives = 0;
+                    triggerGameOverScreen(killerName || "Apex Deep Predator");
+                    return;
+                }
+            } else {
+                showFloatingAlert(`⚠️ HULL DAMAGE! ${playerHearts}/10 HEARTS`);
+            }
+
+            player.invulnerable = 1.8;
+            syncHUD();
+        }
+
+        function triggerGameOverScreen(killer) {
+            gameState = "GAME_OVER";
+            syncHUD();
+
+            document.getElementById("breach-lives-badge").textContent = `❤️ ${playerLives}/10 LIVES REMAINING • SAVED AT LEVEL ${currentLevel}`;
+            document.getElementById("death-killer-name").textContent = `KILLER PREDATOR: ${killer}`;
+            const depth = Math.floor(player.y * 0.85);
+            document.getElementById("death-killer-coords").textContent = `Depth: ${depth}m • Location: Sector X: ${Math.floor(player.x)} • Hull Rupture`;
+
+            document.getElementById("gameover-overlay").style.display = "flex";
+        }
+
+        function respawnSubmarine() {
+            if (playerLives <= 0) {
+                alert("⚠️ Out of lives! Tap 'WATCH AD (+5 LIVES)' to replenish your lives.");
+                return;
+            }
+            player.x = Math.max(220, player.x - 300);
+            player.invulnerable = 3.0;
+            document.getElementById("gameover-overlay").style.display = "none";
+            gameState = "PLAYING";
+            syncHUD();
         }
 
         function watchAdForLives() {
             playerLives += 5;
             playerHearts = 10;
-            alert("📺 [AdMob Rewarded Video]: Success! +5 Live Credits added (+10 Hearts replenished).");
-            updateHUD();
+            syncHUD();
+            alert("📺 [AdMob Rewarded Ad]: Reward Granted! +5 Live Credits added (+10 Hearts replenished).");
+
             if (gameState === "GAME_OVER") {
-                document.getElementById("game-over-overlay").style.display = "none";
-                gameState = "PLAYING";
+                respawnSubmarine();
             }
         }
 
-        window.addEventListener("keydown", e => {
-            keys[e.code] = true;
-            if (e.code === "Space") fireBullet();
-        });
-        window.addEventListener("keyup", e => { keys[e.code] = false; });
-
-        const joystickZone = document.getElementById("joystick-zone");
-        const joystickKnob = document.getElementById("joystick-knob");
-        function handleJoystick(touch) {
-            const rect = joystickZone.getBoundingClientRect();
-            const dx = touch.clientX - (rect.left + rect.width / 2);
-            const dy = touch.clientY - (rect.top + rect.height / 2);
-            const dist = Math.min(Math.hypot(dx, dy), 40);
-            const angle = Math.atan2(dy, dx);
-            joystickKnob.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
-            joystick.active = true;
-            joystick.dx = (Math.cos(angle)*dist) / 40;
-            joystick.dy = (Math.sin(angle)*dist) / 40;
+        function prevDeathReviewStep() {
+            deathInspectionStep = Math.max(1, deathInspectionStep - 1);
+            document.getElementById("death-review-step-lbl").textContent = `DEATH SCENE REVIEW (${deathInspectionStep}/4)`;
         }
 
-        joystickZone.addEventListener("touchstart", e => { e.preventDefault(); handleJoystick(e.touches[0]); }, { passive: false });
-        joystickZone.addEventListener("touchmove", e => { e.preventDefault(); handleJoystick(e.touches[0]); }, { passive: false });
-        joystickZone.addEventListener("touchend", () => { joystickKnob.style.transform = `translate(0,0)`; joystick.active = false; });
-        joystickZone.addEventListener("touchcancel", () => { joystickKnob.style.transform = `translate(0,0)`; joystick.active = false; });
+        function nextDeathReviewStep() {
+            deathInspectionStep = Math.min(4, deathInspectionStep + 1);
+            document.getElementById("death-review-step-lbl").textContent = `DEATH SCENE REVIEW (${deathInspectionStep}/4)`;
+        }
 
-        document.getElementById("btn-torpedo").addEventListener("touchstart", (e) => { e.preventDefault(); fireBullet(); }, { passive: false });
-        document.getElementById("btn-torpedo").addEventListener("click", fireBullet);
+        // =========================================================================
+        // 6. TOUCH & CONTROLS BINDING
+        // =========================================================================
+        const joystickZone = document.getElementById("joystick-zone");
+        const joystickKnob = document.getElementById("joystick-knob");
+
+        function handleJoystickMove(touch) {
+            const rect = joystickZone.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dx = touch.clientX - centerX;
+            const dy = touch.clientY - centerY;
+            const dist = Math.min(Math.hypot(dx, dy), 42);
+            const angle = Math.atan2(dy, dx);
+
+            joystickKnob.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`;
+            joystick.active = true;
+            joystick.dx = (Math.cos(angle) * dist) / 42;
+            joystick.dy = (Math.sin(angle) * dist) / 42;
+        }
+
+        joystickZone.addEventListener("touchstart", (e) => { e.preventDefault(); handleJoystickMove(e.touches[0]); }, { passive: false });
+        joystickZone.addEventListener("touchmove", (e) => { e.preventDefault(); handleJoystickMove(e.touches[0]); }, { passive: false });
+        joystickZone.addEventListener("touchend", () => {
+            joystickKnob.style.transform = "translate(0px, 0px)";
+            joystick.active = false;
+            joystick.dx = 0; joystick.dy = 0;
+        });
+
+        const btnTorpedo = document.getElementById("btn-torpedo");
+        btnTorpedo.addEventListener("touchstart", (e) => { e.preventDefault(); fireTorpedo(); }, { passive: false });
+        btnTorpedo.addEventListener("click", fireTorpedo);
 
         const btnBoost = document.getElementById("btn-boost");
         btnBoost.addEventListener("touchstart", (e) => { e.preventDefault(); if (player) player.isBoosting = true; }, { passive: false });
         btnBoost.addEventListener("touchend", () => { if (player) player.isBoosting = false; });
-        btnBoost.addEventListener("mousedown", () => { if (player) player.isBoosting = true; });
-        btnBoost.addEventListener("mouseup", () => { if (player) player.isBoosting = false; });
 
-        function fireBullet() {
+        window.addEventListener("keydown", (e) => {
+            keys[e.code] = true;
+            if (e.code === "Space") fireTorpedo();
+        });
+        window.addEventListener("keyup", (e) => { keys[e.code] = false; });
+
+        function fireTorpedo() {
             if (gameState !== "PLAYING" || !player) return;
-            const lvl = player.weaponLevel;
+            playSound("torpedo");
             const dir = player.facingRight ? 1 : -1;
-            const startX = player.x + (dir * 35);
-
-            if (lvl === 1) {
-                playerBullets.push({ x: startX, y: player.y, vx: dir * 650, vy: 0 });
-            } else if (lvl === 2) {
-                playerBullets.push({ x: startX, y: player.y - 8, vx: dir * 650, vy: 0 });
-                playerBullets.push({ x: startX, y: player.y + 8, vx: dir * 650, vy: 0 });
-            } else {
-                [-0.22, 0, 0.22].forEach(a => {
-                    playerBullets.push({
-                        x: startX, y: player.y,
-                        vx: dir * Math.cos(a) * 650,
-                        vy: Math.sin(a) * 650
-                    });
-                });
-            }
-        }
-
-        function spawnEnemyFireballs(x, y, count) {
-            const startAngle = -0.35;
-            const angleStep = 0.7 / Math.max(1, count - 1);
-            for (let i = 0; i < count; i++) {
-                const angle = Math.PI + startAngle + (i * angleStep);
-                enemyBullets.push({ x, y, vx: Math.cos(angle) * 200, vy: Math.sin(angle) * 200, radius: 6, expanding: true });
-            }
-        }
-
-        function startGameSession() {
-            document.getElementById("menu-overlay").style.display = "none";
-            document.getElementById("game-over-overlay").style.display = "none";
-            document.getElementById("victory-overlay").style.display = "none";
-            hasActiveSession = true;
-            gameState = "PLAYING";
-        }
-
-        function respawnOrRetry() {
-            document.getElementById("game-over-overlay").style.display = "none";
-            initLevel(currentLevel);
-            startGameSession();
-        }
-
-        function openDashboard() {
-            gameState = "MENU";
-            updateHUD();
-            document.getElementById("menu-overlay").style.display = "flex";
-        }
-
-        function advanceToNextLevel() {
-            document.getElementById("victory-overlay").style.display = "none";
-            currentLevel = Math.min(500, currentLevel + 1);
-            localStorage.setItem("ocean_current_level", currentLevel);
-            initLevel(currentLevel);
-            gameState = "PLAYING";
-        }
-
-        let lastTime = performance.now();
-        function loop(now) {
-            const dt = Math.min((now - lastTime) / 1000, 0.1);
-            lastTime = now;
-            if (gameState === "PLAYING") update(dt);
-            render(now * 0.001);
-            requestAnimationFrame(loop);
-        }
-
-        function update(dt) {
-            levelElapsedTime += dt;
-            updateHUD();
-
-            let mx = joystick.active ? joystick.dx : 0;
-            let my = joystick.active ? joystick.dy : 0;
-            if (keys["KeyW"] || keys["ArrowUp"]) my -= 1;
-            if (keys["KeyS"] || keys["ArrowDown"]) my += 1;
-            if (keys["KeyA"] || keys["ArrowLeft"]) mx -= 1;
-            if (keys["KeyD"] || keys["ArrowRight"]) mx += 1;
-
-            if (mx !== 0) player.facingRight = (mx > 0);
-
-            const isBoost = player.isBoosting || keys["ShiftLeft"] || keys["ShiftRight"];
-            const currentSpeed = isBoost ? player.boostSpeed : player.speed;
-
-            player.x += mx * currentSpeed * dt;
-            player.y += my * currentSpeed * dt;
-            player.y = Math.max(65, Math.min(655, player.y));
-            player.x = Math.max(50, Math.min(config.worldWidth - 100, player.x));
-
-            if (player.invulnerable > 0) player.invulnerable -= dt;
-
-            document.getElementById("minimap-fill").style.width = Math.min(100, (player.x / config.worldWidth) * 100) + "%";
-
-            enemySpawnTimer += dt;
-            if (enemySpawnTimer >= config.spawnInterval && player.x < config.worldWidth - 1200) {
-                enemySpawnTimer = 0;
-                enemies.push({
-                    x: player.x + 850 + Math.random() * 200,
-                    y: 100 + Math.random() * 520,
-                    hp: 3,
-                    maxHp: 3,
-                    shootTimer: 0,
-                    burstType: 3,
-                    isAlerted: false
-                });
-            }
-
-            enemies.forEach((e) => {
-                const distToPlayer = Math.hypot(player.x - e.x, player.y - e.y);
-                e.isAlerted = (distToPlayer <= config.warningRadius);
-
-                e.x -= (e.isAlerted ? 65 : 40) * dt;
-                e.shootTimer += dt;
-                if (e.shootTimer >= (e.isAlerted ? 1.6 : 2.4)) {
-                    e.shootTimer = 0;
-                    spawnEnemyFireballs(e.x - 20, e.y, e.burstType);
-                }
-            });
-
-            creatures.forEach(c => {
-                c.x += c.vx * dt;
-                if (c.x < player.x - 800) {
-                    c.x = player.x + 900 + Math.random() * 400;
-                    c.y = 100 + Math.random() * 520;
-                }
-                if (player.invulnerable <= 0 && Math.hypot(c.x - player.x, c.y - player.y) < 38) {
-                    onPlayerDamage();
-                }
-            });
-
-            turrets.forEach(t => {
-                t.shootTimer += dt;
-                if (t.shootTimer >= 2.4 && Math.abs(player.x - t.x) < 700) {
-                    t.shootTimer = 0;
-                    spawnEnemyFireballs(t.x, t.y, 3);
-                }
-            });
-
-            for (let i = playerBullets.length - 1; i >= 0; i--) {
-                const b = playerBullets[i];
-                b.x += b.vx * dt;
-                b.y += b.vy * dt;
-
-                let hit = false;
-                enemies.forEach((e, eIdx) => {
-                    if (Math.hypot(b.x - e.x, b.y - e.y) < 32) {
-                        e.hp -= 1;
-                        hit = true;
-                        if (e.hp <= 0) enemies.splice(eIdx, 1);
-                    }
-                });
-
-                turrets.forEach((t, tIdx) => {
-                    if (!hit && Math.hypot(b.x - t.x, b.y - t.y) < 30) {
-                        t.hp -= 1;
-                        hit = true;
-                        if (t.hp <= 0) turrets.splice(tIdx, 1);
-                    }
-                });
-
-                creatures.forEach((c, cIdx) => {
-                    if (!hit && Math.hypot(b.x - c.x, b.y - c.y) < 35) {
-                        hit = true;
-                        creatures.splice(cIdx, 1);
-                    }
-                });
-
-                if (boss.activated && Math.hypot(b.x - boss.x, b.y - boss.y) < 65) {
-                    boss.hp -= 1;
-                    hit = true;
-                    if (boss.hp <= 0) {
-                        boss.activated = false;
-                        portal.open = true;
-                        document.getElementById("boss-alert-banner").style.display = "none";
-                        document.getElementById("victory-overlay").style.display = "flex";
-                    }
-                }
-
-                if (hit || b.x < player.x - 700 || b.x > player.x + 900) {
-                    playerBullets.splice(i, 1);
-                }
-            }
-
-            for (let i = enemyBullets.length - 1; i >= 0; i--) {
-                const eb = enemyBullets[i];
-                eb.x += eb.vx * dt;
-                eb.y += eb.vy * dt;
-                if (eb.expanding) eb.radius += dt * 3.5;
-
-                if (player.invulnerable <= 0 && Math.hypot(eb.x - player.x, eb.y - player.y) < eb.radius + 18) {
-                    onPlayerDamage();
-                    enemyBullets.splice(i, 1);
-                }
-            }
-
-            if (player.x >= config.bossTriggerX && !boss.activated && boss.hp > 0) {
-                boss.activated = true;
-                const banner = document.getElementById("boss-alert-banner");
-                if (banner) banner.style.display = "block";
-            }
-
-            if (boss.activated && boss.hp > 0) {
-                boss.y += boss.dirY * 95 * dt;
-                if (boss.y < 120) { boss.y = 120; boss.dirY = 1; }
-                else if (boss.y > 600) { boss.y = 600; boss.dirY = -1; }
-
-                boss.shootTimer += dt;
-                if (boss.shootTimer >= 1.8) {
-                    boss.shootTimer = 0;
-                    spawnEnemyFireballs(boss.x - 60, boss.y, 5);
-                }
-
-                if (Math.hypot(player.x - boss.x, player.y - boss.y) < boss.dangerZoneRadius) {
-                    player.x = boss.x - boss.dangerZoneRadius;
-                }
-            }
-
-            if (portal.open && Math.hypot(player.x - portal.x, player.y - portal.y) < 60) {
-                advanceToNextLevel();
-            }
-
-            bubbles.forEach(b => {
-                b.y -= b.vy * dt;
-                if (b.y < 0) {
-                    b.y = 720;
-                    b.x = player.x - 300 + Math.random() * 1200;
-                }
+            bullets.push({
+                x: player.x + dir * 42,
+                y: player.y + (Math.random() * 6 - 3),
+                vx: dir * 680,
+                radius: 4
             });
         }
 
-        function onPlayerDamage() {
-            playerHearts -= 1;
-            if (playerHearts <= 0) {
-                playerLives -= 1;
-                playerHearts = 10;
-                deathCountForInterstitial++;
-
-                if (deathCountForInterstitial >= 2) {
-                    deathCountForInterstitial = 0;
-                    alert("📺 [AdMob Interstitial Ad]: Displayed after 2 player deaths!");
-                }
-
-                if (playerLives <= 0) {
-                    playerLives = 0;
-                    alert("⚠️ Live credits depleted! Watch a video ad to get +5 live credits.");
-                }
-            }
-
-            localStorage.setItem("ocean_player_lives", playerLives);
-            localStorage.setItem("ocean_player_hearts", playerHearts);
-            document.getElementById("death-desc").textContent = `Lost 1 Heart. Lives remaining: ${playerLives} | Hearts: ${playerHearts}/10`;
-            document.getElementById("game-over-overlay").style.display = "flex";
-            gameState = "GAME_OVER";
-            player.invulnerable = 1.5;
-            updateHUD();
-        }
-
-        function drawGodotSubmarine3D(ctx, x, y, facingRight, time, invulnerable) {
+        // =========================================================================
+        // 7. EXACT GODOT 3D SUBMARINE PROCEDURAL RENDERER (MATCHES SCREENSHOT 2)
+        // =========================================================================
+        function drawSubmarineGodot3D(x, y, facingRight, time, invulnerable, heartsRatio) {
             ctx.save();
             ctx.translate(x, y);
             if (!facingRight) ctx.scale(-1, 1);
@@ -977,80 +1268,69 @@
                 ctx.globalAlpha = 0.45;
             }
 
-            // Volumetric Searchlight Cone
+            // 1. DUAL VOLUMETRIC SEARCHLIGHT CONE
             const beamLength = 460;
             const beamSpread = 115;
-            const beamGrad = ctx.createLinearGradient(50, 0, 50 + beamLength, 0);
-            beamGrad.addColorStop(0, "rgba(224, 250, 255, 0.42)");
-            beamGrad.addColorStop(0.3, "rgba(0, 240, 255, 0.18)");
+            const beamGrad = ctx.createLinearGradient(48, 0, 48 + beamLength, 0);
+            beamGrad.addColorStop(0, "rgba(224, 250, 255, 0.45)");
+            beamGrad.addColorStop(0.25, "rgba(0, 240, 255, 0.2)");
             beamGrad.addColorStop(1, "rgba(0, 53, 84, 0.0)");
             ctx.fillStyle = beamGrad;
             ctx.beginPath();
-            ctx.moveTo(50, -8);
-            ctx.lineTo(50 + beamLength, -beamSpread);
-            ctx.lineTo(50 + beamLength, beamSpread);
-            ctx.lineTo(50, 8);
+            ctx.moveTo(48, -8);
+            ctx.lineTo(48 + beamLength, -beamSpread);
+            ctx.lineTo(48 + beamLength, beamSpread);
+            ctx.lineTo(48, 8);
             ctx.closePath();
             ctx.fill();
 
-            // 3D Rotating Propeller
-            const propRotation = (time * 18) % (Math.PI * 2);
-            const propX = -58;
-            const propY = 0;
-
+            // 2. ROTATING BRONZE TWIN PROPELLERS
+            const propAngle = (time * 20) % (Math.PI * 2);
+            const propX = -56;
             ctx.fillStyle = "#2B3A4A";
-            ctx.fillRect(propX, propY - 5, 12, 10);
+            ctx.fillRect(propX, -5, 10, 10);
 
             for (let i = 0; i < 3; i++) {
-                const bladeAngle = propRotation + (i * Math.PI * 2 / 3);
-                const bladeSpread = Math.sin(bladeAngle) * 22;
-                const depthAlpha = 0.5 + 0.5 * Math.max(0, Math.cos(bladeAngle));
-                ctx.strokeStyle = `rgba(255, 209, 102, ${depthAlpha})`;
-                ctx.lineWidth = 4.5;
+                const bladeA = propAngle + (i * Math.PI * 2 / 3);
+                const bladeSpread = Math.sin(bladeA) * 20;
+                ctx.strokeStyle = "#ffd166";
+                ctx.lineWidth = 4;
                 ctx.lineCap = "round";
                 ctx.beginPath();
-                ctx.moveTo(propX + 2, propY);
-                ctx.lineTo(propX - 4, propY + bladeSpread);
+                ctx.moveTo(propX + 2, 0);
+                ctx.lineTo(propX - 4, bladeSpread);
                 ctx.stroke();
             }
 
-            const hubGrad = ctx.createRadialGradient(propX, propY, 1, propX, propY, 7);
-            hubGrad.addColorStop(0, "#FFE194");
-            hubGrad.addColorStop(1, "#B07D1E");
-            ctx.fillStyle = hubGrad;
-            ctx.beginPath();
-            ctx.arc(propX, propY, 6, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Main Metallic Hull
+            // 3. MAIN METALLIC HULL (GODOT METALLIC SHADER PROFILE)
             ctx.beginPath();
             ctx.moveTo(-48, -14);
             ctx.lineTo(-10, -15);
-            ctx.lineTo(-6, -30);
+            ctx.lineTo(-6, -30); // Conning tower
             ctx.lineTo(16, -30);
             ctx.lineTo(22, -15);
-            ctx.bezierCurveTo(44, -14, 58, -6, 60, 0);
+            ctx.bezierCurveTo(44, -14, 58, -6, 60, 0); // Bow curve
             ctx.bezierCurveTo(58, 6, 44, 14, 22, 15);
             ctx.lineTo(-48, 14);
-            ctx.bezierCurveTo(-52, 8, -54, -8, -48, -14);
+            ctx.bezierCurveTo(-52, 8, -54, -8, -48, -14); // Stern taper
             ctx.closePath();
 
             const hullGrad = ctx.createLinearGradient(0, -30, 0, 20);
-            hullGrad.addColorStop(0.0, "#8DA4C4");
-            hullGrad.addColorStop(0.35, "#384E66");
-            hullGrad.addColorStop(0.75, "#1B2836");
-            hullGrad.addColorStop(1.0, "#0F1720");
+            hullGrad.addColorStop(0.0, "#8DA4C4"); // Top specular highlight
+            hullGrad.addColorStop(0.35, "#384E66"); // Mid metallic slate
+            hullGrad.addColorStop(0.8, "#1B2836");  // Deep shadow
+            hullGrad.addColorStop(1.0, "#0F1720");  // Keel
             ctx.fillStyle = hullGrad;
             ctx.fill();
             ctx.strokeStyle = "#5A728F";
             ctx.lineWidth = 1.6;
             ctx.stroke();
 
-            // Ribs & Brass Rivets
+            // 4. HULL SEAMS & RIVETS
             const ribs = [-30, -12, 8, 28];
             for (let rx of ribs) {
                 ctx.strokeStyle = "#5A728F";
-                ctx.lineWidth = 1.5;
+                ctx.lineWidth = 1.4;
                 ctx.beginPath();
                 ctx.moveTo(rx, -13);
                 ctx.lineTo(rx, 13);
@@ -1058,293 +1338,393 @@
 
                 ctx.fillStyle = "#FFD166";
                 ctx.beginPath();
-                ctx.arc(rx, -8, 1.3, 0, Math.PI * 2);
-                ctx.arc(rx, 8, 1.3, 0, Math.PI * 2);
+                ctx.arc(rx, -8, 1.2, 0, Math.PI * 2);
+                ctx.arc(rx, 8, 1.2, 0, Math.PI * 2);
                 ctx.fill();
             }
 
-            // Stabilizer Fins
-            ctx.beginPath();
-            ctx.moveTo(-44, -12);
-            ctx.lineTo(-52, -26);
-            ctx.lineTo(-40, -24);
-            ctx.lineTo(-34, -12);
-            ctx.closePath();
+            // 5. STABILIZER FINS
             ctx.fillStyle = "#4A607A";
-            ctx.fill();
-
             ctx.beginPath();
-            ctx.moveTo(-44, 12);
-            ctx.lineTo(-52, 26);
-            ctx.lineTo(-40, 24);
-            ctx.lineTo(-34, 12);
+            ctx.moveTo(-44, -12); ctx.lineTo(-52, -25); ctx.lineTo(-40, -23); ctx.lineTo(-34, -12);
             ctx.closePath();
-            ctx.fillStyle = "#223140";
             ctx.fill();
 
-            // Cockpit Dome & Diver Silhouette
+            ctx.fillStyle = "#223140";
+            ctx.beginPath();
+            ctx.moveTo(-44, 12); ctx.lineTo(-52, 25); ctx.lineTo(-40, 23); ctx.lineTo(-34, 12);
+            ctx.closePath();
+            ctx.fill();
+
+            // 6. COCKPIT DOME & DIVER SILHOUETTE
             ctx.beginPath();
             ctx.moveTo(32, -9);
             ctx.bezierCurveTo(46, -7, 54, -3, 56, 0);
             ctx.bezierCurveTo(54, 3, 46, 7, 32, 9);
             ctx.closePath();
-            const canopyGrad = ctx.createRadialGradient(42, 0, 2, 42, 0, 16);
-            canopyGrad.addColorStop(0, "rgba(0, 240, 255, 0.95)");
-            canopyGrad.addColorStop(1, "rgba(0, 82, 122, 0.95)");
-            ctx.fillStyle = canopyGrad;
+            const domeGrad = ctx.createRadialGradient(42, 0, 2, 42, 0, 16);
+            domeGrad.addColorStop(0, "rgba(0, 240, 255, 0.95)");
+            domeGrad.addColorStop(1, "rgba(0, 82, 122, 0.95)");
+            ctx.fillStyle = domeGrad;
             ctx.fill();
 
+            // Diver silhouette
             ctx.fillStyle = "#0A1E2E";
             ctx.beginPath();
             ctx.arc(39, -1, 3.5, 0, Math.PI * 2);
             ctx.fill();
             ctx.fillRect(36, 2, 8, 5);
 
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
+            // 7. BEACON LIGHT (CONNING TOWER)
+            const strobe = (time % 1.0) < 0.22;
+            ctx.fillStyle = strobe ? "#FFD166" : "#886611";
+            ctx.beginPath();
+            ctx.arc(5, -33, strobe ? 4.5 : 2.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Running lights (Red port, Green starboard)
+            ctx.fillStyle = "#FF0055";
+            ctx.beginPath(); ctx.arc(18, -14, 2.2, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#00FF66";
+            ctx.beginPath(); ctx.arc(18, 14, 2.2, 0, Math.PI * 2); ctx.fill();
+
+            // 8. CYAN SHIELD OVAL AURA (MATCHES SCREENSHOT 2)
+            ctx.strokeStyle = "rgba(0, 240, 255, 0.75)";
             ctx.lineWidth = 1.8;
             ctx.beginPath();
-            ctx.arc(43, 0, 9, Math.PI * 1.1, Math.PI * 1.6);
+            ctx.ellipse(0, 0, 68, 38, 0, 0, Math.PI * 2);
             ctx.stroke();
 
-            // Beacon & Running Lights
-            const strobeOn = (time % 1.0) < 0.25;
-            ctx.fillStyle = strobeOn ? "#FFD166" : "#886611";
+            // 9. OVERHEAD FLOATING LIFE/OXYGEN BAR (MATCHES SCREENSHOT 2)
+            const barW = 68;
+            const barH = 5;
+            const barX = -barW / 2;
+            const barY = -48;
+
+            ctx.fillStyle = "rgba(0, 15, 30, 0.85)";
+            ctx.fillRect(barX - 1, barY - 1, barW + 2, barH + 2);
+            ctx.strokeStyle = "#ffd166";
+            ctx.lineWidth = 1;
+            ctx.strokeRect(barX - 1, barY - 1, barW + 2, barH + 2);
+
+            const fillW = Math.max(0, barW * heartsRatio);
+            const barGrad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+            barGrad.addColorStop(0, "#ff0055");
+            barGrad.addColorStop(1, "#ff9900");
+            ctx.fillStyle = barGrad;
+            ctx.fillRect(barX, barY, fillW, barH);
+
+            ctx.restore();
+        }
+
+        // =========================================================================
+        // 8. EXACT ENEMY RENDERER (MATCHES SCREENSHOT 2: APEX DEEP PREDATOR)
+        // =========================================================================
+        function drawApexDeepPredator(x, y, time) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // 1. SEGMENTED TAIL WITH SINE MOTION
+            const tailWag = Math.sin(time * 5) * 8;
+            ctx.fillStyle = "#260636";
             ctx.beginPath();
-            ctx.arc(5, -33, strobeOn ? 4.5 : 2.5, 0, Math.PI * 2);
+            ctx.moveTo(-45, 0);
+            ctx.lineTo(-75, tailWag - 12);
+            ctx.lineTo(-90, tailWag);
+            ctx.lineTo(-75, tailWag + 12);
+            ctx.closePath();
             ctx.fill();
 
-            ctx.fillStyle = "#FF0055";
+            // 2. MAIN BIO-MECHANICAL BODY (DEEP VIOLET / PURPLE)
             ctx.beginPath();
-            ctx.arc(18, -14, 2.5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = "#00FF66";
-            ctx.beginPath();
-            ctx.arc(18, 14, 2.5, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.moveTo(50, 0);
+            ctx.bezierCurveTo(40, -22, -15, -24, -45, 0);
+            ctx.bezierCurveTo(-15, 24, 40, 22, 50, 0);
+            ctx.closePath();
 
-            // Torpedo Pods
-            const podY = [-16, 16];
-            for (let py of podY) {
-                ctx.fillStyle = "#1E2D3D";
-                ctx.fillRect(8, py - 3.5, 26, 7);
-                ctx.strokeStyle = "#5A728F";
-                ctx.lineWidth = 1.2;
+            const bodyGrad = ctx.createLinearGradient(0, -24, 0, 24);
+            bodyGrad.addColorStop(0, "#4a0e4e");
+            bodyGrad.addColorStop(0.5, "#2b0938");
+            bodyGrad.addColorStop(1, "#15021c");
+            ctx.fillStyle = bodyGrad;
+            ctx.fill();
+            ctx.strokeStyle = "#ff0077";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // 3. GLOWING CYAN DORSAL SPINES (MATCHES SCREENSHOT 2)
+            for (let i = 0; i < 6; i++) {
+                const sx = -25 + i * 11;
+                const sy = -18 - Math.sin(i * 0.5) * 4;
+                ctx.fillStyle = "#00f0ff";
                 ctx.beginPath();
-                ctx.moveTo(10, py - 2);
-                ctx.lineTo(32, py - 2);
-                ctx.stroke();
-
-                ctx.fillStyle = "#00FF88";
-                ctx.beginPath();
-                ctx.arc(12, py, 1.8, 0, Math.PI * 2);
+                ctx.moveTo(sx, sy);
+                ctx.lineTo(sx - 3, sy - 14);
+                ctx.lineTo(sx + 5, sy);
+                ctx.closePath();
                 ctx.fill();
+            }
+
+            // 4. CENTRAL GLOWING CYAN EYE / BIO-CORE ORB (MATCHES SCREENSHOT 2)
+            const pulse = 0.8 + 0.2 * Math.sin(time * 6);
+            ctx.beginPath();
+            ctx.arc(10, 0, 10, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0, 240, 255, ${pulse})`;
+            ctx.shadowColor = "#00f0ff";
+            ctx.shadowBlur = 14;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(10, 0, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 5. TEETH & JAWS
+            ctx.strokeStyle = "#ccd7e4";
+            ctx.lineWidth = 1.5;
+            for (let t = 0; t < 5; t++) {
+                const tx = 32 + t * 3;
+                ctx.beginPath();
+                ctx.moveTo(tx, -4);
+                ctx.lineTo(tx + 2, 4);
+                ctx.stroke();
             }
 
             ctx.restore();
         }
 
-        function render(time) {
+        function drawPatrolSubmarine(x, y, alerted, time) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Radar Warning Circle
+            if (alerted) {
+                ctx.strokeStyle = "rgba(255, 0, 85, 0.4)";
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([6, 6]);
+                ctx.beginPath();
+                ctx.arc(0, 0, 180, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+
+            // Patrol Sub Body
+            ctx.fillStyle = alerted ? "#4a121a" : "#1a2c3d";
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 36, 16, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = alerted ? "#ff0055" : "#00d2ff";
+            ctx.lineWidth = 1.4;
+            ctx.stroke();
+
+            // Red/Yellow Optic Sensor
+            ctx.fillStyle = alerted ? "#ff0055" : "#ffd166";
+            ctx.beginPath();
+            ctx.arc(24, 0, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // =========================================================================
+        // 9. MAIN GAME LOOP (RENDER & UPDATE)
+        // =========================================================================
+        let lastTime = performance.now();
+
+        function gameLoop(now) {
+            const dt = Math.min((now - lastTime) / 1000, 0.1);
+            lastTime = now;
+            const timeSeconds = now / 1000;
+
+            if (gameState === "PLAYING" && player) {
+                levelElapsedTime += dt;
+
+                // Input handling
+                let mx = 0, my = 0;
+                if (keys["ArrowUp"] || keys["KeyW"]) my -= 1;
+                if (keys["ArrowDown"] || keys["KeyS"]) my += 1;
+                if (keys["ArrowLeft"] || keys["KeyA"]) mx -= 1;
+                if (keys["ArrowRight"] || keys["KeyD"]) mx += 1;
+
+                if (joystick.active) {
+                    mx = joystick.dx;
+                    my = joystick.dy;
+                }
+
+                if (mx !== 0) player.facingRight = (mx > 0);
+
+                const speed = player.isBoosting ? player.boostSpeed : player.speed;
+                player.x += mx * speed * dt;
+                player.y += my * speed * dt;
+                player.y = Math.max(70, Math.min(650, player.y));
+                player.x = Math.max(100, Math.min(worldWidth - 100, player.x));
+
+                if (player.invulnerable > 0) player.invulnerable -= dt;
+
+                // Update 5-minute progress bar and countdown timer
+                const progressPct = Math.min(100, (player.x / worldWidth) * 100);
+                document.getElementById("minimap-fill").style.width = progressPct + "%";
+                const remSec = Math.max(0, 300 - Math.floor(levelElapsedTime));
+                const mins = String(Math.floor(remSec / 60)).padStart(2, '0');
+                const secs = String(remSec % 60).padStart(2, '0');
+                const currentBiome = getBiome(currentLevel);
+                document.getElementById("biome-ticker").textContent = `🌊 ZONE ${currentLevel}: ${currentBiome.name} (⏱️ ${mins}:${secs})`;
+
+                // Bullets
+                for (let i = bullets.length - 1; i >= 0; i--) {
+                    const b = bullets[i];
+                    b.x += b.vx * dt;
+
+                    let hit = false;
+                    for (let e of enemies) {
+                        if (Math.hypot(b.x - e.x, b.y - e.y) < 36) {
+                            e.hp -= 1;
+                            hit = true;
+                            playerScore += 50;
+                            break;
+                        }
+                    }
+
+                    if (hit || b.x > player.x + 900 || b.x < player.x - 700) {
+                        bullets.splice(i, 1);
+                    }
+                }
+
+                // Enemies update & collision
+                enemies.forEach((e) => {
+                    const distToPlayer = Math.hypot(player.x - e.x, player.y - e.y);
+                    e.alerted = (distToPlayer < e.warningRadius);
+
+                    e.x += (e.alerted ? e.vx * 1.5 : e.vx) * dt;
+                    if (e.x < player.x - 800) {
+                        e.x = player.x + 900 + Math.random() * 400;
+                        e.y = 90 + Math.random() * 540;
+                    }
+
+                    if (player.invulnerable <= 0 && distToPlayer < 38) {
+                        onSubmarineDamaged(e.type === "APEX_PREDATOR" ? "Apex Deep Predator" : "Patrol Submarine");
+                    }
+                });
+
+                // Collectibles collision
+                collectibles.forEach((c) => {
+                    if (!c.collected && Math.hypot(player.x - c.x, player.y - c.y) < 34) {
+                        c.collected = true;
+                        playSound("pickup");
+                        if (c.type === "SHIELD") {
+                            playerHearts = Math.min(10, playerHearts + 1);
+                            showFloatingAlert("💙 REPAIRED +1 HEART");
+                        } else if (c.type === "PEARL") {
+                            playerScore += 100;
+                        } else {
+                            playerScore += 50;
+                        }
+                        syncHUD();
+                    }
+                });
+            }
+
+            // Bubbles animation
+            bubbles.forEach((b) => {
+                b.y -= b.vy * dt;
+                if (b.y < 0) {
+                    b.y = 720;
+                    b.x = (player ? player.x - 300 : 0) + Math.random() * 1400;
+                }
+            });
+
+            // =====================================================================
+            // CANVAS RENDERING
+            // =====================================================================
             ctx.clearRect(0, 0, 1280, 720);
 
-            const camX = Math.max(0, Math.min(config.worldWidth - 1280, player ? player.x - 300 : 0));
+            const camX = Math.max(0, Math.min(worldWidth - 1280, player ? player.x - 320 : 0));
             ctx.save();
             ctx.translate(-camX, 0);
 
-            // 1. Dynamic Biome Water Gradient
-            const abyssGrad = ctx.createLinearGradient(0, 0, 0, 720);
-            abyssGrad.addColorStop(0, config.biome.waterTop);
-            abyssGrad.addColorStop(0.5, config.biome.waterMid);
-            abyssGrad.addColorStop(1, config.biome.waterBottom);
-            ctx.fillStyle = abyssGrad;
+            // 1. Water abyss gradient
+            const biome = getBiome(currentLevel);
+            const waterGrad = ctx.createLinearGradient(0, 0, 0, 720);
+            waterGrad.addColorStop(0, biome.top);
+            waterGrad.addColorStop(0.5, biome.mid);
+            waterGrad.addColorStop(1, biome.bot);
+            ctx.fillStyle = waterGrad;
             ctx.fillRect(camX, 0, 1280, 720);
 
-            // 2. Volumetric Sunlight / Biome Caustic Beams
+            // 2. Caustic light rays
             for (let i = 0; i < 4; i++) {
-                const shaftX = camX + ((i * 320 + Math.sin(time * 0.5 + i) * 60) % 1400) - 100;
-                ctx.fillStyle = config.biome.causticColor;
+                const shaftX = camX + ((i * 340 + Math.sin(timeSeconds * 0.4 + i) * 60) % 1500) - 100;
+                ctx.fillStyle = biome.caustic;
                 ctx.beginPath();
                 ctx.moveTo(shaftX, 0);
-                ctx.lineTo(shaftX + 130, 0);
-                ctx.lineTo(shaftX + 260, 720);
-                ctx.lineTo(shaftX + 70, 720);
+                ctx.lineTo(shaftX + 140, 0);
+                ctx.lineTo(shaftX + 280, 720);
+                ctx.lineTo(shaftX + 80, 720);
                 ctx.closePath();
                 ctx.fill();
             }
 
-            // 3. Trench Borders
-            ctx.fillStyle = config.biome.trenchBorder;
-            ctx.fillRect(camX, 0, 1280, 42);
-            ctx.fillRect(camX, 678, 1280, 42);
-            ctx.strokeStyle = config.biome.accentColor;
-            ctx.lineWidth = 1.8;
-            ctx.beginPath();
-            ctx.moveTo(camX, 42); ctx.lineTo(camX + 1280, 42);
-            ctx.moveTo(camX, 678); ctx.lineTo(camX + 1280, 678);
-            ctx.stroke();
-
-            // 4. Bubbles
-            bubbles.forEach(b => {
+            // 3. Bubbles
+            bubbles.forEach((b) => {
                 ctx.fillStyle = `rgba(100, 223, 223, ${b.alpha})`;
                 ctx.beginPath();
                 ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
                 ctx.fill();
             });
 
-            // 5. Turrets
-            turrets.forEach(t => {
-                if (!safeDrawImage(SPRITES.turret, t.x - 30, t.y - 30, 60, 60)) {
-                    ctx.fillStyle = "#1f2d3d";
-                    ctx.fillRect(t.x - 20, t.y - 20, 40, 40);
-                    ctx.fillStyle = "#ff0055";
-                    ctx.beginPath(); ctx.arc(t.x, t.y, 10, 0, Math.PI * 2); ctx.fill();
+            // 4. Collectibles (Blue capsules, green bio, white pearls)
+            collectibles.forEach((c) => {
+                if (!c.collected && Math.abs(c.x - (player ? player.x : 0)) < 900) {
+                    ctx.save();
+                    ctx.translate(c.x, c.y);
+                    if (c.type === "SHIELD") {
+                        ctx.fillStyle = "#00f0ff";
+                        ctx.beginPath(); ctx.arc(0, 0, 7, 0, Math.PI * 2); ctx.fill();
+                        ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1.5; ctx.stroke();
+                    } else if (c.type === "BIO") {
+                        ctx.fillStyle = "#00ff88";
+                        ctx.beginPath(); ctx.arc(0, 0, 6, 0, Math.PI * 2); ctx.fill();
+                    } else {
+                        ctx.fillStyle = "#ffffff";
+                        ctx.beginPath(); ctx.arc(0, 0, 5, 0, Math.PI * 2); ctx.fill();
+                    }
+                    ctx.restore();
                 }
             });
 
-            // 6. Deep Sea Creatures
-            creatures.forEach(c => {
-                ctx.save();
-                ctx.translate(c.x, c.y);
-                if (c.vx < 0) ctx.scale(-1, 1);
-
-                if (c.type === "SHARK") {
-                    if (!safeDrawImage(SPRITES.shark, -55, -25, 110, 50)) {
-                        ctx.fillStyle = "#ff3366";
-                        ctx.beginPath(); ctx.ellipse(0, 0, 35, 16, 0, 0, Math.PI * 2); ctx.fill();
-                    }
-                } else if (c.type === "KRAKEN") {
-                    if (!safeDrawImage(SPRITES.kraken, -60, -35, 120, 70)) {
-                        ctx.fillStyle = "#7209b7";
-                        ctx.beginPath(); ctx.arc(0, 0, 24, 0, Math.PI * 2); ctx.fill();
-                    }
-                } else if (c.type === "EEL") {
-                    if (!safeDrawImage(SPRITES.eel, -65, -22, 130, 45)) {
-                        ctx.fillStyle = "#00f5d4";
-                        ctx.fillRect(-40, -6, 80, 12);
-                    }
-                } else {
-                    if (!safeDrawImage(SPRITES.angler, -48, -38, 95, 75)) {
-                        ctx.fillStyle = "#9d4edd";
-                        ctx.beginPath(); ctx.arc(0, 0, 20, 0, Math.PI * 2); ctx.fill();
+            // 5. Enemies
+            enemies.forEach((e) => {
+                if (Math.abs(e.x - (player ? player.x : 0)) < 900) {
+                    if (e.type === "APEX_PREDATOR") {
+                        drawApexDeepPredator(e.x, e.y, timeSeconds);
+                    } else {
+                        drawPatrolSubmarine(e.x, e.y, e.alerted, timeSeconds);
                     }
                 }
-                ctx.restore();
             });
 
-            // 7. Patrol Submarines with Radar Warning Ring
-            enemies.forEach(e => {
-                ctx.save();
-                ctx.translate(e.x, e.y);
-
+            // 6. Bullets / Torpedoes
+            bullets.forEach((b) => {
+                ctx.fillStyle = "#00f0ff";
                 ctx.beginPath();
-                ctx.arc(0, 0, config.warningRadius, 0, Math.PI * 2);
-                if (e.isAlerted) {
-                    ctx.fillStyle = "rgba(255, 0, 85, 0.08)";
-                    ctx.fill();
-                    ctx.strokeStyle = "rgba(255, 0, 85, 0.65)";
-                    ctx.lineWidth = 2;
-                    ctx.setLineDash([8, 6]);
-                    ctx.stroke();
-
-                    ctx.fillStyle = "#ff0055";
-                    ctx.font = "bold 10px sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.fillText("⚠️ AREA OF WARNING (ALERT)", 0, -config.warningRadius + 16);
-                } else {
-                    ctx.strokeStyle = "rgba(0, 210, 255, 0.22)";
-                    ctx.lineWidth = 1.2;
-                    ctx.setLineDash([6, 6]);
-                    ctx.stroke();
-                }
-                ctx.setLineDash([]);
-
-                const img = e.isAlerted ? SPRITES.patrolSubAlert : SPRITES.patrolSub;
-                if (!safeDrawImage(img, -50, -25, 100, 50)) {
-                    ctx.fillStyle = e.isAlerted ? "#3d0b1a" : "#132338";
-                    ctx.beginPath(); ctx.ellipse(0, 0, 30, 12, 0, 0, Math.PI * 2); ctx.fill();
-                }
-
-                if (e.hp < e.maxHp) {
-                    ctx.fillStyle = "#000";
-                    ctx.fillRect(-20, -32, 40, 4);
-                    ctx.fillStyle = "#00ff88";
-                    ctx.fillRect(-20, -32, 40 * (e.hp / e.maxHp), 4);
-                }
-                ctx.restore();
+                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                ctx.fill();
             });
 
-            // 8. Player Submarine (Exact 1:1 Godot 3D Submarine)
+            // 7. Player Submarine (Matches Screenshot 2)
             if (player) {
-                drawGodotSubmarine3D(ctx, player.x, player.y, player.facingRight, time, player.invulnerable);
-            }
-
-            // 9. Bullets
-            ctx.fillStyle = "#00ff88";
-            playerBullets.forEach(b => {
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, 4.5, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            ctx.fillStyle = "#ff0055";
-            enemyBullets.forEach(eb => {
-                ctx.beginPath();
-                ctx.arc(eb.x, eb.y, eb.radius, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            // 10. Boss
-            if (boss && boss.hp > 0) {
-                ctx.save();
-                ctx.translate(boss.x, boss.y);
-                if (!safeDrawImage(SPRITES.boss, -90, -48, 180, 96)) {
-                    ctx.fillStyle = "#2a0010";
-                    ctx.beginPath(); ctx.ellipse(0, 0, 60, 30, 0, 0, Math.PI * 2); ctx.fill();
-                }
-
-                if (boss.activated) {
-                    const barW = 140;
-                    ctx.fillStyle = "rgba(0,0,0,0.85)";
-                    ctx.fillRect(-barW / 2, -60, barW, 8);
-                    ctx.strokeStyle = "#ff0055";
-                    ctx.lineWidth = 1.5;
-                    ctx.strokeRect(-barW / 2, -60, barW, 8);
-
-                    const hpRatio = Math.max(0, boss.hp / boss.maxHp);
-                    ctx.fillStyle = hpRatio > 0.4 ? "#ff0055" : "#ff9900";
-                    ctx.fillRect(-barW / 2, -60, barW * hpRatio, 8);
-
-                    ctx.fillStyle = "#ffffff";
-                    ctx.font = "bold 10px sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.fillText(`👑 LEVIATHAN PRIME BOSS (${Math.ceil(boss.hp)}/${boss.maxHp})`, 0, -65);
-                } else {
-                    ctx.fillStyle = "rgba(0, 210, 255, 0.7)";
-                    ctx.font = "bold 11px sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.fillText("💤 DORMANT END BOSS", 0, -40);
-                }
-                ctx.restore();
-            }
-
-            // 11. Escape Portal
-            if (portal.open) {
-                ctx.save();
-                ctx.translate(portal.x, portal.y);
-                if (!safeDrawImage(SPRITES.portal, -portal.radius, -portal.radius, portal.radius * 2, portal.radius * 2)) {
-                    ctx.fillStyle = "rgba(0, 255, 136, 0.3)";
-                    ctx.beginPath(); ctx.arc(0, 0, portal.radius, 0, Math.PI * 2); ctx.fill();
-                }
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 11px sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText("🌀 ENTER PORTAL", 0, 4);
-                ctx.restore();
+                const heartsRatio = playerHearts / 10;
+                drawSubmarineGodot3D(player.x, player.y, player.facingRight, timeSeconds, player.invulnerable, heartsRatio);
             }
 
             ctx.restore();
+
+            requestAnimationFrame(gameLoop);
         }
 
-        requestAnimationFrame(loop);
+        // Start animation immediately so underwater scenery renders live
+        requestAnimationFrame(gameLoop);
     </script>
 </body>
 </html>

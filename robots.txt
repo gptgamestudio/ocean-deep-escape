@@ -8,4 +8,4 @@ Allow: /app-ads.txt
 Allow: /sitemap.xml
 
 # Sitemap reference for Googlebot & Google Search Console
-Sitemap: https://gptgamestudio.github.io/ocean-deep-escape./sitemap.xml
+Sitemap: https://gptgamestudio.github.io/ocean-deep-escape/sitemap.xml

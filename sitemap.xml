@@ -5,32 +5,32 @@
     
     <!-- Homepage / Web Game & APK Download Portal -->
     <url>
-        <loc>https://gptgamestudio.github.io/ocean-deep-escape./</loc>
-        <lastmod>2026-10-22</lastmod>
+        <loc>https://gptgamestudio.github.io/ocean-deep-escape/</loc>
+        <lastmod>2026-10-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
 
     <!-- Direct Official Release APK Download (GitHub Releases) -->
     <url>
-        <loc>https://github.com/gptgamestudio/ocean-deep-escape./releases/download/v1.0.0/app-release.apk</loc>
-        <lastmod>2026-10-22</lastmod>
+        <loc>https://github.com/gptgamestudio/ocean-deep-escape/releases/download/v1.0.0/app-release.apk</loc>
+        <lastmod>2026-10-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
 
     <!-- Alternative Direct app-release.apk on Root -->
     <url>
-        <loc>https://gptgamestudio.github.io/ocean-deep-escape./app-release.apk</loc>
-        <lastmod>2026-10-22</lastmod>
+        <loc>https://gptgamestudio.github.io/ocean-deep-escape/app-release.apk</loc>
+        <lastmod>2026-10-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
 
     <!-- AdMob app-ads.txt Verification File -->
     <url>
-        <loc>https://gptgamestudio.github.io/ocean-deep-escape./app-ads.txt</loc>
-        <lastmod>2026-10-22</lastmod>
+        <loc>https://gptgamestudio.github.io/ocean-deep-escape/app-ads.txt</loc>
+        <lastmod>2026-10-25</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
