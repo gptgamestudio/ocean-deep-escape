@@ -6,10 +6,26 @@
   <title>Ocean Deep Escape - 500 Abyssal Zones Submarine Survival</title>
   <meta name="description" content="Ocean Deep Escape: Godot Yellow Submarine with searchlight beam, wave spread torpedoes, 500 Abyssal Zones, AdMob integration, and hosted deep-sea sprite assets.">
   <meta name="theme-color" content="#001e3d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OceanEscape">
+  <meta name="application-name" content="Ocean Deep Escape">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="canonical" href="https://gptgamestudio.github.io/ocean-deep-escape/">
   <meta name="google-site-verification" content="googlea3797afede2989e5">
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js')
+          .then(function(reg) { console.log('ServiceWorker registered:', reg.scope); })
+          .catch(function(err) { console.warn('ServiceWorker error:', err); });
+      });
+    }
+  </script>
 
   <!-- Google AdMob / AdSense Official Integration (Publisher ID: pub-9786472984542330) -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9786472984542330" crossorigin="anonymous"></script>
