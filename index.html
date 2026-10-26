@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Ocean Deep Escape - 500 Abyssal Zones Submarine Survival</title>
-  <meta name="description" content="Ocean Deep Escape: 500 Abyssal Zones, Godot Yellow Submarine with searchlight beam, full invisible split-screen touch controls, Kidlat lightning weapons, and Kraken Bosses.">
+  <meta name="description" content="Ocean Deep Escape: Compact Godot Yellow Submarine with searchlight beam, wave spread torpedoes, 500 Abyssal Zones, and fixed bottom ad banner.">
   <meta name="theme-color" content="#020813">
   <link rel="canonical" href="https://gptgamestudio.github.io/ocean-deep-escape/">
   <meta name="google-site-verification" content="googlea3797afede2989e5">
@@ -84,8 +84,8 @@
       gap: 4px;
     }
     .progress-bar-wrap {
-      width: 160px;
-      height: 7px;
+      width: 150px;
+      height: 6px;
       background: rgba(4, 20, 38, 0.85);
       border: 1px solid rgba(0, 240, 255, 0.4);
       border-radius: 4px;
@@ -122,7 +122,7 @@
     /* BOSS HP BAR */
     #boss-hud {
       position: absolute;
-      top: 50px;
+      top: 48px;
       left: 50%;
       transform: translateX(-50%);
       width: 80%;
@@ -163,13 +163,12 @@
     }
 
     /* INVISIBLE TOUCH SCREEN SPLIT-ZONES */
-    /* All controls are 100% invisible by default while responding to touch coordinates */
     #touch-layer {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: calc(100% - 48px);
       z-index: 15;
       display: flex;
     }
@@ -186,14 +185,14 @@
       position: relative;
     }
 
-    /* Subtle Dynamic Touch Ring for Left Thumb (Fades quickly, purely responsive) */
+    /* Subtle Touch Rings (Fades quickly, 100% unobtrusive) */
     .touch-indicator-ring {
       position: absolute;
-      width: 60px;
-      height: 60px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
-      border: 1.5px solid rgba(0, 240, 255, 0.5);
-      box-shadow: 0 0 14px rgba(0, 240, 255, 0.4);
+      border: 1.5px solid rgba(0, 240, 255, 0.45);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
       transform: translate(-50%, -50%) scale(0.6);
       pointer-events: none;
       opacity: 0;
@@ -204,13 +203,12 @@
       transform: translate(-50%, -50%) scale(1);
     }
 
-    /* Subtle Firing Flare for Right Thumb */
     .fire-flare {
       position: absolute;
-      width: 44px;
-      height: 44px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 50, 80, 0.7) 0%, rgba(255, 200, 0, 0.3) 60%, transparent 100%);
+      background: radial-gradient(circle, rgba(255, 80, 80, 0.7) 0%, rgba(255, 200, 0, 0.25) 60%, transparent 100%);
       transform: translate(-50%, -50%) scale(0.5);
       pointer-events: none;
       opacity: 0;
@@ -218,7 +216,7 @@
     }
     .fire-flare.active {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1.3);
+      transform: translate(-50%, -50%) scale(1.2);
     }
 
     /* LEVEL START TUTORIAL PROMPT OVERLAY (LEVEL 1 TO 500) */
@@ -229,11 +227,11 @@
       transform: translate(-50%, -50%);
       z-index: 50;
       width: 90%;
-      max-width: 480px;
+      max-width: 460px;
       background: rgba(3, 16, 36, 0.94);
       border: 2px solid #00f0ff;
-      border-radius: 18px;
-      padding: 20px 24px;
+      border-radius: 16px;
+      padding: 18px 22px;
       box-shadow: 0 0 35px rgba(0, 240, 255, 0.45);
       backdrop-filter: blur(8px);
       text-align: center;
@@ -251,36 +249,36 @@
       display: inline-block;
       background: rgba(0, 240, 255, 0.18);
       color: #00f0ff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       letter-spacing: 2px;
-      padding: 4px 16px;
+      padding: 4px 14px;
       border-radius: 12px;
       border: 1px solid #00f0ff;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-transform: uppercase;
     }
     .prompt-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin: 14px 0 16px;
+      gap: 10px;
+      margin: 12px 0 14px;
     }
     .prompt-card {
       background: rgba(1, 8, 18, 0.75);
-      border-radius: 12px;
-      padding: 12px 10px;
+      border-radius: 10px;
+      padding: 10px 8px;
       border: 1px solid rgba(0, 240, 255, 0.35);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
     .prompt-card.right-card {
       border-color: rgba(255, 80, 100, 0.5);
     }
     .prompt-icon {
-      font-size: 24px;
+      font-size: 22px;
     }
     .prompt-title {
       font-size: 11px;
@@ -307,6 +305,37 @@
       100% { opacity: 1; }
     }
 
+    /* 3. FIXED BOTTOM AD BANNER */
+    #bottom-ad-banner {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      background: rgba(2, 9, 22, 0.95);
+      border-top: 1px solid rgba(0, 240, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #79a6d2;
+      font-size: 11px;
+      font-weight: 600;
+      z-index: 30;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.6);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .ad-badge {
+      background: #00f0ff;
+      color: #010814;
+      font-size: 9px;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
     /* 500 LEVEL SELECT MODAL */
     #level-select-modal {
       position: absolute;
@@ -330,7 +359,7 @@
       border-bottom: 1px solid rgba(0, 240, 255, 0.3);
     }
     .modal-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       color: #00f0ff;
       letter-spacing: 1px;
@@ -478,7 +507,7 @@
 <div id="game-container">
   <canvas id="gameCanvas"></canvas>
 
-  <!-- TOP MINIMAL HUD -->
+  <!-- 4. CORE TOP HUD -->
   <div id="top-hud">
     <div class="hud-chip" id="btnOpenLevelSelect" title="Select from 500 Levels">
       <span>🌊</span>
@@ -497,7 +526,7 @@
     <div id="hearts-bar"></div>
   </div>
 
-  <!-- BOSS HP BAR (When Boss appears) -->
+  <!-- BOSS HP BAR -->
   <div id="boss-hud">
     <div class="boss-hud-title" id="bossTitle">⚠️ ABYSSAL LEVIATHAN KRAKEN HP: <span id="bossHpVal">50</span>/50 ⚠️</div>
     <div class="boss-bar-wrap">
@@ -505,7 +534,7 @@
     </div>
   </div>
 
-  <!-- INVISIBLE SCREEN SPLIT TOUCH LAYER (0-50% Left for Movement, 50-100% Right for Weapons) -->
+  <!-- INVISIBLE SCREEN SPLIT TOUCH LAYER (0-50% Left for Movement, 50-100% Right for Firing) -->
   <div id="touch-layer">
     <div class="touch-half-left" id="touchZoneLeft">
       <div class="touch-indicator-ring" id="touchRing"></div>
@@ -518,7 +547,7 @@
   <!-- LEVEL START PROMPT OVERLAY (LEVEL 1 TO 500) -->
   <div id="level-prompt-overlay">
     <div class="prompt-level-badge" id="promptLevelBadge">ABYSSAL ZONE 1 / 500</div>
-    <div style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 4px;">CONTROLS BRIEFING</div>
+    <div style="font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 4px;">CONTROLS BRIEFING</div>
     <div style="font-size: 11px; color: #8bbcd6;">Full invisible touch navigation active</div>
 
     <div class="prompt-grid">
@@ -530,11 +559,17 @@
       <div class="prompt-card right-card">
         <div class="prompt-icon">⚡🚀</div>
         <div class="prompt-title">RIGHT SIDE (50-100%)</div>
-        <div class="prompt-desc">Touch ANY AREA on the RIGHT side for <strong>FIRE and KIDLAT</strong></div>
+        <div class="prompt-desc">Touch ANY AREA on the RIGHT side for <strong>WAVE SPREAD TORPEDOES</strong></div>
       </div>
     </div>
 
     <div class="prompt-dismiss-hint">Tap anywhere to launch submarine...</div>
+  </div>
+
+  <!-- 3. FIXED BOTTOM AD BANNER -->
+  <div id="bottom-ad-banner" title="Deep-Sea Radar Support">
+    <span class="ad-badge">Ad</span>
+    <span>📡 Deep-Sea Radar Support • Tap for +1 Shield</span>
   </div>
 
   <!-- 500 LEVEL SELECT MODAL -->
@@ -549,10 +584,7 @@
       <button class="jump-btn" id="btnJumpLevel">DEPLOY</button>
     </div>
 
-    <!-- Tier Tabs -->
     <div class="tier-tab-bar" id="tierTabBar"></div>
-
-    <!-- Level Cards Grid -->
     <div class="levels-grid" id="levelsGrid"></div>
   </div>
 
@@ -579,7 +611,7 @@
 
 <script>
   // =========================================================================
-  // 1. CANVAS & RETINA SETUP
+  // 1. CANVAS SETUP & AUDIO
   // =========================================================================
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas.getContext('2d');
@@ -591,9 +623,6 @@
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
-  // =========================================================================
-  // 2. PROCEDURAL WEB AUDIO SYNTHESIZER (No 404s, Zero External Audio Files)
-  // =========================================================================
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
   let audio = null;
   function ensureAudio() {
@@ -610,39 +639,30 @@
       osc.connect(gain);
       gain.connect(audio.destination);
 
-      if (type === 'fire') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(540, now);
-        osc.frequency.exponentialRampToValueAtTime(160, now + 0.1);
+      if (type === 'torpedo') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(480, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.1);
         gain.gain.setValueAtTime(0.2, now);
         gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
         osc.start(now);
         osc.stop(now + 0.1);
-      } else if (type === 'kidlat') {
-        // High-voltage lightning discharge
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(880, now);
-        osc.frequency.linearRampToValueAtTime(220, now + 0.16);
-        gain.gain.setValueAtTime(0.28, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.16);
-        osc.start(now);
-        osc.stop(now + 0.16);
       } else if (type === 'hit') {
         osc.type = 'square';
-        osc.frequency.setValueAtTime(140, now);
-        osc.frequency.linearRampToValueAtTime(50, now + 0.14);
-        gain.gain.setValueAtTime(0.22, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.14);
+        osc.frequency.setValueAtTime(130, now);
+        osc.frequency.linearRampToValueAtTime(45, now + 0.12);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
         osc.start(now);
-        osc.stop(now + 0.14);
+        osc.stop(now + 0.12);
       } else if (type === 'powerup') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(360, now);
-        osc.frequency.exponentialRampToValueAtTime(920, now + 0.22);
+        osc.frequency.setValueAtTime(340, now);
+        osc.frequency.exponentialRampToValueAtTime(900, now + 0.2);
         gain.gain.setValueAtTime(0.25, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.22);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
         osc.start(now);
-        osc.stop(now + 0.22);
+        osc.stop(now + 0.2);
       } else if (type === 'victory') {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(440, now);
@@ -656,19 +676,17 @@
   }
 
   // =========================================================================
-  // 3. 500 LEVELS SYSTEM CONFIGURATION
+  // 2. 500 LEVELS SYSTEM
   // =========================================================================
   let currentLevel = 1;
   const TOTAL_LEVELS = 500;
   let levelDistanceTarget = 1000;
   let levelDistanceTravelled = 0;
   let levelActive = true;
-  let levelStartTime = 0;
 
-  // Level Progression Generator
   function getLevelConfig(lvl) {
     const isBoss = (lvl % 10 === 0) || lvl === 500;
-    const depth = 100 + (lvl * 24); // Up to 12,100 meters in Hadal Trenches
+    const depth = 100 + (lvl * 24);
     const targetDist = 1200 + (lvl * 40);
     const enemySpeed = 2.4 + Math.min(5.5, lvl * 0.018);
     const spawnRate = Math.max(500, 1600 - (lvl * 2.5));
@@ -694,20 +712,18 @@
   }
 
   // =========================================================================
-  // 4. PLAYER SUBMARINE (ORIGINAL GODOT YELLOW SUBMARINE WITH SEARCHLIGHT BEAM)
+  // 3. COMPACT PLAYER SUBMARINE (ADJUSTMENT 1: 45px width x 20px height)
   // =========================================================================
   const player = {
-    x: 140,
+    x: 120,
     y: window.innerHeight / 2,
     vx: 0,
     vy: 0,
-    targetX: 140,
-    targetY: window.innerHeight / 2,
     baseSpeed: 6.2,
+    radius: 12, // Compact collision radius matching 45x20px
     hp: 10,
     maxHp: 10,
     shield: false,
-    weaponMode: 'kidlat', // 'plasma', 'kidlat' (lightning), 'rocket'
     invulnerableTimer: 0,
     bubbles: []
   };
@@ -718,8 +734,8 @@
   const floatingMines = [];
   let boss = null;
   let portal = null;
+  let torpedoCounter = 0;
 
-  // Render 10 Hearts
   function renderHearts() {
     const bar = document.getElementById('hearts-bar');
     bar.innerHTML = '';
@@ -731,17 +747,20 @@
     }
   }
 
-  // Draw Exact Godot Yellow Submarine with Volumetric Spotlight Beam
-  function drawGodotYellowSubmarine(x, y, time) {
+  // Draw Exact Godot Yellow Submarine Scaled Compactly to ~45px x 20px
+  function drawCompactGodotYellowSubmarine(x, y, time) {
     ctx.save();
     ctx.translate(x, y);
 
-    // 1. Dual Volumetric Headlamp Spotlight Beam Cone
-    const beamLength = Math.min(520, canvas.width * 0.65);
-    const beamSpread = 130;
+    // Scale to exact compact size: original canvas was ~108px wide -> scale(0.42, 0.42) = ~45px width x 20px height
+    ctx.scale(0.42, 0.42);
+
+    // 1. Dual Volumetric Headlamp Spotlight Beam Cone (Scaled & Focused)
+    const beamLength = Math.min(650, canvas.width * 0.9);
+    const beamSpread = 135;
     const beamGrad = ctx.createLinearGradient(46, 0, 46 + beamLength, 0);
-    beamGrad.addColorStop(0, "rgba(255, 248, 200, 0.55)"); // Bright golden-white headlamp source
-    beamGrad.addColorStop(0.18, "rgba(0, 240, 255, 0.28)"); // Aqua-blue water volumetric scatter
+    beamGrad.addColorStop(0, "rgba(255, 248, 200, 0.6)");
+    beamGrad.addColorStop(0.18, "rgba(0, 240, 255, 0.32)");
     beamGrad.addColorStop(0.7, "rgba(0, 70, 120, 0.12)");
     beamGrad.addColorStop(1, "rgba(0, 20, 40, 0.0)");
 
@@ -755,7 +774,7 @@
     ctx.fill();
 
     // 2. Rotating Propeller
-    const propAngle = (time * 24) % (Math.PI * 2);
+    const propAngle = (time * 26) % (Math.PI * 2);
     const propX = -54;
     ctx.fillStyle = "#3a4a58";
     ctx.fillRect(propX, -4, 8, 8);
@@ -763,7 +782,7 @@
       const bladeA = propAngle + (i * Math.PI * 2 / 3);
       const bladeSpread = Math.sin(bladeA) * 18;
       ctx.strokeStyle = "#ffd166";
-      ctx.lineWidth = 3.5;
+      ctx.lineWidth = 4;
       ctx.lineCap = "round";
       ctx.beginPath();
       ctx.moveTo(propX + 2, 0);
@@ -787,7 +806,7 @@
     ctx.beginPath();
     ctx.moveTo(-48, -14);
     ctx.lineTo(-12, -15);
-    ctx.lineTo(-8, -28); // Conning tower / periscope bridge
+    ctx.lineTo(-8, -28);
     ctx.lineTo(16, -28);
     ctx.lineTo(22, -15);
     ctx.bezierCurveTo(44, -14, 58, -6, 60, 0);
@@ -797,21 +816,21 @@
     ctx.closePath();
 
     const yellowHullGrad = ctx.createLinearGradient(0, -28, 0, 20);
-    yellowHullGrad.addColorStop(0.0, "#ffe066"); // Bright yellow top highlight
-    yellowHullGrad.addColorStop(0.35, "#ffb703"); // Deep Godot amber yellow
-    yellowHullGrad.addColorStop(0.75, "#d48b00"); // Metallic gold shade
-    yellowHullGrad.addColorStop(1.0, "#8a5700"); // Bottom hull shadow
+    yellowHullGrad.addColorStop(0.0, "#ffe066");
+    yellowHullGrad.addColorStop(0.35, "#ffb703");
+    yellowHullGrad.addColorStop(0.75, "#d48b00");
+    yellowHullGrad.addColorStop(1.0, "#8a5700");
     ctx.fillStyle = yellowHullGrad;
     ctx.fill();
     ctx.strokeStyle = "#ffdd55";
-    ctx.lineWidth = 1.6;
+    ctx.lineWidth = 2.2;
     ctx.stroke();
 
     // 5. Armor Ribs & Brass Rivets
     const ribs = [-28, -10, 8, 26];
     for (let rx of ribs) {
-      ctx.strokeStyle = "rgba(160, 100, 0, 0.5)";
-      ctx.lineWidth = 1.3;
+      ctx.strokeStyle = "rgba(160, 100, 0, 0.55)";
+      ctx.lineWidth = 1.8;
       ctx.beginPath();
       ctx.moveTo(rx, -13);
       ctx.lineTo(rx, 13);
@@ -819,12 +838,12 @@
 
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
-      ctx.arc(rx, -8, 1.2, 0, Math.PI * 2);
-      ctx.arc(rx, 8, 1.2, 0, Math.PI * 2);
+      ctx.arc(rx, -8, 1.6, 0, Math.PI * 2);
+      ctx.arc(rx, 8, 1.6, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    // 6. Cockpit Dome & Diver Observation Window
+    // 6. Cockpit Dome
     ctx.beginPath();
     ctx.moveTo(30, -9);
     ctx.bezierCurveTo(46, -7, 54, -3, 56, 0);
@@ -836,15 +855,15 @@
     ctx.fillStyle = domeGrad;
     ctx.fill();
     ctx.strokeStyle = "#00f0ff";
-    ctx.lineWidth = 1.2;
+    ctx.lineWidth = 1.8;
     ctx.stroke();
 
-    // 7. Headlamp Spotlight Housing (Front)
+    // 7. Headlamp Spotlight Housing
     ctx.fillStyle = "#ffffff";
     ctx.shadowColor = "#ffea88";
-    ctx.shadowBlur = 12;
+    ctx.shadowBlur = 14;
     ctx.beginPath();
-    ctx.arc(58, 0, 4.5, 0, Math.PI * 2);
+    ctx.arc(58, 0, 5, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
@@ -852,17 +871,17 @@
     const strobe = (Math.floor(time * 6) % 2 === 0);
     ctx.fillStyle = strobe ? "#ff3355" : "#661122";
     ctx.beginPath();
-    ctx.arc(4, -30, 3, 0, Math.PI * 2);
+    ctx.arc(4, -30, 3.5, 0, Math.PI * 2);
     ctx.fill();
 
-    // 9. Active Shield Aura (if active)
+    // 9. Active Shield Aura
     if (player.shield) {
-      ctx.strokeStyle = "rgba(0, 255, 136, 0.85)";
-      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = "rgba(0, 255, 136, 0.9)";
+      ctx.lineWidth = 3.5;
       ctx.shadowColor = "#00ff88";
-      ctx.shadowBlur = 14;
+      ctx.shadowBlur = 16;
       ctx.beginPath();
-      ctx.ellipse(0, 0, 68, 36, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 72, 38, 0, 0, Math.PI * 2);
       ctx.stroke();
       ctx.shadowBlur = 0;
     }
@@ -871,10 +890,35 @@
   }
 
   // =========================================================================
+  // 4. FIRING & WAVE SPREAD WEAPON SYSTEM (ADJUSTMENT 2)
+  // =========================================================================
+  function fireWaveTorpedo() {
+    if (!levelActive) return;
+    playSfx('torpedo');
+    torpedoCounter++;
+
+    // Dynamic wave oscillation offset based on player vertical movement & firing sequence
+    const movementOffset = player.vy * 0.42;
+    const waveSine = Math.sin(torpedoCounter * 0.85) * 1.6;
+    const finalVy = movementOffset + waveSine;
+
+    bullets.push({
+      x: player.x + 24,
+      y: player.y,
+      vx: 15,
+      vy: finalVy,
+      radius: 4,
+      length: 12,
+      damage: 1,
+      life: 65,
+      waveFreq: 0.12,
+      timeAlive: 0
+    });
+  }
+
+  // =========================================================================
   // 5. INVISIBLE SCREEN DIVISION TOUCH CONTROLS
   // =========================================================================
-  // Left 50% = Dynamic Submarine Navigation
-  // Right 50% = Fire Weapons (Plasma, Kidlat Lightning, Rockets)
   const touchZoneLeft = document.getElementById('touchZoneLeft');
   const touchZoneRight = document.getElementById('touchZoneRight');
   const touchRing = document.getElementById('touchRing');
@@ -882,10 +926,8 @@
 
   let leftTouchId = null;
   let leftTouchOrigin = null;
-  let isRightTouching = false;
   let autoFireInterval = null;
 
-  // Touch on Left Half: Submarine steering
   touchZoneLeft.addEventListener('touchstart', (e) => {
     e.preventDefault();
     ensureAudio();
@@ -899,9 +941,8 @@
     touchRing.style.top = `${t.clientY}px`;
     touchRing.classList.add('active');
 
-    // Smoothly set steering target towards touch position
-    player.targetY = t.clientY;
-    player.targetX = Math.min(canvas.width * 0.45, Math.max(60, t.clientX));
+    player.y = t.clientY;
+    player.x = Math.min(canvas.width * 0.45, Math.max(50, t.clientX));
   }, { passive: false });
 
   window.addEventListener('touchmove', (e) => {
@@ -910,8 +951,8 @@
         const dx = t.clientX - leftTouchOrigin.x;
         const dy = t.clientY - leftTouchOrigin.y;
 
-        player.vx = Math.max(-player.baseSpeed, Math.min(player.baseSpeed, dx * 0.12));
-        player.vy = Math.max(-player.baseSpeed, Math.min(player.baseSpeed, dy * 0.12));
+        player.vx = Math.max(-player.baseSpeed, Math.min(player.baseSpeed, dx * 0.14));
+        player.vy = Math.max(-player.baseSpeed, Math.min(player.baseSpeed, dy * 0.14));
 
         touchRing.style.left = `${t.clientX}px`;
         touchRing.style.top = `${t.clientY}px`;
@@ -939,7 +980,6 @@
     touchRing.classList.remove('active');
   });
 
-  // Touch on Right Half: Fire weapons (Tapping or holding triggers continuous firing)
   touchZoneRight.addEventListener('touchstart', (e) => {
     e.preventDefault();
     ensureAudio();
@@ -950,9 +990,9 @@
     fireFlare.style.top = `${t.clientY}px`;
     fireFlare.classList.add('active');
 
-    firePlayerWeapons();
+    fireWaveTorpedo();
     if (!autoFireInterval) {
-      autoFireInterval = setInterval(firePlayerWeapons, 180);
+      autoFireInterval = setInterval(fireWaveTorpedo, 140); // Rapid single-fire stream
     }
   }, { passive: false });
 
@@ -972,12 +1012,11 @@
     }
   });
 
-  // Desktop Mouse / Keyboard Fallback
   window.addEventListener('mousedown', (e) => {
     ensureAudio();
     dismissPromptOverlay();
     if (e.clientX >= window.innerWidth * 0.5) {
-      firePlayerWeapons();
+      fireWaveTorpedo();
     }
   });
 
@@ -986,85 +1025,21 @@
     ensureAudio();
     dismissPromptOverlay();
     keys[e.code] = true;
-    if (e.code === 'Space') firePlayerWeapons();
+    if (e.code === 'Space') fireWaveTorpedo();
   });
   window.addEventListener('keyup', (e) => {
     keys[e.code] = false;
   });
 
-  // Weapon Firing: Kidlat (Lightning), Plasma, Rockets
-  function firePlayerWeapons() {
-    if (!levelActive) return;
+  // Bottom Ad Banner Click
+  document.getElementById('bottom-ad-banner').addEventListener('click', () => {
+    ensureAudio();
+    player.shield = true;
+    playSfx('powerup');
+    alert('🛡️ RADAR BONUS!\nDeep-sea shield matrix recharged.');
+  });
 
-    if (player.weaponMode === 'kidlat') {
-      playSfx('kidlat');
-      // Kidlat discharge: Piercing electric arc
-      bullets.push({
-        type: 'kidlat',
-        x: player.x + 50,
-        y: player.y,
-        vx: 18,
-        vy: 0,
-        radius: 12,
-        damage: 2,
-        color: '#00f0ff',
-        life: 30
-      });
-      // Forked electric arc
-      bullets.push({
-        type: 'kidlat',
-        x: player.x + 46,
-        y: player.y - 6,
-        vx: 16,
-        vy: -2.5,
-        radius: 8,
-        damage: 1,
-        color: '#70e0ff',
-        life: 25
-      });
-      bullets.push({
-        type: 'kidlat',
-        x: player.x + 46,
-        y: player.y + 6,
-        vx: 16,
-        vy: 2.5,
-        radius: 8,
-        damage: 1,
-        color: '#70e0ff',
-        life: 25
-      });
-    } else if (player.weaponMode === 'rocket') {
-      playSfx('fire');
-      bullets.push({
-        type: 'rocket',
-        x: player.x + 48,
-        y: player.y,
-        vx: 13,
-        vy: 0,
-        radius: 9,
-        damage: 3,
-        color: '#ff5500',
-        life: 50
-      });
-    } else {
-      playSfx('fire');
-      bullets.push({
-        type: 'plasma',
-        x: player.x + 46,
-        y: player.y,
-        vx: 14,
-        vy: 0,
-        radius: 6,
-        damage: 1,
-        color: '#ffd166',
-        life: 45
-      });
-    }
-  }
-
-  // =========================================================================
-  // 6. LEVEL START PROMPT OVERLAY (LEVEL 1 TO 500)
-  // =========================================================================
+  // Level Briefing Overlay
   const levelPromptOverlay = document.getElementById('level-prompt-overlay');
   let promptDismissTimer = null;
 
@@ -1074,7 +1049,6 @@
     levelPromptOverlay.classList.add('show');
 
     if (promptDismissTimer) clearTimeout(promptDismissTimer);
-    // Smoothly auto-fade after 2.5s
     promptDismissTimer = setTimeout(() => {
       dismissPromptOverlay();
     }, 2500);
@@ -1093,44 +1067,41 @@
   levelPromptOverlay.addEventListener('click', dismissPromptOverlay);
 
   // =========================================================================
-  // 7. ENEMIES, PREDATORS & KRAKEN BOSS
+  // 6. ENEMIES, POWER-UPS & BOSS
   // =========================================================================
   function spawnEnemy(cfg) {
     if (!levelActive) return;
-    const y = 80 + Math.random() * (canvas.height - 180);
+    const y = 80 + Math.random() * (canvas.height - 210);
     const rand = Math.random();
 
     if (rand < 0.45) {
-      // Apex Shark Predator
       enemies.push({
         type: 'shark',
         x: canvas.width + 60,
         y: y,
         vx: -(cfg.enemySpeed + Math.random() * 1.5),
         vy: (Math.random() - 0.5) * 1.2,
-        radius: 26,
+        radius: 22,
         hp: 3 + Math.floor(cfg.level / 120),
         tailWiggle: 0
       });
     } else if (rand < 0.8) {
-      // Bioluminescent Jellyfish
       enemies.push({
         type: 'jellyfish',
         x: canvas.width + 50,
         y: y,
         vx: -(cfg.enemySpeed * 0.7),
         vy: Math.sin(Date.now() / 300) * 1.4,
-        radius: 19,
+        radius: 17,
         hp: 2,
         pulseAnim: 0
       });
     } else {
-      // Explosive Abyssal Mine
       floatingMines.push({
         x: canvas.width + 40,
         y: y,
         vx: -1.8,
-        radius: 16,
+        radius: 14,
         hp: 1,
         angle: 0
       });
@@ -1139,13 +1110,12 @@
 
   function spawnBoss(cfg) {
     boss = {
-      x: canvas.width - 160,
+      x: canvas.width - 150,
       y: canvas.height / 2,
       vy: 2.4,
-      radius: 65,
+      radius: 60,
       hp: cfg.bossHp,
-      maxHp: cfg.bossHp,
-      attackCooldown: 0
+      maxHp: cfg.bossHp
     };
     document.getElementById('boss-hud').style.display = 'flex';
     document.getElementById('bossTitle').innerText = `⚠️ ZONE ${cfg.level} KRAKEN BOSS HP: ${boss.hp}/${boss.maxHp} ⚠️`;
@@ -1153,19 +1123,19 @@
   }
 
   function spawnPowerUp(x, y) {
-    const types = ['kidlat', 'rocket', 'shield', 'heal'];
+    const types = ['shield', 'heal'];
     const selected = types[Math.floor(Math.random() * types.length)];
     powerUps.push({
       type: selected,
       x: x,
       y: y,
       vx: -1.4,
-      radius: 16
+      radius: 14
     });
   }
 
   // =========================================================================
-  // 8. 500 LEVEL DIRECTORY & SELECTION UI
+  // 7. 500 LEVEL DIRECTORY & SELECTION UI
   // =========================================================================
   const levelSelectModal = document.getElementById('level-select-modal');
   const levelsGrid = document.getElementById('levelsGrid');
@@ -1232,7 +1202,7 @@
   });
 
   // =========================================================================
-  // 9. CORE GAME ENGINE LOOP
+  // 8. CORE GAME ENGINE LOOP
   // =========================================================================
   let lastSpawn = 0;
 
@@ -1243,13 +1213,10 @@
     levelActive = true;
     levelDistanceTarget = cfg.targetDist;
     levelDistanceTravelled = 0;
-    levelStartTime = Date.now();
 
     player.hp = 10;
-    player.x = 120;
-    player.y = canvas.height / 2;
-    player.targetX = player.x;
-    player.targetY = player.y;
+    player.x = 100;
+    player.y = (canvas.height - 48) / 2;
     player.vx = 0;
     player.vy = 0;
     player.shield = false;
@@ -1280,7 +1247,6 @@
     startLevel(currentLevel < 500 ? currentLevel + 1 : 1);
   }
 
-  // Damage Handler
   function hurtPlayer(amt) {
     if (player.invulnerableTimer > 0) return;
     if (player.shield) {
@@ -1301,7 +1267,6 @@
     }
   }
 
-  // Main Render Loop
   let animTime = 0;
   function updateAndRender() {
     animTime += 0.03;
@@ -1310,60 +1275,55 @@
     const cfg = getLevelConfig(currentLevel);
 
     if (levelActive) {
-      // 1. Level Distance Progression
       levelDistanceTravelled += 3;
       const progress = Math.min(100, (levelDistanceTravelled / levelDistanceTarget) * 100);
       document.getElementById('zoneProgressBar').style.width = `${progress}%`;
 
-      // Spawn Boss on Boss Levels or Escape Portal on Regular Levels
       if (levelDistanceTravelled >= levelDistanceTarget) {
         if (cfg.isBoss && !boss) {
           spawnBoss(cfg);
         } else if (!cfg.isBoss && !portal) {
-          portal = { x: canvas.width + 60, y: canvas.height / 2, radius: 45 };
+          portal = { x: canvas.width + 50, y: (canvas.height - 48) / 2, radius: 40 };
         }
       }
 
-      // Keyboard movement
       if (keys['KeyW'] || keys['ArrowUp']) player.y -= player.baseSpeed;
       if (keys['KeyS'] || keys['ArrowDown']) player.y += player.baseSpeed;
       if (keys['KeyA'] || keys['ArrowLeft']) player.x -= player.baseSpeed;
       if (keys['KeyD'] || keys['ArrowRight']) player.x += player.baseSpeed;
 
-      // Touch velocity interpolation
       player.x += player.vx;
       player.y += player.vy;
 
-      // Keep within bounds
-      player.x = Math.max(45, Math.min(canvas.width * 0.85, player.x));
-      player.y = Math.max(65, Math.min(canvas.height - 65, player.y));
+      // Keep within bounds (accounting for top HUD and bottom Ad Banner)
+      player.x = Math.max(30, Math.min(canvas.width * 0.85, player.x));
+      player.y = Math.max(55, Math.min(canvas.height - 65, player.y));
 
       if (player.invulnerableTimer > 0) player.invulnerableTimer--;
 
-      // Spawn Enemies
       if (Date.now() - lastSpawn > cfg.spawnRate && enemies.length < cfg.maxEnemies && !boss) {
         spawnEnemy(cfg);
         lastSpawn = Date.now();
       }
     }
 
-    // 2. Deep Ocean Floating Particulates / Bioluminescence
+    // Particulates
     ctx.fillStyle = "rgba(0, 240, 255, 0.15)";
     for (let i = 0; i < 20; i++) {
       const px = (Math.sin(animTime * 0.2 + i * 2) * 0.5 + 0.5) * canvas.width;
-      const py = (Math.cos(animTime * 0.15 + i * 3) * 0.5 + 0.5) * canvas.height;
+      const py = (Math.cos(animTime * 0.15 + i * 3) * 0.5 + 0.5) * (canvas.height - 48);
       ctx.beginPath();
       ctx.arc(px, py, (i % 3) + 1, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    // 3. Draw Escape Portal (if generated)
+    // Portal
     if (portal) {
       portal.x -= 2;
       ctx.save();
       ctx.translate(portal.x, portal.y);
       ctx.rotate(animTime * 1.5);
-      const portalGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, portal.radius);
+      const portalGrad = ctx.createRadialGradient(0, 0, 8, 0, 0, portal.radius);
       portalGrad.addColorStop(0, '#ffffff');
       portalGrad.addColorStop(0.4, '#00ff88');
       portalGrad.addColorStop(1, 'rgba(0, 255, 136, 0)');
@@ -1373,7 +1333,6 @@
       ctx.fill();
       ctx.restore();
 
-      // Check player reached portal
       if (Math.hypot(player.x - portal.x, player.y - portal.y) < player.radius + portal.radius) {
         levelActive = false;
         playSfx('victory');
@@ -1382,33 +1341,32 @@
       }
     }
 
-    // 4. Update & Draw Bullets / Kidlat
+    // 2. Torpedo Bullets with Dynamic Wave Trailing
     for (let i = bullets.length - 1; i >= 0; i--) {
       const b = bullets[i];
+      b.timeAlive++;
       b.x += b.vx;
-      b.y += b.vy;
+      b.y += b.vy + Math.sin(b.timeAlive * b.waveFreq) * 0.45;
       b.life--;
 
+      // Sleek Torpedo Rendering with glowing wake
       ctx.save();
-      if (b.type === 'kidlat') {
-        // High-voltage electric lightning bolt render
-        ctx.strokeStyle = b.color;
-        ctx.lineWidth = 3;
-        ctx.shadowColor = '#00f0ff';
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.moveTo(b.x - 24, b.y + (Math.random() * 8 - 4));
-        ctx.lineTo(b.x - 10, b.y + (Math.random() * 10 - 5));
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      } else {
-        ctx.fillStyle = b.color;
-        ctx.shadowColor = b.color;
-        ctx.shadowBlur = 8;
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      ctx.translate(b.x, b.y);
+
+      // Torpedo body
+      ctx.fillStyle = '#00f0ff';
+      ctx.shadowColor = '#00f0ff';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, b.length, b.radius, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Torpedo head
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(b.length - 3, 0, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
       ctx.restore();
 
       if (b.x > canvas.width + 20 || b.life <= 0) {
@@ -1416,74 +1374,65 @@
       }
     }
 
-    // 5. Update & Draw Enemies (Sharks & Jellyfish)
+    // Enemies (Sharks & Jellyfish)
     for (let i = enemies.length - 1; i >= 0; i--) {
       const e = enemies[i];
       e.x += e.vx;
       e.y += e.vy;
 
       if (e.type === 'shark') {
-        // Slate-grey Apex Shark with swimming tail & white belly
         e.tailWiggle += 0.18;
         ctx.save();
         ctx.translate(e.x, e.y);
 
-        // Body
         ctx.beginPath();
-        ctx.ellipse(0, 0, 26, 13, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2);
         ctx.fillStyle = '#2f4858';
         ctx.fill();
 
-        // White belly
         ctx.beginPath();
-        ctx.ellipse(0, 5, 22, 6, 0, 0, Math.PI);
+        ctx.ellipse(0, 4, 20, 5, 0, 0, Math.PI);
         ctx.fillStyle = '#c8d9e6';
         ctx.fill();
 
-        // Dorsal Fin
         ctx.beginPath();
-        ctx.moveTo(-4, -13); ctx.lineTo(6, -22); ctx.lineTo(8, -13);
+        ctx.moveTo(-4, -12); ctx.lineTo(5, -20); ctx.lineTo(7, -12);
         ctx.fillStyle = '#1e303d';
         ctx.fill();
 
-        // Animated Tail
-        const tailY = Math.sin(e.tailWiggle) * 8;
+        const tailY = Math.sin(e.tailWiggle) * 7;
         ctx.beginPath();
-        ctx.moveTo(22, 0); ctx.lineTo(34, -10 + tailY); ctx.lineTo(30, tailY); ctx.lineTo(34, 10 + tailY);
+        ctx.moveTo(20, 0); ctx.lineTo(30, -9 + tailY); ctx.lineTo(26, tailY); ctx.lineTo(30, 9 + tailY);
         ctx.fillStyle = '#1e303d';
         ctx.fill();
 
-        // Eye
         ctx.fillStyle = '#ff2200';
         ctx.beginPath();
-        ctx.arc(-16, -2, 2.2, 0, Math.PI * 2);
+        ctx.arc(-15, -2, 2, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       } else {
-        // Translucent Bioluminescent Jellyfish
         e.pulseAnim += 0.08;
         ctx.save();
         ctx.translate(e.x, e.y);
         ctx.fillStyle = 'rgba(120, 60, 255, 0.7)';
         ctx.shadowColor = '#aa55ff';
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 10;
         ctx.beginPath();
-        ctx.arc(0, 0, 18, Math.PI * 0.9, Math.PI * 2.1);
+        ctx.arc(0, 0, 16, Math.PI * 0.9, Math.PI * 2.1);
         ctx.fill();
 
-        // Tentacles
         ctx.strokeStyle = 'rgba(0, 240, 255, 0.6)';
-        ctx.lineWidth = 1.5;
-        for (let t = -10; t <= 10; t += 5) {
+        ctx.lineWidth = 1.4;
+        for (let t = -8; t <= 8; t += 4) {
           ctx.beginPath();
-          ctx.moveTo(t, 6);
-          ctx.quadraticCurveTo(t + Math.sin(e.pulseAnim + t) * 6, 18, t, 28);
+          ctx.moveTo(t, 5);
+          ctx.quadraticCurveTo(t + Math.sin(e.pulseAnim + t) * 5, 15, t, 24);
           ctx.stroke();
         }
         ctx.restore();
       }
 
-      // Collision: Bullets vs Enemy
       for (let j = bullets.length - 1; j >= 0; j--) {
         const b = bullets[j];
         if (Math.hypot(b.x - e.x, b.y - e.y) < e.radius + b.radius) {
@@ -1499,8 +1448,7 @@
         }
       }
 
-      // Collision: Enemy vs Player
-      if (Math.hypot(player.x - e.x, player.y - e.y) < 32 + e.radius) {
+      if (Math.hypot(player.x - e.x, player.y - e.y) < player.radius + e.radius) {
         hurtPlayer(1);
         enemies.splice(i, 1);
       }
@@ -1508,7 +1456,7 @@
       if (e.x < -80) enemies.splice(i, 1);
     }
 
-    // 6. Update & Draw Mines
+    // Mines
     for (let i = floatingMines.length - 1; i >= 0; i--) {
       const m = floatingMines[i];
       m.x += m.vx;
@@ -1522,12 +1470,11 @@
       ctx.arc(0, 0, m.radius, 0, Math.PI * 2);
       ctx.fill();
       for (let s = 0; s < 6; s++) {
-        ctx.fillRect(-2, -m.radius - 4, 4, 8);
+        ctx.fillRect(-2, -m.radius - 3, 4, 6);
         ctx.rotate(Math.PI / 3);
       }
       ctx.restore();
 
-      // Check collision with bullets
       for (let j = bullets.length - 1; j >= 0; j--) {
         const b = bullets[j];
         if (Math.hypot(b.x - m.x, b.y - m.y) < m.radius + b.radius) {
@@ -1538,7 +1485,7 @@
         }
       }
 
-      if (Math.hypot(player.x - m.x, player.y - m.y) < 30 + m.radius) {
+      if (Math.hypot(player.x - m.x, player.y - m.y) < player.radius + m.radius) {
         hurtPlayer(2);
         floatingMines.splice(i, 1);
       }
@@ -1546,14 +1493,14 @@
       if (m.x < -50) floatingMines.splice(i, 1);
     }
 
-    // 7. Update & Draw Power-ups
+    // Power-ups
     for (let i = powerUps.length - 1; i >= 0; i--) {
       const p = powerUps[i];
       p.x += p.vx;
 
       ctx.save();
       ctx.translate(p.x, p.y);
-      ctx.fillStyle = p.type === 'kidlat' ? '#00f0ff' : (p.type === 'shield' ? '#00ff88' : '#ffaa00');
+      ctx.fillStyle = p.type === 'shield' ? '#00ff88' : '#ff3366';
       ctx.shadowColor = ctx.fillStyle;
       ctx.shadowBlur = 10;
       ctx.beginPath();
@@ -1561,21 +1508,18 @@
       ctx.fill();
 
       ctx.fillStyle = '#010814';
-      ctx.font = 'bold 12px sans-serif';
+      ctx.font = 'bold 11px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      const icon = p.type === 'kidlat' ? '⚡' : (p.type === 'rocket' ? '🚀' : (p.type === 'shield' ? '🛡️' : '❤️'));
-      ctx.fillText(icon, 0, 0);
+      ctx.fillText(p.type === 'shield' ? '🛡️' : '❤️', 0, 0);
       ctx.restore();
 
-      if (Math.hypot(player.x - p.x, player.y - p.y) < 30 + p.radius) {
+      if (Math.hypot(player.x - p.x, player.y - p.y) < player.radius + p.radius) {
         playSfx('powerup');
         if (p.type === 'shield') player.shield = true;
         else if (p.type === 'heal') {
           player.hp = Math.min(player.maxHp, player.hp + 2);
           renderHearts();
-        } else {
-          player.weaponMode = p.type;
         }
         powerUps.splice(i, 1);
       }
@@ -1583,10 +1527,10 @@
       if (p.x < -40) powerUps.splice(i, 1);
     }
 
-    // 8. Update & Draw Boss (Kraken)
+    // Boss
     if (boss) {
       boss.y += boss.vy;
-      if (boss.y < 100 || boss.y > canvas.height - 120) boss.vy *= -1;
+      if (boss.y < 90 || boss.y > canvas.height - 130) boss.vy *= -1;
 
       ctx.save();
       ctx.translate(boss.x, boss.y);
@@ -1597,18 +1541,16 @@
       ctx.arc(0, 0, boss.radius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Glowing Eye
       ctx.fillStyle = '#ffcc00';
       ctx.beginPath();
-      ctx.arc(-24, -12, 16, 0, Math.PI * 2);
+      ctx.arc(-22, -10, 15, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = '#000';
       ctx.beginPath();
-      ctx.arc(-26, -12, 7, 0, Math.PI * 2);
+      ctx.arc(-24, -10, 6, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // Boss Collisions with bullets
       for (let j = bullets.length - 1; j >= 0; j--) {
         const b = bullets[j];
         if (Math.hypot(b.x - boss.x, b.y - boss.y) < boss.radius + b.radius) {
@@ -1633,15 +1575,14 @@
       }
     }
 
-    // 9. Draw Player Submarine (Original Godot Yellow Submarine with Searchlight Beam)
+    // 1. Draw Compact Player Submarine (Scaled ~45px width x 20px height)
     if (player.invulnerableTimer === 0 || Math.floor(animTime * 15) % 2 === 0) {
-      drawGodotYellowSubmarine(player.x, player.y, animTime);
+      drawCompactGodotYellowSubmarine(player.x, player.y, animTime);
     }
 
     requestAnimationFrame(updateAndRender);
   }
 
-  // Initialize Level 1
   startLevel(1);
   requestAnimationFrame(updateAndRender);
 </script>
