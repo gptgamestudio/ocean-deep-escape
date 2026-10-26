@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 130" width="240" height="130">
+    <defs>
+        <radialGradient id="bossReactor" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="30%" stop-color="#00F0FF"/>
+            <stop offset="65%" stop-color="#FF0055"/>
+            <stop offset="100%" stop-color="#FF0055" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="bossArmor" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#3C096C"/>
+            <stop offset="50%" stop-color="#240046"/>
+            <stop offset="100%" stop-color="#10002B"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Outer Charging Energy Field Rings -->
+    <ellipse cx="120" cy="65" rx="112" ry="58" fill="none" stroke="#FF0055" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="8,6"/>
+    <ellipse cx="120" cy="65" rx="100" ry="50" fill="none" stroke="#00F0FF" stroke-width="1.2" stroke-opacity="0.5"/>
+
+    <!-- Segmented Tail Thrusters -->
+    <path d="M 45 65 L 12 36 L 28 65 L 12 94 Z" fill="#240046" stroke="#FF0055" stroke-width="2"/>
+    <path d="M 68 65 L 35 42 L 50 65 L 35 88 Z" fill="#3C096C" stroke="#00F0FF" stroke-width="2"/>
+
+    <!-- Colossal Armored Dreadnought Hull -->
+    <path d="M 50 65 C 75 22, 140 18, 185 40 L 228 65 L 185 90 C 140 112, 75 108, 50 65 Z" 
+          fill="url(#bossArmor)" stroke="#FF0055" stroke-width="3"/>
+
+    <!-- Armored Dorsal Spines -->
+    <polygon points="105,25 118,6 132,23" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+    <polygon points="140,24 154,4 168,26" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+    <!-- Ventral Spines -->
+    <polygon points="105,105 118,124 132,107" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+    <polygon points="140,106 154,126 168,104" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+
+    <!-- Glowing Bio-Mechanical Core -->
+    <circle cx="125" cy="65" r="28" fill="url(#bossReactor)"/>
+    <circle cx="125" cy="65" r="22" fill="none" stroke="#FFD166" stroke-width="2.5" stroke-dasharray="8,5"/>
+
+    <!-- Mandibles / Plasma Cannons -->
+    <path d="M 195 56 L 234 65 L 195 74 Z" fill="#FF0055" stroke="#FFFFFF" stroke-width="1.2"/>
+    <circle cx="210" cy="52" r="4" fill="#00F0FF"/>
+    <circle cx="210" cy="78" r="4" fill="#00F0FF"/>
+</svg>
