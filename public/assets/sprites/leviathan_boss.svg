@@ -1,30 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 96" width="180" height="96">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 130" width="240" height="130">
     <defs>
-        <linearGradient id="bossPlate" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#7209B7"/>
-            <stop offset="50%" stop-color="#2B0938"/>
-            <stop offset="100%" stop-color="#0F0014"/>
-        </linearGradient>
-        <radialGradient id="bossCore" cx="50%" cy="50%" r="50%">
+        <radialGradient id="bossReactor" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#FFFFFF"/>
             <stop offset="30%" stop-color="#00F0FF"/>
-            <stop offset="70%" stop-color="#FF0055"/>
+            <stop offset="65%" stop-color="#FF0055"/>
             <stop offset="100%" stop-color="#FF0055" stop-opacity="0"/>
         </radialGradient>
+        <linearGradient id="bossArmor" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#3C096C"/>
+            <stop offset="50%" stop-color="#240046"/>
+            <stop offset="100%" stop-color="#10002B"/>
+        </linearGradient>
     </defs>
-    <!-- Spiked Tail Plates -->
-    <path d="M35 48 L8 24 L22 48 L8 72 Z" fill="#2C1938" stroke="#FF0055" stroke-width="1.5"/>
-    <path d="M50 48 L25 28 L38 48 L25 68 Z" fill="#3F1952" stroke="#FF0055" stroke-width="1.5"/>
-    <!-- Colossal Armored Carapace -->
-    <path d="M40 48 C60 14 110 10 145 28 L176 48 L145 68 C110 86 60 82 40 48 Z" fill="url(#bossPlate)" stroke="#FF0055" stroke-width="2.5"/>
-    <!-- Armored Dorsal Spikes -->
-    <polygon points="80,18 90,4 100,16" fill="#FF0055"/>
-    <polygon points="105,16 115,2 125,18" fill="#FF0055"/>
-    <!-- Glowing Hydrothermal Energy Core -->
-    <circle cx="95" cy="48" r="22" fill="url(#bossCore)"/>
-    <circle cx="95" cy="48" r="18" fill="none" stroke="#FFD166" stroke-width="2" stroke-dasharray="6,4"/>
-    <!-- Mandibles & Fierce Eye -->
-    <circle cx="152" cy="40" r="4.5" fill="#FFD166"/>
-    <circle cx="153" cy="40" r="2.2" fill="#000000"/>
-    <path d="M165 44 L178 48 L165 52 Z" fill="#FF0055"/>
+
+    <!-- Outer Charging Energy Field Rings -->
+    <ellipse cx="120" cy="65" rx="112" ry="58" fill="none" stroke="#FF0055" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="8,6"/>
+    <ellipse cx="120" cy="65" rx="100" ry="50" fill="none" stroke="#00F0FF" stroke-width="1.2" stroke-opacity="0.5"/>
+
+    <!-- Segmented Tail Thrusters -->
+    <path d="M 45 65 L 12 36 L 28 65 L 12 94 Z" fill="#240046" stroke="#FF0055" stroke-width="2"/>
+    <path d="M 68 65 L 35 42 L 50 65 L 35 88 Z" fill="#3C096C" stroke="#00F0FF" stroke-width="2"/>
+
+    <!-- Colossal Armored Dreadnought Hull -->
+    <path d="M 50 65 C 75 22, 140 18, 185 40 L 228 65 L 185 90 C 140 112, 75 108, 50 65 Z" 
+          fill="url(#bossArmor)" stroke="#FF0055" stroke-width="3"/>
+
+    <!-- Armored Dorsal Spines -->
+    <polygon points="105,25 118,6 132,23" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+    <polygon points="140,24 154,4 168,26" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+    <!-- Ventral Spines -->
+    <polygon points="105,105 118,124 132,107" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+    <polygon points="140,106 154,126 168,104" fill="#FF0055" stroke="#FFFFFF" stroke-width="1"/>
+
+    <!-- Glowing Bio-Mechanical Core -->
+    <circle cx="125" cy="65" r="28" fill="url(#bossReactor)"/>
+    <circle cx="125" cy="65" r="22" fill="none" stroke="#FFD166" stroke-width="2.5" stroke-dasharray="8,5"/>
+
+    <!-- Mandibles / Plasma Cannons -->
+    <path d="M 195 56 L 234 65 L 195 74 Z" fill="#FF0055" stroke="#FFFFFF" stroke-width="1.2"/>
+    <circle cx="210" cy="52" r="4" fill="#00F0FF"/>
+    <circle cx="210" cy="78" r="4" fill="#00F0FF"/>
 </svg>
