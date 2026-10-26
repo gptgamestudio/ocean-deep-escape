@@ -663,6 +663,14 @@
         gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
         osc.start(now);
         osc.stop(now + 0.2);
+      } else if (type === 'explosion') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.exponentialRampToValueAtTime(30, now + 0.4);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
       } else if (type === 'victory') {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(440, now);
@@ -685,7 +693,7 @@
   let levelActive = true;
 
   function getLevelConfig(lvl) {
-    const isBoss = (lvl % 10 === 0) || lvl === 500;
+    const isBoss = true;
     const depth = 100 + (lvl * 24);
     const targetDist = 1200 + (lvl * 40);
     const enemySpeed = 2.4 + Math.min(5.5, lvl * 0.018);
@@ -700,14 +708,14 @@
 
     return {
       level: lvl,
-      isBoss,
+      isBoss: true,
       depth,
       targetDist,
       enemySpeed,
       spawnRate,
       maxEnemies,
       tierName,
-      bossHp: 30 + Math.floor(lvl * 1.2)
+      bossHp: 50 + (lvl - 1) * 3
     };
   }
 
@@ -733,6 +741,7 @@
   const powerUps = [];
   const floatingMines = [];
   let boss = null;
+  let bossDefeated = false;
   let portal = null;
   let torpedoCounter = 0;
 
@@ -1110,16 +1119,17 @@
 
   function spawnBoss(cfg) {
     boss = {
-      x: canvas.width - 150,
-      y: canvas.height / 2,
-      vy: 2.4,
-      radius: 60,
+      x: Math.max(canvas.width * 0.72, canvas.width - 150),
+      y: (canvas.height - 48) / 2,
+      vy: 2.2,
+      radius: 56,
       hp: cfg.bossHp,
       maxHp: cfg.bossHp
     };
     document.getElementById('boss-hud').style.display = 'flex';
-    document.getElementById('bossTitle').innerText = `⚠️ ZONE ${cfg.level} KRAKEN BOSS HP: ${boss.hp}/${boss.maxHp} ⚠️`;
+    document.getElementById('bossTitle').innerText = `⚠️ ZONE ${cfg.level} BIG BOSS HP: ${boss.hp}/${boss.maxHp} ⚠️`;
     document.getElementById('bossHpFill').style.width = '100%';
+    document.getElementById('bossHpVal').innerText = boss.hp;
   }
 
   function spawnPowerUp(x, y) {
@@ -1226,7 +1236,8 @@
     powerUps.length = 0;
     floatingMines.length = 0;
     boss = null;
-    portal = null;
+    bossDefeated = false;
+    portal = null; // Exit portal NEVER appears at the start
 
     document.getElementById('boss-hud').style.display = 'none';
     document.getElementById('gameOverModal').style.display = 'none';
@@ -1235,6 +1246,9 @@
     document.getElementById('depthMeter').innerText = `DEPTH: ${cfg.depth}M`;
     document.getElementById('zoneProgressBar').style.width = '0%';
     renderHearts();
+
+    // Spawn Big Boss immediately for this zone
+    spawnBoss(cfg);
 
     showLevelStartPrompt(currentLevel);
   }
@@ -1276,15 +1290,11 @@
 
     if (levelActive) {
       levelDistanceTravelled += 3;
-      const progress = Math.min(100, (levelDistanceTravelled / levelDistanceTarget) * 100);
-      document.getElementById('zoneProgressBar').style.width = `${progress}%`;
-
-      if (levelDistanceTravelled >= levelDistanceTarget) {
-        if (cfg.isBoss && !boss) {
-          spawnBoss(cfg);
-        } else if (!cfg.isBoss && !portal) {
-          portal = { x: canvas.width + 50, y: (canvas.height - 48) / 2, radius: 40 };
-        }
+      if (boss) {
+        const hpPct = Math.max(0, (boss.hp / boss.maxHp) * 100);
+        document.getElementById('zoneProgressBar').style.width = `${100 - hpPct}%`;
+      } else {
+        document.getElementById('zoneProgressBar').style.width = '100%';
       }
 
       if (keys['KeyW'] || keys['ArrowUp']) player.y -= player.baseSpeed;
@@ -1301,7 +1311,7 @@
 
       if (player.invulnerableTimer > 0) player.invulnerableTimer--;
 
-      if (Date.now() - lastSpawn > cfg.spawnRate && enemies.length < cfg.maxEnemies && !boss) {
+      if (Date.now() - lastSpawn > cfg.spawnRate && enemies.length < cfg.maxEnemies && !bossDefeated) {
         spawnEnemy(cfg);
         lastSpawn = Date.now();
       }
@@ -1317,26 +1327,47 @@
       ctx.fill();
     }
 
-    // Portal
+    // Exit Portal (Lumalabas lamang kapag napatay na ang Big Boss)
     if (portal) {
-      portal.x -= 2;
+      if (portal.x > portal.targetX) {
+        portal.x -= 2.2;
+      }
       ctx.save();
       ctx.translate(portal.x, portal.y);
       ctx.rotate(animTime * 1.5);
       const portalGrad = ctx.createRadialGradient(0, 0, 8, 0, 0, portal.radius);
       portalGrad.addColorStop(0, '#ffffff');
-      portalGrad.addColorStop(0.4, '#00ff88');
+      portalGrad.addColorStop(0.35, '#00ff88');
+      portalGrad.addColorStop(0.75, '#00f0ff');
       portalGrad.addColorStop(1, 'rgba(0, 255, 136, 0)');
       ctx.fillStyle = portalGrad;
       ctx.beginPath();
       ctx.arc(0, 0, portal.radius, 0, Math.PI * 2);
       ctx.fill();
+
+      // Swirling rings
+      ctx.strokeStyle = '#00ff88';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, portal.radius * 0.8, portal.radius * 0.35, animTime * 2.2, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // Floating Neon "EXIT PORTAL ❯" label
+      ctx.save();
+      ctx.fillStyle = '#00ff88';
+      ctx.font = 'bold 12px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.shadowColor = '#00ff88';
+      ctx.shadowBlur = 10;
+      ctx.fillText('EXIT PORTAL ❯', portal.x, portal.y - portal.radius - 8);
       ctx.restore();
 
       if (Math.hypot(player.x - portal.x, player.y - portal.y) < player.radius + portal.radius) {
         levelActive = false;
+        portal = null;
         playSfx('victory');
-        document.getElementById('victoryDesc').innerText = `Zone ${currentLevel} cleared! Descending to Zone ${currentLevel + 1}...`;
+        document.getElementById('victoryDesc').innerText = `Big Boss Defeated! Zone ${currentLevel} cleared successfully.`;
         document.getElementById('victoryModal').style.display = 'flex';
       }
     }
@@ -1563,12 +1594,31 @@
           document.getElementById('bossHpVal').innerText = Math.max(0, boss.hp);
 
           if (boss.hp <= 0) {
+            playSfx('explosion');
+            const deadX = boss.x;
+            const deadY = boss.y;
             boss = null;
+            bossDefeated = true;
             document.getElementById('boss-hud').style.display = 'none';
-            levelActive = false;
-            playSfx('victory');
-            document.getElementById('victoryDesc').innerText = `KRAKEN BOSS SLAIN! Zone ${currentLevel} cleared!`;
-            document.getElementById('victoryModal').style.display = 'flex';
+
+            // SAKA LALABAS ANG EXIT: Spawn the Exit Portal only once the Big Boss is killed!
+            portal = {
+              x: canvas.width + 50,
+              y: Math.max(90, Math.min(canvas.height - 130, deadY)),
+              radius: 42,
+              targetX: canvas.width * 0.72
+            };
+
+            // Spawn reward powerups where the boss was destroyed
+            for (let k = 0; k < 3; k++) {
+              powerUps.push({
+                type: k % 2 === 0 ? 'heal' : 'shield',
+                x: deadX + (k - 1) * 36,
+                y: deadY,
+                vx: -1.2,
+                radius: 14
+              });
+            }
             break;
           }
         }
