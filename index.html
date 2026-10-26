@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Ocean Deep Escape - 500 Biome Zones & 5-Min Exploration</title>
+    <title>Ocean Deep Escape - 3D Submarine Survival (500 Levels)</title>
     <meta name="description" content="Ocean Deep Escape: 500 Abyssal Zones Submarine Survival. Explore vast underwater biomes for 5 minutes, battle Apex Leviathans, and earn AdMob rewards.">
-    <meta name="theme-color" content="#020b18">
-    <!-- Canonical URL & Google Verification -->
+    <meta name="theme-color" content="#01060f">
     <link rel="canonical" href="https://gptgamestudio.github.io/ocean-deep-escape./">
     <meta name="google-site-verification" content="googlea3797afede2989e5">
 
@@ -35,11 +34,9 @@
         #game-wrapper {
             position: relative;
             width: 100vw;
-            height: 56.25vw;
-            max-height: 100vh;
-            max-width: 177.78vh;
-            background: #020b18;
-            box-shadow: 0 0 35px rgba(0, 240, 255, 0.25);
+            height: 100vh;
+            height: 100dvh;
+            background: #010814;
             overflow: hidden;
         }
 
@@ -49,12 +46,11 @@
             height: 100%;
         }
 
-        /* TOP HUD STATUS BAR */
         #top-hud {
             position: absolute;
-            top: 10px;
-            left: 12px;
-            right: 12px;
+            top: 8px;
+            left: 10px;
+            right: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -65,14 +61,13 @@
         #status-bar-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             background: rgba(2, 16, 32, 0.92);
             border: 1.5px solid var(--accent-color, #00d2ff);
             border-radius: 8px;
-            padding: 6px 14px;
+            padding: 5px 12px;
             box-shadow: 0 4px 14px rgba(0, 210, 255, 0.3);
             pointer-events: auto;
-            transition: border-color 0.5s;
         }
 
         #status-text {
@@ -87,7 +82,7 @@
             border: 1.5px solid var(--accent-color, #00d2ff);
             color: var(--accent-color, #00d2ff);
             border-radius: 8px;
-            padding: 6px 14px;
+            padding: 5px 12px;
             font-size: 11px;
             font-weight: 800;
             cursor: pointer;
@@ -99,18 +94,17 @@
             color: #01060f;
         }
 
-        /* PROGRESS MINIMAP & BIOME TITLE */
         #minimap-container {
             position: absolute;
-            bottom: 56px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            width: 48%;
-            max-width: 420px;
+            gap: 2px;
+            width: 44%;
+            max-width: 380px;
             z-index: 20;
             pointer-events: none;
         }
@@ -119,16 +113,16 @@
             font-size: 10px;
             font-weight: 800;
             color: #e0faff;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             text-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
         }
 
         #minimap-bar {
             width: 100%;
-            height: 8px;
+            height: 7px;
             background: rgba(0, 20, 38, 0.85);
             border: 1px solid var(--accent-color, #0077aa);
-            border-radius: 6px;
+            border-radius: 5px;
             overflow: hidden;
         }
 
@@ -139,15 +133,14 @@
             transition: width 0.1s linear;
         }
 
-        /* GOOGLE ADMOB BANNER */
         #admob-banner {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 48px;
-            background: rgba(0, 0, 0, 0.92);
-            border-top: 1px solid rgba(0, 210, 255, 0.5);
+            height: 42px;
+            background: rgba(0, 0, 0, 0.94);
+            border-top: 1px solid rgba(0, 210, 255, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -158,7 +151,6 @@
             z-index: 40;
         }
 
-        /* TOUCH CONTROLS */
         #touch-controls {
             position: absolute;
             top: 0;
@@ -171,10 +163,10 @@
 
         #joystick-zone {
             position: absolute;
-            bottom: 65px;
-            left: 20px;
-            width: 105px;
-            height: 105px;
+            bottom: 55px;
+            left: 15px;
+            width: 95px;
+            height: 95px;
             background: radial-gradient(circle, rgba(15, 25, 35, 0.88) 0%, rgba(5, 10, 15, 0.95) 100%);
             border: 2px solid rgba(0, 240, 255, 0.45);
             border-radius: 50%;
@@ -186,8 +178,8 @@
         }
 
         #joystick-knob {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background: radial-gradient(circle, #00d2ff 0%, #004d73 100%);
             border: 2px solid #ffffff;
             border-radius: 50%;
@@ -197,22 +189,22 @@
 
         #action-zone {
             position: absolute;
-            bottom: 65px;
-            right: 20px;
+            bottom: 55px;
+            right: 15px;
             display: flex;
-            gap: 14px;
+            gap: 12px;
             pointer-events: auto;
         }
 
         .action-button {
-            width: 58px;
-            height: 58px;
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.45);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             color: #ffffff;
             cursor: pointer;
@@ -226,7 +218,6 @@
         #btn-torpedo { background: radial-gradient(circle, #e6004c 0%, #66001f 100%); border-color: #ff3366; box-shadow: 0 0 12px rgba(255, 0, 85, 0.4); }
         #btn-boost { background: radial-gradient(circle, #ff9900 0%, #804c00 100%); border-color: #ffcc00; box-shadow: 0 0 12px rgba(255, 183, 3, 0.4); }
 
-        /* OVERLAYS & MODALS */
         .game-overlay {
             position: absolute;
             top: 0;
@@ -238,7 +229,7 @@
             align-items: center;
             justify-content: center;
             z-index: 50;
-            padding: 18px;
+            padding: 16px;
             text-align: center;
         }
 
@@ -246,12 +237,12 @@
             background: #041426;
             border: 2px solid #00d2ff;
             border-radius: 14px;
-            padding: 20px 24px;
+            padding: 18px 22px;
             max-width: 480px;
             width: 92%;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             box-shadow: 0 8px 32px rgba(0, 210, 255, 0.25);
         }
@@ -261,7 +252,7 @@
             color: #001828;
             border: none;
             border-radius: 8px;
-            padding: 11px 22px;
+            padding: 10px 20px;
             font-size: 13px;
             font-weight: 900;
             cursor: pointer;
@@ -276,14 +267,14 @@
 
         #boss-alert-banner {
             position: absolute;
-            top: 60px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 0, 85, 0.92);
             color: #ffffff;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 900;
-            padding: 6px 20px;
+            padding: 6px 18px;
             border-radius: 20px;
             display: none;
             z-index: 28;
@@ -301,19 +292,17 @@
     <div id="game-wrapper">
         <canvas id="gameCanvas"></canvas>
 
-        <div id="boss-alert-banner">⚠️ 5-MINUTE EXPLORATION COMPLETE: APEX BOSS ENGAGED!</div>
+        <div id="boss-alert-banner">⚠️ 5-MINUTE EXPEDITION COMPLETE: APEX BOSS ENGAGED!</div>
 
-        <!-- TOP HUD -->
         <div id="top-hud">
             <div id="status-bar-left">
-                <span id="status-text">ZONE 1 | LVL 1 | ⏱️ 05:00 | ❤️ 5 LIVES | 💙 10/10 HEARTS</span>
+                <span id="status-text">ZONE 1 | LVL 1 | ⏱️ 00:00 | ❤️ 5 LIVES | 💙 10/10 HEARTS</span>
             </div>
             <div>
                 <button class="hud-btn" onclick="openDashboard()">🏠 MENU</button>
             </div>
         </div>
 
-        <!-- MINIMAP CONTAINER & BIOME BADGE -->
         <div id="minimap-container">
             <div id="biome-name-badge">🌊 ZONE 1: SUNLIT TWILIGHT SHALLOWS</div>
             <div id="minimap-bar">
@@ -321,12 +310,10 @@
             </div>
         </div>
 
-        <!-- GOOGLE ADMOB BANNER -->
         <div id="admob-banner">
             [AdMob Banner ID: pub-9786472984542330] - Sponsored Deep Ocean Space
         </div>
 
-        <!-- TOUCH CONTROLS -->
         <div id="touch-controls">
             <div id="joystick-zone"><div id="joystick-knob"></div></div>
             <div id="action-zone">
@@ -335,13 +322,12 @@
             </div>
         </div>
 
-        <!-- MAIN MENU OVERLAY -->
         <div id="menu-overlay" class="game-overlay">
             <div class="modal-card">
                 <h2 style="color: #00f0ff; letter-spacing: 1px;">OCEAN DEEP ESCAPE</h2>
                 <p style="font-size: 11px; color: #a4bed8; line-height: 1.5;">
-                    • 500 Abyssal Zones with 7 Unique Beautiful Biome Colors!<br>
-                    • Long 5-Minute Expedition in every zone before the Boss awakens!<br>
+                    • 500 Abyssal Zones with 7 Beautiful Dynamic Biome Colors!<br>
+                    • Continuous 5-Minute Deep Ocean Expedition before Boss Battle!<br>
                     • 1 Watch Ad = 5 Live Credits (10 Hearts per Life)!
                 </p>
                 <button class="primary-btn" id="start-game-btn" onclick="startGameSession()">START EXPLORING (5-MIN EXPEDITION)</button>
@@ -349,7 +335,6 @@
             </div>
         </div>
 
-        <!-- GAME OVER / HEART LOST OVERLAY -->
         <div id="game-over-overlay" class="game-overlay" style="display: none;">
             <div class="modal-card" style="border-color: #ff3366;">
                 <h2 style="color: #ff3366;" id="death-title">💔 HEART DEPLETED</h2>
@@ -359,70 +344,24 @@
             </div>
         </div>
 
-        <!-- VICTORY OVERLAY -->
         <div id="victory-overlay" class="game-overlay" style="display: none;">
             <div class="modal-card" style="border-color: #00ff88;">
                 <h2 style="color: #00ff88;">🏆 APEX LEVIATHAN DEFEATED!</h2>
-                <p style="font-size: 12px; color: #a4bed8;" id="victory-desc">Abyssal escape portal is now active. Ready for next zone?</p>
+                <p style="font-size: 12px; color: #a4bed8;">Abyssal escape portal is now active. Ready for next zone?</p>
                 <button class="primary-btn" onclick="advanceToNextLevel()">ENTER ESCAPE PORTAL (NEXT LEVEL)</button>
             </div>
         </div>
     </div>
 
     <script>
-        // =========================================================================
-        // 1. GODOT IMAGE SPRITES (LOADED FROM FILESYSTEM + SVG FALLBACK)
-        // =========================================================================
-        function loadSprite(filename, fallbackSvg) {
+        function makeSvgImage(svg) {
             const img = new Image();
-            // Subok munang i-load mula sa file path (assets/sprites/...)
-            img.src = "assets/sprites/" + filename;
-            img.onerror = () => {
-                // Kung wala pang file sa host, mag-fallback sa embedded crisp SVG
-                img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(fallbackSvg.trim());
-            };
+            img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
             return img;
         }
 
         const SPRITES = {
-            player: loadSprite("player_submarine.svg", `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
-                    <defs>
-                        <linearGradient id="pHull" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#8DA4C4"/>
-                            <stop offset="35%" stop-color="#384E66"/>
-                            <stop offset="75%" stop-color="#1B2836"/>
-                            <stop offset="100%" stop-color="#0F1720"/>
-                        </linearGradient>
-                        <radialGradient id="pDome" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#00F0FF" stop-opacity="0.95"/>
-                            <stop offset="100%" stop-color="#00527A"/>
-                        </radialGradient>
-                    </defs>
-                    <path d="M16 18 L6 4 L20 6 L26 18 Z" fill="#4A607A"/>
-                    <path d="M16 42 L6 56 L20 54 L26 42 Z" fill="#223140"/>
-                    <rect x="2" y="26" width="10" height="8" fill="#2B3A4A"/>
-                    <ellipse cx="4" cy="30" rx="3" ry="14" fill="#FFD166"/>
-                    <circle cx="6" cy="30" r="4" fill="#B07D1E"/>
-                    <path d="M12 20 L50 18 L54 6 L76 6 L82 18 C104 19 118 27 120 30 C118 33 104 41 82 42 L12 42 C6 36 4 24 12 20 Z" fill="url(#pHull)" stroke="#5A728F" stroke-width="1.5"/>
-                    <line x1="30" y1="20" x2="30" y2="42" stroke="#5A728F" stroke-width="1.2"/>
-                    <circle cx="30" cy="24" r="1.3" fill="#FFD166"/>
-                    <circle cx="30" cy="38" r="1.3" fill="#FFD166"/>
-                    <line x1="48" y1="20" x2="48" y2="42" stroke="#5A728F" stroke-width="1.2"/>
-                    <circle cx="48" cy="24" r="1.3" fill="#FFD166"/>
-                    <circle cx="48" cy="38" r="1.3" fill="#FFD166"/>
-                    <path d="M92 23 C106 25 114 29 116 30 C114 31 106 35 92 37 Z" fill="url(#pDome)"/>
-                    <circle cx="98" cy="29" r="3.2" fill="#0A1E2E"/>
-                    <rect x="68" y="14" width="24" height="6" rx="2" fill="#1E2D3D" stroke="#5A728F" stroke-width="0.8"/>
-                    <circle cx="72" cy="17" r="1.5" fill="#00FF88"/>
-                    <rect x="68" y="40" width="24" height="6" rx="2" fill="#1E2D3D" stroke="#5A728F" stroke-width="0.8"/>
-                    <circle cx="72" cy="43" r="1.5" fill="#00FF88"/>
-                    <circle cx="65" cy="4" r="2.5" fill="#FFD166"/>
-                    <circle cx="78" cy="18" r="2" fill="#FF0055"/>
-                    <circle cx="78" cy="42" r="2" fill="#00FF66"/>
-                </svg>
-            `),
-            patrolSub: loadSprite("patrol_submarine.svg", `
+            patrolSub: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50">
                     <defs>
                         <linearGradient id="eHull" x1="0" y1="0" x2="0" y2="1">
@@ -441,7 +380,7 @@
                     <rect x="38" y="20" width="4" height="12" fill="#FFB703"/>
                 </svg>
             `),
-            patrolSubAlert: loadSprite("patrol_submarine_alert.svg", `
+            patrolSubAlert: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50">
                     <defs>
                         <linearGradient id="eHullAlert" x1="0" y1="0" x2="0" y2="1">
@@ -457,7 +396,7 @@
                     <circle cx="86" cy="25" r="2" fill="#FFFFFF"/>
                 </svg>
             `),
-            shark: loadSprite("shark_predator.svg", `
+            shark: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 50" width="110" height="50">
                     <defs>
                         <linearGradient id="sharkGrad" x1="0" y1="0" x2="0" y2="1">
@@ -475,7 +414,7 @@
                     <path d="M90 28 L94 32 L98 28 L102 32 L106 28" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
                 </svg>
             `),
-            angler: loadSprite("angler_fish.svg", `
+            angler: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95 75" width="95" height="75">
                     <defs>
                         <radialGradient id="escaGlow" cx="50%" cy="50%" r="50%">
@@ -492,16 +431,15 @@
                     <circle cx="62" cy="38" r="4" fill="#90E0EF"/>
                 </svg>
             `),
-            kraken: loadSprite("kraken_squid.svg", `
+            kraken: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 70" width="120" height="70">
                     <path d="M118 35 C100 20 75 22 55 26 L55 44 C75 48 100 50 118 35 Z" fill="#7209B7"/>
                     <circle cx="60" cy="32" r="5" fill="#FFD166"/>
                     <path d="M55 28 C35 22 18 38 4 30" fill="none" stroke="#7209B7" stroke-width="4.5" stroke-linecap="round"/>
-                    <path d="M55 33 C35 26 15 44 2 36" fill="none" stroke="#B5179E" stroke-width="4" stroke-linecap="round"/>
                     <circle cx="35" cy="26" r="1.5" fill="#4CC9F0"/>
                 </svg>
             `),
-            eel: loadSprite("viper_eel.svg", `
+            eel: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45" width="130" height="45">
                     <circle cx="10" cy="22" r="4" fill="#00F5D4"/>
                     <circle cx="22" cy="18" r="5" fill="#00F5D4"/>
@@ -514,7 +452,7 @@
                     <circle cx="118" cy="19" r="2.5" fill="#FF0055"/>
                 </svg>
             `),
-            turret: loadSprite("defense_turret.svg", `
+            turret: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
                     <rect x="10" y="10" width="40" height="40" rx="8" fill="#1A2736" stroke="#FF9900" stroke-width="2.5"/>
                     <circle cx="30" cy="30" r="15" fill="#2C3E50" stroke="#00D2FF" stroke-width="1.5"/>
@@ -522,7 +460,7 @@
                     <circle cx="30" cy="30" r="4.5" fill="#FFD166"/>
                 </svg>
             `),
-            boss: loadSprite("leviathan_boss.svg", `
+            boss: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 96" width="180" height="96">
                     <path d="M35 48 L8 24 L22 48 L8 72 Z" fill="#2C1938" stroke="#FF0055" stroke-width="1.5"/>
                     <path d="M40 48 C60 14 110 10 145 28 L176 48 L145 68 C110 86 60 82 40 48 Z" fill="#2B0938" stroke="#FF0055" stroke-width="2.5"/>
@@ -530,7 +468,7 @@
                     <circle cx="152" cy="40" r="4.5" fill="#FFD166"/>
                 </svg>
             `),
-            portal: loadSprite("portal_escape.svg", `
+            portal: makeSvgImage(`
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
                     <circle cx="50" cy="50" r="42" fill="none" stroke="#00FF88" stroke-width="4" stroke-dasharray="14,8"/>
                     <circle cx="50" cy="50" r="32" fill="none" stroke="#00F0FF" stroke-width="3" stroke-dasharray="10,6"/>
@@ -539,65 +477,65 @@
             `)
         };
 
-        // =========================================================================
-        // 2. 7 DYNAMIC OCEAN BIOME COLOR SYSTEMS (ACROSS 500 LEVELS)
-        // =========================================================================
+        function safeDrawImage(img, x, y, w, h) {
+            try {
+                if (img && img.complete && img.naturalWidth > 0) {
+                    ctx.drawImage(img, x, y, w, h);
+                    return true;
+                }
+            } catch (err) {}
+            return false;
+        }
+
         const BIOMES = [
             {
                 minLevel: 1, maxLevel: 50,
                 name: "SUNLIT TWILIGHT SHALLOWS",
                 waterTop: "#002b47", waterMid: "#001a2e", waterBottom: "#000a14",
                 trenchBorder: "#003b5c", accentColor: "#00d2ff",
-                causticColor: "rgba(100, 223, 223, 0.045)",
-                portalGlow: "#00ff88"
+                causticColor: "rgba(100, 223, 223, 0.045)"
             },
             {
                 minLevel: 51, maxLevel: 120,
                 name: "MIDNIGHT SAPPHIRE TRENCH",
                 waterTop: "#010d28", waterMid: "#01081a", waterBottom: "#00030a",
                 trenchBorder: "#0d2b63", accentColor: "#3a86ff",
-                causticColor: "rgba(58, 134, 255, 0.045)",
-                portalGlow: "#00f0ff"
+                causticColor: "rgba(58, 134, 255, 0.045)"
             },
             {
                 minLevel: 121, maxLevel: 200,
                 name: "BIOLUMINESCENT CORAL RIFT",
                 waterTop: "#1a0429", waterMid: "#11021c", waterBottom: "#06000a",
                 trenchBorder: "#3d0b5e", accentColor: "#c77dff",
-                causticColor: "rgba(199, 125, 255, 0.05)",
-                portalGlow: "#ff007f"
+                causticColor: "rgba(199, 125, 255, 0.05)"
             },
             {
                 minLevel: 201, maxLevel: 290,
                 name: "THERMAL HYDROTHERMAL VENTS",
                 waterTop: "#2e0909", waterMid: "#1c0404", waterBottom: "#0a0101",
                 trenchBorder: "#5e1515", accentColor: "#ff9e00",
-                causticColor: "rgba(255, 158, 0, 0.05)",
-                portalGlow: "#ff3366"
+                causticColor: "rgba(255, 158, 0, 0.05)"
             },
             {
                 minLevel: 291, maxLevel: 380,
                 name: "PHOSPHOR EMERALD DEPTHS",
                 waterTop: "#022416", waterMid: "#01170e", waterBottom: "#000a06",
                 trenchBorder: "#0b4d32", accentColor: "#00f5d4",
-                causticColor: "rgba(0, 245, 212, 0.045)",
-                portalGlow: "#52b788"
+                causticColor: "rgba(0, 245, 212, 0.045)"
             },
             {
                 minLevel: 381, maxLevel: 450,
                 name: "GLACIAL FROST MARIANA",
                 waterTop: "#0a2238", waterMid: "#051524", waterBottom: "#01080f",
                 trenchBorder: "#1e4d75", accentColor: "#a0c4ff",
-                causticColor: "rgba(160, 196, 255, 0.055)",
-                portalGlow: "#e0faff"
+                causticColor: "rgba(160, 196, 255, 0.055)"
             },
             {
                 minLevel: 451, maxLevel: 500,
                 name: "HADOPELAGIC LEVIATHAN VOID",
                 waterTop: "#0d0014", waterMid: "#06000a", waterBottom: "#000000",
                 trenchBorder: "#40001f", accentColor: "#ff0055",
-                causticColor: "rgba(255, 0, 85, 0.06)",
-                portalGlow: "#ffd166"
+                causticColor: "rgba(255, 0, 85, 0.06)"
             }
         ];
 
@@ -605,15 +543,9 @@
             return BIOMES.find(b => lvl >= b.minLevel && lvl <= b.maxLevel) || BIOMES[0];
         }
 
-        // =========================================================================
-        // 3. 5-MINUTE PLAY EXPLORATION CONFIGURATION (500 LEVELS)
-        // =========================================================================
         function getLevelConfig(lvl) {
             const level = Math.max(1, Math.min(500, lvl));
             const biome = getBiome(level);
-
-            // 5 minutes cruising exploration distance:
-            // Cruising at 260px/sec with enemy encounters = ~16,500px world length!
             const worldWidth = 16000 + (level - 1) * 35;
             const bossTriggerX = worldWidth - 1100;
 
@@ -626,21 +558,27 @@
                 warningRadius: 180 + Math.min(60, level * 0.12),
                 spawnInterval: Math.max(1.2, 3.2 - (level * 0.004)),
                 bossTriggerX,
-                targetExpeditionSeconds: 300 // 5 Minutes
+                targetExpeditionSeconds: 300
             };
         }
 
         let currentLevel = parseInt(localStorage.getItem("ocean_current_level")) || 1;
-        let playerLives = parseInt(localStorage.getItem("ocean_player_lives")) || 5;       // Live Credits
-        let playerHearts = parseInt(localStorage.getItem("ocean_player_hearts")) || 10;   // 10 Hearts per Life
+        let playerLives = parseInt(localStorage.getItem("ocean_player_lives")) || 5;
+        let playerHearts = parseInt(localStorage.getItem("ocean_player_hearts")) || 10;
         let deathCountForInterstitial = 0;
         let gameState = "MENU";
         let hasActiveSession = false;
-
-        let levelElapsedTime = 0; // Tracks the 5-minute exploration progress
+        let levelElapsedTime = 0;
 
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = 1280;
+            canvas.height = 720;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
 
         let config = getLevelConfig(currentLevel);
         let player, enemies, turrets, boss, playerBullets, enemyBullets, creatures, bubbles, portal;
@@ -652,16 +590,15 @@
             config = getLevelConfig(lvl);
             levelElapsedTime = 0;
 
-            // Apply Biome Accent Colors to CSS UI
             document.documentElement.style.setProperty("--accent-color", config.biome.accentColor);
             document.getElementById("biome-name-badge").textContent = `🌊 ZONE ${Math.ceil(lvl / 71)}: ${config.biome.name}`;
 
             player = {
                 x: 180, y: 360, vx: 0, vy: 0,
                 speed: 260, boostSpeed: 420, isBoosting: false,
-                width: 60, height: 30, facingRight: true,
+                facingRight: true,
                 weaponLevel: Math.min(5, 1 + Math.floor(lvl / 100)),
-                shield: false, invulnerable: 0
+                invulnerable: 0
             };
 
             enemies = [];
@@ -673,7 +610,6 @@
                 turretX += 750;
             }
 
-            // Creatures wandering in deep ocean (Sharks, Anglers, Kraken, Eels)
             creatures = [];
             const creatureTypes = ["SHARK", "ANGLER", "KRAKEN", "EEL"];
             for (let i = 0; i < 28; i++) {
@@ -710,6 +646,8 @@
             updateHUD();
         }
 
+        initLevel(currentLevel);
+
         function updateHUD() {
             const minutes = Math.floor(levelElapsedTime / 60);
             const seconds = Math.floor(levelElapsedTime % 60);
@@ -728,9 +666,6 @@
             }
         }
 
-        // =========================================================================
-        // 4. WATCH AD REWARD SYSTEM (ADMOB REWARDED & INTERSTITIAL ADS)
-        // =========================================================================
         function watchAdForLives() {
             playerLives += 5;
             playerHearts = 10;
@@ -742,9 +677,6 @@
             }
         }
 
-        // =========================================================================
-        // 5. TOUCH & KEYBOARD CONTROLS
-        // =========================================================================
         window.addEventListener("keydown", e => {
             keys[e.code] = true;
             if (e.code === "Space") fireBullet();
@@ -810,20 +742,17 @@
             }
         }
 
-        // =========================================================================
-        // 6. NAVIGATION & SESSION FLOW
-        // =========================================================================
         function startGameSession() {
             document.getElementById("menu-overlay").style.display = "none";
             document.getElementById("game-over-overlay").style.display = "none";
             document.getElementById("victory-overlay").style.display = "none";
             hasActiveSession = true;
             gameState = "PLAYING";
-            initLevel(currentLevel);
         }
 
         function respawnOrRetry() {
             document.getElementById("game-over-overlay").style.display = "none";
+            initLevel(currentLevel);
             startGameSession();
         }
 
@@ -837,19 +766,16 @@
             document.getElementById("victory-overlay").style.display = "none";
             currentLevel = Math.min(500, currentLevel + 1);
             localStorage.setItem("ocean_current_level", currentLevel);
-            gameState = "PLAYING";
             initLevel(currentLevel);
+            gameState = "PLAYING";
         }
 
-        // =========================================================================
-        // 7. MAIN GAME LOOP
-        // =========================================================================
         let lastTime = performance.now();
         function loop(now) {
             const dt = Math.min((now - lastTime) / 1000, 0.1);
             lastTime = now;
             if (gameState === "PLAYING") update(dt);
-            render();
+            render(now * 0.001);
             requestAnimationFrame(loop);
         }
 
@@ -876,10 +802,8 @@
 
             if (player.invulnerable > 0) player.invulnerable -= dt;
 
-            // Update Minimap Progress Bar (Long 5-min journey gauge)
             document.getElementById("minimap-fill").style.width = Math.min(100, (player.x / config.worldWidth) * 100) + "%";
 
-            // Spawn Patrol Submarines
             enemySpawnTimer += dt;
             if (enemySpawnTimer >= config.spawnInterval && player.x < config.worldWidth - 1200) {
                 enemySpawnTimer = 0;
@@ -894,7 +818,6 @@
                 });
             }
 
-            // Update Patrol Submarines with Radar Warning AI
             enemies.forEach((e) => {
                 const distToPlayer = Math.hypot(player.x - e.x, player.y - e.y);
                 e.isAlerted = (distToPlayer <= config.warningRadius);
@@ -907,15 +830,17 @@
                 }
             });
 
-            // Update Creatures
             creatures.forEach(c => {
                 c.x += c.vx * dt;
+                if (c.x < player.x - 800) {
+                    c.x = player.x + 900 + Math.random() * 400;
+                    c.y = 100 + Math.random() * 520;
+                }
                 if (player.invulnerable <= 0 && Math.hypot(c.x - player.x, c.y - player.y) < 38) {
                     onPlayerDamage();
                 }
             });
 
-            // Update Turrets
             turrets.forEach(t => {
                 t.shootTimer += dt;
                 if (t.shootTimer >= 2.4 && Math.abs(player.x - t.x) < 700) {
@@ -924,7 +849,6 @@
                 }
             });
 
-            // Player Bullets
             for (let i = playerBullets.length - 1; i >= 0; i--) {
                 const b = playerBullets[i];
                 b.x += b.vx * dt;
@@ -970,7 +894,6 @@
                 }
             }
 
-            // Enemy Torpedoes & Bullets
             for (let i = enemyBullets.length - 1; i >= 0; i--) {
                 const eb = enemyBullets[i];
                 eb.x += eb.vx * dt;
@@ -983,7 +906,6 @@
                 }
             }
 
-            // Boss Trigger (Occurs after long expedition reaching boss trigger boundary)
             if (player.x >= config.bossTriggerX && !boss.activated && boss.hp > 0) {
                 boss.activated = true;
                 const banner = document.getElementById("boss-alert-banner");
@@ -1006,12 +928,10 @@
                 }
             }
 
-            // End Portal Collision
             if (portal.open && Math.hypot(player.x - portal.x, player.y - portal.y) < 60) {
                 advanceToNextLevel();
             }
 
-            // Bubbles animation
             bubbles.forEach(b => {
                 b.y -= b.vy * dt;
                 if (b.y < 0) {
@@ -1022,13 +942,12 @@
         }
 
         function onPlayerDamage() {
-            playerHearts -= 1; // Bawas 1 Heart
+            playerHearts -= 1;
             if (playerHearts <= 0) {
-                playerLives -= 1; // Bawas 1 Live Credit
-                playerHearts = 10; // Reset 10 Hearts
+                playerLives -= 1;
+                playerHearts = 10;
                 deathCountForInterstitial++;
 
-                // AdMob Interstitial Trigger matapos ang 2 deaths
                 if (deathCountForInterstitial >= 2) {
                     deathCountForInterstitial = 0;
                     alert("📺 [AdMob Interstitial Ad]: Displayed after 2 player deaths!");
@@ -1049,19 +968,189 @@
             updateHUD();
         }
 
-        // =========================================================================
-        // 8. RENDER METHOD WITH DYNAMIC BIOME COLORS
-        // =========================================================================
-        function render() {
-            canvas.width = 1280;
-            canvas.height = 720;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function drawGodotSubmarine3D(ctx, x, y, facingRight, time, invulnerable) {
+            ctx.save();
+            ctx.translate(x, y);
+            if (!facingRight) ctx.scale(-1, 1);
+
+            if (invulnerable > 0 && Math.floor(time * 15) % 2 === 0) {
+                ctx.globalAlpha = 0.45;
+            }
+
+            // Volumetric Searchlight Cone
+            const beamLength = 460;
+            const beamSpread = 115;
+            const beamGrad = ctx.createLinearGradient(50, 0, 50 + beamLength, 0);
+            beamGrad.addColorStop(0, "rgba(224, 250, 255, 0.42)");
+            beamGrad.addColorStop(0.3, "rgba(0, 240, 255, 0.18)");
+            beamGrad.addColorStop(1, "rgba(0, 53, 84, 0.0)");
+            ctx.fillStyle = beamGrad;
+            ctx.beginPath();
+            ctx.moveTo(50, -8);
+            ctx.lineTo(50 + beamLength, -beamSpread);
+            ctx.lineTo(50 + beamLength, beamSpread);
+            ctx.lineTo(50, 8);
+            ctx.closePath();
+            ctx.fill();
+
+            // 3D Rotating Propeller
+            const propRotation = (time * 18) % (Math.PI * 2);
+            const propX = -58;
+            const propY = 0;
+
+            ctx.fillStyle = "#2B3A4A";
+            ctx.fillRect(propX, propY - 5, 12, 10);
+
+            for (let i = 0; i < 3; i++) {
+                const bladeAngle = propRotation + (i * Math.PI * 2 / 3);
+                const bladeSpread = Math.sin(bladeAngle) * 22;
+                const depthAlpha = 0.5 + 0.5 * Math.max(0, Math.cos(bladeAngle));
+                ctx.strokeStyle = `rgba(255, 209, 102, ${depthAlpha})`;
+                ctx.lineWidth = 4.5;
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.moveTo(propX + 2, propY);
+                ctx.lineTo(propX - 4, propY + bladeSpread);
+                ctx.stroke();
+            }
+
+            const hubGrad = ctx.createRadialGradient(propX, propY, 1, propX, propY, 7);
+            hubGrad.addColorStop(0, "#FFE194");
+            hubGrad.addColorStop(1, "#B07D1E");
+            ctx.fillStyle = hubGrad;
+            ctx.beginPath();
+            ctx.arc(propX, propY, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Main Metallic Hull
+            ctx.beginPath();
+            ctx.moveTo(-48, -14);
+            ctx.lineTo(-10, -15);
+            ctx.lineTo(-6, -30);
+            ctx.lineTo(16, -30);
+            ctx.lineTo(22, -15);
+            ctx.bezierCurveTo(44, -14, 58, -6, 60, 0);
+            ctx.bezierCurveTo(58, 6, 44, 14, 22, 15);
+            ctx.lineTo(-48, 14);
+            ctx.bezierCurveTo(-52, 8, -54, -8, -48, -14);
+            ctx.closePath();
+
+            const hullGrad = ctx.createLinearGradient(0, -30, 0, 20);
+            hullGrad.addColorStop(0.0, "#8DA4C4");
+            hullGrad.addColorStop(0.35, "#384E66");
+            hullGrad.addColorStop(0.75, "#1B2836");
+            hullGrad.addColorStop(1.0, "#0F1720");
+            ctx.fillStyle = hullGrad;
+            ctx.fill();
+            ctx.strokeStyle = "#5A728F";
+            ctx.lineWidth = 1.6;
+            ctx.stroke();
+
+            // Ribs & Brass Rivets
+            const ribs = [-30, -12, 8, 28];
+            for (let rx of ribs) {
+                ctx.strokeStyle = "#5A728F";
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(rx, -13);
+                ctx.lineTo(rx, 13);
+                ctx.stroke();
+
+                ctx.fillStyle = "#FFD166";
+                ctx.beginPath();
+                ctx.arc(rx, -8, 1.3, 0, Math.PI * 2);
+                ctx.arc(rx, 8, 1.3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Stabilizer Fins
+            ctx.beginPath();
+            ctx.moveTo(-44, -12);
+            ctx.lineTo(-52, -26);
+            ctx.lineTo(-40, -24);
+            ctx.lineTo(-34, -12);
+            ctx.closePath();
+            ctx.fillStyle = "#4A607A";
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(-44, 12);
+            ctx.lineTo(-52, 26);
+            ctx.lineTo(-40, 24);
+            ctx.lineTo(-34, 12);
+            ctx.closePath();
+            ctx.fillStyle = "#223140";
+            ctx.fill();
+
+            // Cockpit Dome & Diver Silhouette
+            ctx.beginPath();
+            ctx.moveTo(32, -9);
+            ctx.bezierCurveTo(46, -7, 54, -3, 56, 0);
+            ctx.bezierCurveTo(54, 3, 46, 7, 32, 9);
+            ctx.closePath();
+            const canopyGrad = ctx.createRadialGradient(42, 0, 2, 42, 0, 16);
+            canopyGrad.addColorStop(0, "rgba(0, 240, 255, 0.95)");
+            canopyGrad.addColorStop(1, "rgba(0, 82, 122, 0.95)");
+            ctx.fillStyle = canopyGrad;
+            ctx.fill();
+
+            ctx.fillStyle = "#0A1E2E";
+            ctx.beginPath();
+            ctx.arc(39, -1, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(36, 2, 8, 5);
+
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.arc(43, 0, 9, Math.PI * 1.1, Math.PI * 1.6);
+            ctx.stroke();
+
+            // Beacon & Running Lights
+            const strobeOn = (time % 1.0) < 0.25;
+            ctx.fillStyle = strobeOn ? "#FFD166" : "#886611";
+            ctx.beginPath();
+            ctx.arc(5, -33, strobeOn ? 4.5 : 2.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = "#FF0055";
+            ctx.beginPath();
+            ctx.arc(18, -14, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#00FF66";
+            ctx.beginPath();
+            ctx.arc(18, 14, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Torpedo Pods
+            const podY = [-16, 16];
+            for (let py of podY) {
+                ctx.fillStyle = "#1E2D3D";
+                ctx.fillRect(8, py - 3.5, 26, 7);
+                ctx.strokeStyle = "#5A728F";
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(10, py - 2);
+                ctx.lineTo(32, py - 2);
+                ctx.stroke();
+
+                ctx.fillStyle = "#00FF88";
+                ctx.beginPath();
+                ctx.arc(12, py, 1.8, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function render(time) {
+            ctx.clearRect(0, 0, 1280, 720);
 
             const camX = Math.max(0, Math.min(config.worldWidth - 1280, player ? player.x - 300 : 0));
             ctx.save();
             ctx.translate(-camX, 0);
 
-            // 1. DYNAMIC BIOME WATER GRADIENT (Unique per zone area)
+            // 1. Dynamic Biome Water Gradient
             const abyssGrad = ctx.createLinearGradient(0, 0, 0, 720);
             abyssGrad.addColorStop(0, config.biome.waterTop);
             abyssGrad.addColorStop(0.5, config.biome.waterMid);
@@ -1069,8 +1158,7 @@
             ctx.fillStyle = abyssGrad;
             ctx.fillRect(camX, 0, 1280, 720);
 
-            // 2. VOLUMETRIC SUNLIGHT / BIOME CAUSTIC BEAMS
-            const time = performance.now() * 0.001;
+            // 2. Volumetric Sunlight / Biome Caustic Beams
             for (let i = 0; i < 4; i++) {
                 const shaftX = camX + ((i * 320 + Math.sin(time * 0.5 + i) * 60) % 1400) - 100;
                 ctx.fillStyle = config.biome.causticColor;
@@ -1083,7 +1171,7 @@
                 ctx.fill();
             }
 
-            // 3. CEILING AND FLOOR TRENCH BORDERS
+            // 3. Trench Borders
             ctx.fillStyle = config.biome.trenchBorder;
             ctx.fillRect(camX, 0, 1280, 42);
             ctx.fillRect(camX, 678, 1280, 42);
@@ -1094,7 +1182,7 @@
             ctx.moveTo(camX, 678); ctx.lineTo(camX + 1280, 678);
             ctx.stroke();
 
-            // 4. BUBBLES
+            // 4. Bubbles
             bubbles.forEach(b => {
                 ctx.fillStyle = `rgba(100, 223, 223, ${b.alpha})`;
                 ctx.beginPath();
@@ -1102,35 +1190,51 @@
                 ctx.fill();
             });
 
-            // 5. DEFENSE TURRETS (TOP & BOTTOM)
+            // 5. Turrets
             turrets.forEach(t => {
-                ctx.drawImage(SPRITES.turret, t.x - 30, t.y - 30, 60, 60);
+                if (!safeDrawImage(SPRITES.turret, t.x - 30, t.y - 30, 60, 60)) {
+                    ctx.fillStyle = "#1f2d3d";
+                    ctx.fillRect(t.x - 20, t.y - 20, 40, 40);
+                    ctx.fillStyle = "#ff0055";
+                    ctx.beginPath(); ctx.arc(t.x, t.y, 10, 0, Math.PI * 2); ctx.fill();
+                }
             });
 
-            // 6. DEEP SEA CREATURES (SHARKS, ANGLERS, KRAKEN, VIPER EEL)
+            // 6. Deep Sea Creatures
             creatures.forEach(c => {
                 ctx.save();
                 ctx.translate(c.x, c.y);
                 if (c.vx < 0) ctx.scale(-1, 1);
 
                 if (c.type === "SHARK") {
-                    ctx.drawImage(SPRITES.shark, -55, -25, 110, 50);
+                    if (!safeDrawImage(SPRITES.shark, -55, -25, 110, 50)) {
+                        ctx.fillStyle = "#ff3366";
+                        ctx.beginPath(); ctx.ellipse(0, 0, 35, 16, 0, 0, Math.PI * 2); ctx.fill();
+                    }
                 } else if (c.type === "KRAKEN") {
-                    ctx.drawImage(SPRITES.kraken, -60, -35, 120, 70);
+                    if (!safeDrawImage(SPRITES.kraken, -60, -35, 120, 70)) {
+                        ctx.fillStyle = "#7209b7";
+                        ctx.beginPath(); ctx.arc(0, 0, 24, 0, Math.PI * 2); ctx.fill();
+                    }
                 } else if (c.type === "EEL") {
-                    ctx.drawImage(SPRITES.eel, -65, -22, 130, 45);
+                    if (!safeDrawImage(SPRITES.eel, -65, -22, 130, 45)) {
+                        ctx.fillStyle = "#00f5d4";
+                        ctx.fillRect(-40, -6, 80, 12);
+                    }
                 } else {
-                    ctx.drawImage(SPRITES.angler, -48, -38, 95, 75);
+                    if (!safeDrawImage(SPRITES.angler, -48, -38, 95, 75)) {
+                        ctx.fillStyle = "#9d4edd";
+                        ctx.beginPath(); ctx.arc(0, 0, 20, 0, Math.PI * 2); ctx.fill();
+                    }
                 }
                 ctx.restore();
             });
 
-            // 7. PATROL SUBMARINES (WITH AREA OF WARNING RADAR)
+            // 7. Patrol Submarines with Radar Warning Ring
             enemies.forEach(e => {
                 ctx.save();
                 ctx.translate(e.x, e.y);
 
-                // Radar Warning Circle
                 ctx.beginPath();
                 ctx.arc(0, 0, config.warningRadius, 0, Math.PI * 2);
                 if (e.isAlerted) {
@@ -1154,7 +1258,10 @@
                 ctx.setLineDash([]);
 
                 const img = e.isAlerted ? SPRITES.patrolSubAlert : SPRITES.patrolSub;
-                ctx.drawImage(img, -50, -25, 100, 50);
+                if (!safeDrawImage(img, -50, -25, 100, 50)) {
+                    ctx.fillStyle = e.isAlerted ? "#3d0b1a" : "#132338";
+                    ctx.beginPath(); ctx.ellipse(0, 0, 30, 12, 0, 0, Math.PI * 2); ctx.fill();
+                }
 
                 if (e.hp < e.maxHp) {
                     ctx.fillStyle = "#000";
@@ -1165,37 +1272,12 @@
                 ctx.restore();
             });
 
-            // 8. PLAYER SUBMARINE (GODOT 3D SPRITE WITH VOLUMETRIC SEARCHLIGHT)
+            // 8. Player Submarine (Exact 1:1 Godot 3D Submarine)
             if (player) {
-                ctx.save();
-                ctx.translate(player.x, player.y);
-                if (!player.facingRight) ctx.scale(-1, 1);
-
-                if (player.invulnerable > 0 && Math.floor(Date.now() / 80) % 2 === 0) {
-                    ctx.globalAlpha = 0.45;
-                }
-
-                // Volumetric Searchlight Beam
-                const beamGrad = ctx.createLinearGradient(40, 0, 440, 0);
-                beamGrad.addColorStop(0, "rgba(224, 250, 255, 0.40)");
-                beamGrad.addColorStop(0.3, "rgba(0, 240, 255, 0.16)");
-                beamGrad.addColorStop(1, "rgba(0, 53, 84, 0.0)");
-                ctx.fillStyle = beamGrad;
-                ctx.beginPath();
-                ctx.moveTo(40, -8);
-                ctx.lineTo(440, -100);
-                ctx.lineTo(440, 100);
-                ctx.lineTo(40, 8);
-                ctx.closePath();
-                ctx.fill();
-
-                // 3D Metallic Submarine Sprite
-                ctx.drawImage(SPRITES.player, -60, -30, 120, 60);
-
-                ctx.restore();
+                drawGodotSubmarine3D(ctx, player.x, player.y, player.facingRight, time, player.invulnerable);
             }
 
-            // 9. PLAYER BULLETS
+            // 9. Bullets
             ctx.fillStyle = "#00ff88";
             playerBullets.forEach(b => {
                 ctx.beginPath();
@@ -1203,7 +1285,6 @@
                 ctx.fill();
             });
 
-            // 10. ENEMY BULLETS / FIREBALLS
             ctx.fillStyle = "#ff0055";
             enemyBullets.forEach(eb => {
                 ctx.beginPath();
@@ -1211,11 +1292,14 @@
                 ctx.fill();
             });
 
-            // 11. APEX LEVIATHAN PRIME BOSS
+            // 10. Boss
             if (boss && boss.hp > 0) {
                 ctx.save();
                 ctx.translate(boss.x, boss.y);
-                ctx.drawImage(SPRITES.boss, -90, -48, 180, 96);
+                if (!safeDrawImage(SPRITES.boss, -90, -48, 180, 96)) {
+                    ctx.fillStyle = "#2a0010";
+                    ctx.beginPath(); ctx.ellipse(0, 0, 60, 30, 0, 0, Math.PI * 2); ctx.fill();
+                }
 
                 if (boss.activated) {
                     const barW = 140;
@@ -1242,12 +1326,14 @@
                 ctx.restore();
             }
 
-            // 12. ESCAPE PORTAL (AFTER BOSS DEFEAT)
+            // 11. Escape Portal
             if (portal.open) {
                 ctx.save();
                 ctx.translate(portal.x, portal.y);
-                ctx.drawImage(SPRITES.portal, -portal.radius, -portal.radius, portal.radius * 2, portal.radius * 2);
-
+                if (!safeDrawImage(SPRITES.portal, -portal.radius, -portal.radius, portal.radius * 2, portal.radius * 2)) {
+                    ctx.fillStyle = "rgba(0, 255, 136, 0.3)";
+                    ctx.beginPath(); ctx.arc(0, 0, portal.radius, 0, Math.PI * 2); ctx.fill();
+                }
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "bold 11px sans-serif";
                 ctx.textAlign = "center";
@@ -1257,10 +1343,6 @@
 
             ctx.restore();
         }
-
-        resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
-        function resizeCanvas() { canvas.width = 1280; canvas.height = 720; }
 
         requestAnimationFrame(loop);
     </script>
