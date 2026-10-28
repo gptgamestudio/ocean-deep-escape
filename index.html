@@ -539,6 +539,17 @@
       color: #00f0ff;
       box-shadow: none;
     }
+    .interstitial-badge {
+      background: #ffb703;
+      color: #010814;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      box-shadow: 0 0 12px rgba(255, 183, 3, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -647,6 +658,21 @@
     <div style="display: flex; gap: 12px; margin-top: 10px;">
       <button class="modal-btn" onclick="nextLevel()">NEXT ZONE ❯</button>
       <button class="modal-btn secondary" onclick="openLevelSelect()">ZONE SELECT</button>
+    </div>
+  </div>
+  <!-- ADMOB INTERSTITIAL SPONSOR MODAL -->
+  <div class="game-modal" id="interstitialModal">
+    <div class="interstitial-badge">GOOGLE ADMOB INTERSTITIAL</div>
+    <div style="font-size: 20px; font-weight: 800; color: #ffb703; margin-top: 6px;">DEEP-SEA SPONSOR BREAK</div>
+    <p style="color: #8bbcd6; font-size: 12px; max-width: 300px;">Official AdMob Sponsor support provides hull reinforcements and energy shield recharge.</p>
+    <div style="background: rgba(0, 240, 255, 0.1); border: 1.5px solid #00f0ff; border-radius: 12px; padding: 14px 20px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
+      <div style="font-size: 32px; margin-bottom: 6px;">🛡️⚡</div>
+      <div style="font-size: 13px; font-weight: 800; color: #00ff88;">+1 SHIELD & REPAIR BONUS</div>
+      <div style="font-size: 10px; color: #a0c8e0; margin-top: 4px;">Verified Google AdMob • pub-9786472984542330</div>
+    </div>
+    <div style="display: flex; gap: 12px; margin-top: 10px;">
+      <button class="modal-btn" onclick="claimInterstitialReward()">CLAIM BONUS & RESUME</button>
+      <button class="modal-btn secondary" onclick="closeInterstitial()">SKIP AD ❯</button>
     </div>
   </div>
 </div>
@@ -819,58 +845,58 @@
     }
   }
 
-  // Draw Exact Godot Yellow Submarine Scaled Compactly to ~45px x 20px
+  // Draw Exact Godot Yellow Submarine (Scaled visibly to ~72px x 32px with radiant beam)
   function drawCompactGodotYellowSubmarine(x, y, time) {
     ctx.save();
     ctx.translate(x, y);
 
     // 1. Dual Volumetric Headlamp Spotlight Beam Cone (Illuminates deep sea ahead)
-    const beamLength = Math.max(200, Math.min(650, canvas.width * 0.85));
-    const beamSpread = 120;
-    const beamGrad = ctx.createLinearGradient(18, 0, 18 + beamLength, 0);
-    beamGrad.addColorStop(0, "rgba(255, 248, 190, 0.65)");
-    beamGrad.addColorStop(0.18, "rgba(0, 240, 255, 0.35)");
-    beamGrad.addColorStop(0.7, "rgba(0, 70, 140, 0.12)");
+    const beamLength = Math.max(240, Math.min(700, canvas.width * 0.85));
+    const beamSpread = 135;
+    const beamGrad = ctx.createLinearGradient(20, 0, 20 + beamLength, 0);
+    beamGrad.addColorStop(0, "rgba(255, 248, 175, 0.9)");
+    beamGrad.addColorStop(0.18, "rgba(0, 240, 255, 0.45)");
+    beamGrad.addColorStop(0.65, "rgba(0, 80, 160, 0.18)");
     beamGrad.addColorStop(1, "rgba(0, 20, 40, 0.0)");
 
     ctx.fillStyle = beamGrad;
     ctx.beginPath();
-    ctx.moveTo(18, -4);
-    ctx.lineTo(18 + beamLength, -beamSpread);
-    ctx.lineTo(18 + beamLength, beamSpread);
-    ctx.lineTo(18, 4);
+    ctx.moveTo(20, -5);
+    ctx.lineTo(20 + beamLength, -beamSpread);
+    ctx.lineTo(20 + beamLength, beamSpread);
+    ctx.lineTo(20, 5);
     ctx.closePath();
     ctx.fill();
 
-    // Scale to exact compact size: original canvas was ~108px wide -> scale(0.42, 0.42) = ~45px width x 20px height
-    ctx.scale(0.42, 0.42);
+    // Scale to exact comfortable size: scale(0.65, 0.65) = ~72px width x 32px height
+    ctx.scale(0.65, 0.65);
 
     // 2. Rotating Propeller
     const propAngle = (time * 26) % (Math.PI * 2);
     const propX = -54;
     ctx.fillStyle = "#3a4a58";
-    ctx.fillRect(propX, -4, 8, 8);
+    ctx.fillRect(propX, -5, 8, 10);
     for (let i = 0; i < 3; i++) {
       const bladeA = propAngle + (i * Math.PI * 2 / 3);
-      const bladeSpread = Math.sin(bladeA) * 18;
+      const bladeSpread = Math.sin(bladeA) * 20;
       ctx.strokeStyle = "#ffd166";
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 4.5;
       ctx.lineCap = "round";
       ctx.beginPath();
       ctx.moveTo(propX + 2, 0);
-      ctx.lineTo(propX - 4, bladeSpread);
+      ctx.lineTo(propX - 6, bladeSpread);
       ctx.stroke();
     }
 
     // 3. Stabilizer Fins
     ctx.fillStyle = "#e6a100";
     ctx.beginPath();
-    ctx.moveTo(-42, -12); ctx.lineTo(-52, -24); ctx.lineTo(-38, -22); ctx.lineTo(-32, -12);
+    ctx.moveTo(-42, -12); ctx.lineTo(-54, -26); ctx.lineTo(-38, -24); ctx.lineTo(-32, -12);
     ctx.closePath();
     ctx.fill();
     ctx.fillStyle = "#b87c00";
     ctx.beginPath();
-    ctx.moveTo(-42, 12); ctx.lineTo(-52, 24); ctx.lineTo(-38, 22); ctx.lineTo(-32, 12);
+    ctx.moveTo(-42, 12); ctx.lineTo(-54, 26); ctx.lineTo(-38, 24); ctx.lineTo(-32, 12);
     ctx.closePath();
     ctx.fill();
 
@@ -888,21 +914,21 @@
     ctx.closePath();
 
     const yellowHullGrad = ctx.createLinearGradient(0, -28, 0, 20);
-    yellowHullGrad.addColorStop(0.0, "#ffe066");
+    yellowHullGrad.addColorStop(0.0, "#fff088");
     yellowHullGrad.addColorStop(0.35, "#ffb703");
     yellowHullGrad.addColorStop(0.75, "#d48b00");
     yellowHullGrad.addColorStop(1.0, "#8a5700");
     ctx.fillStyle = yellowHullGrad;
     ctx.fill();
-    ctx.strokeStyle = "#ffdd55";
-    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = "#ffe266";
+    ctx.lineWidth = 2.4;
     ctx.stroke();
 
     // 5. Armor Ribs & Brass Rivets
     const ribs = [-28, -10, 8, 26];
     for (let rx of ribs) {
-      ctx.strokeStyle = "rgba(160, 100, 0, 0.55)";
-      ctx.lineWidth = 1.8;
+      ctx.strokeStyle = "rgba(160, 100, 0, 0.65)";
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(rx, -13);
       ctx.lineTo(rx, 13);
@@ -910,8 +936,8 @@
 
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
-      ctx.arc(rx, -8, 1.6, 0, Math.PI * 2);
-      ctx.arc(rx, 8, 1.6, 0, Math.PI * 2);
+      ctx.arc(rx, -8, 2, 0, Math.PI * 2);
+      ctx.arc(rx, 8, 2, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -927,15 +953,15 @@
     ctx.fillStyle = domeGrad;
     ctx.fill();
     ctx.strokeStyle = "#00f0ff";
-    ctx.lineWidth = 1.8;
+    ctx.lineWidth = 2;
     ctx.stroke();
 
     // 7. Headlamp Spotlight Housing
     ctx.fillStyle = "#ffffff";
     ctx.shadowColor = "#ffea88";
-    ctx.shadowBlur = 14;
+    ctx.shadowBlur = 16;
     ctx.beginPath();
-    ctx.arc(58, 0, 5, 0, Math.PI * 2);
+    ctx.arc(58, 0, 6, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
@@ -943,17 +969,17 @@
     const strobe = (Math.floor(time * 6) % 2 === 0);
     ctx.fillStyle = strobe ? "#ff3355" : "#661122";
     ctx.beginPath();
-    ctx.arc(4, -30, 3.5, 0, Math.PI * 2);
+    ctx.arc(4, -30, 4, 0, Math.PI * 2);
     ctx.fill();
 
     // 9. Active Shield Aura
     if (player.shield) {
-      ctx.strokeStyle = "rgba(0, 255, 136, 0.9)";
+      ctx.strokeStyle = "rgba(0, 255, 136, 0.95)";
       ctx.lineWidth = 3.5;
       ctx.shadowColor = "#00ff88";
-      ctx.shadowBlur = 16;
+      ctx.shadowBlur = 18;
       ctx.beginPath();
-      ctx.ellipse(0, 0, 72, 38, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 76, 42, 0, 0, Math.PI * 2);
       ctx.stroke();
       ctx.shadowBlur = 0;
     }
@@ -1153,7 +1179,9 @@
   // =========================================================================
   function spawnEnemy(cfg) {
     if (!levelActive) return;
-    const y = 80 + Math.random() * Math.max(100, canvas.height - 210);
+    const playAreaTop = 140;
+    const playAreaBottom = canvas.height - 90;
+    const y = playAreaTop + Math.random() * Math.max(80, playAreaBottom - playAreaTop);
     const rand = Math.random();
 
     if (rand < 0.38) {
@@ -1203,8 +1231,8 @@
 
   function spawnBoss(cfg) {
     boss = {
-      x: Math.max(canvas.width * 0.65, canvas.width - 150),
-      y: Math.max(120, (canvas.height - 50) / 2),
+      x: Math.max(canvas.width * 0.72, canvas.width - 130),
+      y: Math.max(160, (canvas.height - 50) * 0.48),
       vy: 2.2,
       radius: 54,
       hp: cfg.bossHp,
@@ -1301,6 +1329,36 @@
   // =========================================================================
   let lastSpawn = 0;
 
+  let interstitialCloseCb = null;
+
+  function triggerAdMobInterstitial(onDone) {
+    interstitialCloseCb = onDone;
+    const modal = document.getElementById('interstitialModal');
+    if (modal) {
+      modal.style.display = 'flex';
+    } else if (onDone) {
+      onDone();
+    }
+  }
+
+  function closeInterstitial() {
+    const modal = document.getElementById('interstitialModal');
+    if (modal) modal.style.display = 'none';
+    if (interstitialCloseCb) {
+      const cb = interstitialCloseCb;
+      interstitialCloseCb = null;
+      cb();
+    }
+  }
+
+  function claimInterstitialReward() {
+    player.shield = true;
+    player.hp = Math.min(player.maxHp, player.hp + 3);
+    renderHearts();
+    playSfx('powerup');
+    closeInterstitial();
+  }
+
   function startLevel(lvl) {
     currentLevel = Math.max(1, Math.min(500, lvl));
     const cfg = getLevelConfig(currentLevel);
@@ -1311,7 +1369,7 @@
 
     player.hp = 10;
     player.x = 90;
-    player.y = Math.max(80, (canvas.height - 50) / 2);
+    player.y = Math.max(150, (canvas.height - 50) * 0.48);
     player.vx = 0;
     player.vy = 0;
     player.shield = false;
@@ -1328,6 +1386,9 @@
     document.getElementById('boss-hud').style.display = 'none';
     document.getElementById('gameOverModal').style.display = 'none';
     document.getElementById('victoryModal').style.display = 'none';
+    const interModal = document.getElementById('interstitialModal');
+    if (interModal) interModal.style.display = 'none';
+
     document.getElementById('zoneLabel').innerText = `ZONE ${currentLevel} / 500`;
     document.getElementById('depthMeter').innerText = `DEPTH: ${cfg.depth}M`;
     document.getElementById('zoneProgressBar').style.width = '0%';
@@ -1336,15 +1397,27 @@
     // Spawn Big Boss for this zone
     spawnBoss(cfg);
 
+    // Immediately spawn first enemy so ocean action begins right away
+    spawnEnemy(cfg);
+    lastSpawn = Date.now();
+
     showLevelStartPrompt(currentLevel);
   }
 
   function retryLevel() {
-    startLevel(currentLevel);
+    triggerAdMobInterstitial(() => {
+      startLevel(currentLevel);
+    });
   }
 
   function nextLevel() {
-    startLevel(currentLevel < 500 ? currentLevel + 1 : 1);
+    if (currentLevel % 3 === 0) {
+      triggerAdMobInterstitial(() => {
+        startLevel(currentLevel < 500 ? currentLevel + 1 : 1);
+      });
+    } else {
+      startLevel(currentLevel < 500 ? currentLevel + 1 : 1);
+    }
   }
 
   function hurtPlayer(amt) {
@@ -1372,22 +1445,22 @@
     const w = canvas.width;
     const h = canvas.height;
 
-    // Deep water vertical gradient
+    // Deep water vertical gradient (Rich abyssal sapphire into midnight depth)
     const waterGrad = ctx.createLinearGradient(0, 0, 0, h);
-    waterGrad.addColorStop(0, '#041c34');
-    waterGrad.addColorStop(0.35, '#021024');
-    waterGrad.addColorStop(0.75, '#010814');
-    waterGrad.addColorStop(1, '#000408');
+    waterGrad.addColorStop(0, '#06284a');
+    waterGrad.addColorStop(0.35, '#031933');
+    waterGrad.addColorStop(0.75, '#020f21');
+    waterGrad.addColorStop(1, '#010814');
     ctx.fillStyle = waterGrad;
     ctx.fillRect(0, 0, w, h);
 
-    // Subtle volumetric god rays streaming down from surface
+    // Volumetric god rays streaming down from surface
     ctx.save();
     for (let r = 0; r < 5; r++) {
       const rx = (w * 0.15) + r * (w * 0.2) + Math.sin(time * 0.3 + r) * 30;
-      const rGrad = ctx.createLinearGradient(rx, 0, rx + 140, h * 0.8);
-      rGrad.addColorStop(0, 'rgba(0, 240, 255, 0.08)');
-      rGrad.addColorStop(0.5, 'rgba(0, 160, 220, 0.03)');
+      const rGrad = ctx.createLinearGradient(rx, 0, rx + 140, h * 0.85);
+      rGrad.addColorStop(0, 'rgba(0, 240, 255, 0.16)');
+      rGrad.addColorStop(0.45, 'rgba(0, 180, 230, 0.08)');
       rGrad.addColorStop(1, 'rgba(0, 40, 80, 0.0)');
 
       ctx.fillStyle = rGrad;
@@ -1404,7 +1477,7 @@
     // Ocean Seabed Terrain & Bioluminescent Flora at bottom (above Ad banner)
     const seabedY = h - 50;
     ctx.save();
-    ctx.fillStyle = '#01050a';
+    ctx.fillStyle = '#020b18';
     ctx.beginPath();
     ctx.moveTo(0, seabedY);
     for (let x = 0; x <= w; x += 30) {
@@ -1417,20 +1490,20 @@
     ctx.fill();
 
     // Glowing Deep-Sea Bioluminescent Vents & Coral
-    for (let x = 40; x < w; x += 110) {
+    for (let x = 40; x < w; x += 90) {
       const ventPulse = Math.sin(time * 2 + x) * 0.3 + 0.7;
-      ctx.fillStyle = `rgba(0, 240, 255, ${0.4 * ventPulse})`;
+      ctx.fillStyle = `rgba(0, 240, 255, ${0.6 * ventPulse})`;
       ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 10;
+      ctx.shadowBlur = 12;
       ctx.beginPath();
-      ctx.arc(x, seabedY - 14, 3, 0, Math.PI * 2);
+      ctx.arc(x, seabedY - 14, 3.5, 0, Math.PI * 2);
       ctx.fill();
 
       // Rising thermal bubble from vent
-      const bubbleRise = ((time * 40 + x * 3) % (seabedY - 100));
-      ctx.fillStyle = 'rgba(0, 240, 255, 0.3)';
+      const bubbleRise = ((time * 45 + x * 3) % Math.max(100, seabedY - 120));
+      ctx.fillStyle = 'rgba(0, 240, 255, 0.45)';
       ctx.beginPath();
-      ctx.arc(x + Math.sin(time + x) * 4, seabedY - 16 - bubbleRise, 2, 0, Math.PI * 2);
+      ctx.arc(x + Math.sin(time + x) * 5, seabedY - 16 - bubbleRise, 2.5, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.shadowBlur = 0;
@@ -1488,7 +1561,7 @@
 
         // Keep within bounds (accounting for top HUD and bottom Ad Banner)
         player.x = Math.max(35, Math.min(canvas.width * 0.85, player.x));
-        player.y = Math.max(55, Math.min(canvas.height - 75, player.y));
+        player.y = Math.max(110, Math.min(canvas.height - 75, player.y));
 
         if (player.invulnerableTimer > 0) player.invulnerableTimer--;
 
@@ -1838,7 +1911,7 @@
       if (boss) {
         boss.animTime = (boss.animTime || 0) + 0.05;
         boss.y += boss.vy;
-        if (boss.y < 90 || boss.y > canvas.height - 130) boss.vy *= -1;
+        if (boss.y < 140 || boss.y > canvas.height - 120) boss.vy *= -1;
 
         safeDraw(() => {
           ctx.translate(boss.x, boss.y);
