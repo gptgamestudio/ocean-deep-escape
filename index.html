@@ -1163,6 +1163,13 @@
   let interstitialCloseCb = null;
 
   function triggerAdMobInterstitial(onDone) {
+    if (window.AndroidBridge && typeof window.AndroidBridge.showNativeInterstitial === 'function') {
+      try {
+        window.AndroidBridge.showNativeInterstitial();
+      } catch (e) {
+        console.warn("Native bridge interstitial invoke:", e);
+      }
+    }
     interstitialCloseCb = onDone;
     const modal = document.getElementById('interstitialModal');
     if (modal) {

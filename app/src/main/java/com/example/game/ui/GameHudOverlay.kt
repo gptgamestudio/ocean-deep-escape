@@ -89,25 +89,34 @@ fun GameHudOverlay(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "LVL ${state.currentLevel}",
+                        text = "LVL ${state.currentLevel}/500",
                         color = Color(0xFFFFD166),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.ExtraBold
-                    )
-                    Text(
-                        text = "❤️ ${state.livesRemaining} LIVES",
-                        color = Color(0xFFFF7597),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.ExtraBold
                     )
                 }
             }
 
-            // RIGHT: DASHBOARD (REST) Button & Minimal Pause Button
+            // RIGHT: Player Health (Lives), DASHBOARD Button & Minimal Pause Button
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                // Player Lives / Health placed on the RIGHT
+                Surface(
+                    color = Color(0xCC260010),
+                    shape = RoundedCornerShape(8.dp),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFF0055))
+                ) {
+                    Text(
+                        text = "❤️ ${state.livesRemaining} LIVES",
+                        color = Color(0xFFFF7597),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
+                }
+
                 Surface(
                     color = Color(0xEE00253D),
                     shape = RoundedCornerShape(8.dp),
