@@ -5,9 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Ocean Deep Escape - 500 Abyssal Zones Submarine Survival</title>
   <meta name="description" content="Ocean Deep Escape: Godot Yellow Submarine with searchlight beam, wave spread torpedoes, 500 Abyssal Zones, AdMob integration, and hosted deep-sea sprite assets.">
-  <meta name="theme-color" content="#010610">
+  <meta name="theme-color" content="#001e3d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OceanEscape">
+  <meta name="application-name" content="Ocean Deep Escape">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="canonical" href="https://gptgamestudio.github.io/ocean-deep-escape/">
   <meta name="google-site-verification" content="googlea3797afede2989e5">
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js')
+          .then(function(reg) { console.log('ServiceWorker registered:', reg.scope); })
+          .catch(function(err) { console.warn('ServiceWorker error:', err); });
+      });
+    }
+  </script>
 
   <!-- Google AdMob / AdSense Official Integration (Publisher ID: pub-9786472984542330) -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9786472984542330" crossorigin="anonymous"></script>
@@ -52,44 +70,45 @@
     /* TOP HUD: Minimal & Sleek Status Bar */
     #top-hud {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
+      top: 6px;
+      left: 8px;
+      right: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 20;
       pointer-events: none;
     }
-    .hud-chip {
-      background: rgba(2, 16, 34, 0.88);
-      border: 1px solid rgba(0, 240, 255, 0.5);
-      border-radius: 20px;
-      padding: 5px 14px;
-      color: #00f0ff;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      box-shadow: 0 0 14px rgba(0, 240, 255, 0.3);
+    .hud-left {
       display: flex;
       align-items: center;
       gap: 8px;
       pointer-events: auto;
-      cursor: pointer;
+    }
+    .hud-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+    }
+    .hud-chip {
+      background: rgba(2, 16, 34, 0.88);
+      border: 1px solid rgba(0, 240, 255, 0.5);
+      border-radius: 20px;
+      padding: 4px 12px;
+      color: #00f0ff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 6px;
       backdrop-filter: blur(6px);
     }
-    .hud-chip:active {
-      transform: scale(0.96);
-    }
-    .hud-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-    }
     .progress-bar-wrap {
-      width: 140px;
-      height: 6px;
+      width: 100px;
+      height: 5px;
       background: rgba(4, 20, 38, 0.85);
       border: 1px solid rgba(0, 240, 255, 0.4);
       border-radius: 4px;
@@ -103,19 +122,19 @@
       transition: width 0.2s linear;
     }
 
-    /* 10 HEARTS DISPLAY */
+    /* 10 HEARTS DISPLAY (Placed on the RIGHT) */
     #hearts-bar {
       display: flex;
-      gap: 3px;
-      background: rgba(2, 12, 28, 0.85);
+      gap: 2px;
+      background: rgba(2, 12, 28, 0.88);
       border: 1px solid rgba(0, 240, 255, 0.35);
-      padding: 3px 8px;
-      border-radius: 16px;
+      padding: 3px 6px;
+      border-radius: 14px;
       pointer-events: auto;
       backdrop-filter: blur(6px);
     }
     .heart-unit {
-      font-size: 13px;
+      font-size: 11px;
       filter: drop-shadow(0 0 3px #ff0055);
       transition: transform 0.2s, opacity 0.2s;
     }
@@ -124,57 +143,37 @@
       filter: grayscale(1);
     }
 
-    /* BOSS HP BAR */
-    #boss-hud {
-      position: absolute;
-      top: 48px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 82%;
-      max-width: 440px;
-      background: rgba(20, 2, 10, 0.94);
-      border: 1.5px solid #ff0055;
-      border-radius: 10px;
+    /* BACK TO DASHBOARD BUTTON (Placed on the RIGHT) */
+    .dashboard-btn {
+      background: rgba(2, 28, 52, 0.9);
+      border: 1px solid #00f0ff;
+      border-radius: 14px;
       padding: 4px 10px;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      z-index: 25;
-      box-shadow: 0 0 18px rgba(255, 0, 85, 0.55);
-      pointer-events: none;
-      backdrop-filter: blur(6px);
-    }
-    .boss-hud-title {
-      color: #ff3377;
+      color: #00f0ff;
       font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1.2px;
-      margin-bottom: 2px;
-      text-transform: uppercase;
-      text-shadow: 0 0 6px #ff0055;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+      backdrop-filter: blur(6px);
+      transition: transform 0.15s, background 0.15s;
+      pointer-events: auto;
     }
-    .boss-bar-wrap {
-      width: 100%;
-      height: 8px;
-      background: #2a0312;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .boss-bar-fill {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #ff0055, #ffaa00);
-      box-shadow: 0 0 8px #ff0055;
-      transition: width 0.1s ease-out;
+    .dashboard-btn:active {
+      transform: scale(0.94);
+      background: rgba(0, 240, 255, 0.25);
     }
 
-    /* INVISIBLE TOUCH SCREEN SPLIT-ZONES */
+    /* FULL EDGE-TO-EDGE TOUCH SCREEN SPLIT-ZONES (From top edge down to ad banner) */
     #touch-layer {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: calc(100% - 50px);
+      height: calc(100% - 38px);
       z-index: 15;
       display: flex;
     }
@@ -313,176 +312,68 @@
       50% { opacity: 1; }
     }
 
-    /* 3. FIXED BOTTOM AD BANNER (Google AdMob / AdSense Connected) */
+    /* 3. ULTRA-COMPACT BOTTOM AD BANNER (Policy-Compliant Minimum Height 38px) */
     #bottom-ad-banner {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 50px;
-      background: linear-gradient(180deg, #021226 0%, #010914 100%);
-      border-top: 1.5px solid #00f0ff;
+      height: 38px;
+      background: rgba(1, 10, 22, 0.95);
+      border-top: 1px solid rgba(0, 240, 255, 0.45);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 20;
       cursor: pointer;
-      box-shadow: 0 -4px 15px rgba(0, 240, 255, 0.2);
-      padding: 0 10px;
+      box-shadow: 0 -2px 10px rgba(0, 240, 255, 0.2);
+      padding: 0 8px;
     }
     .ad-content-wrapper {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 11px;
+      gap: 6px;
+      font-size: 10px;
       color: #e0faff;
       font-weight: 600;
     }
     .ad-badge {
       background: #ffb703;
       color: #000;
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 900;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 1px 5px;
+      border-radius: 3px;
       letter-spacing: 0.5px;
     }
     .ad-reward-pill {
       background: rgba(0, 255, 136, 0.2);
       border: 1px solid #00ff88;
       color: #00ff88;
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 10px;
-      margin-left: 4px;
+      padding: 1px 6px;
+      border-radius: 8px;
+      margin-left: 2px;
     }
 
-    /* 500 LEVEL SELECT MODAL */
-    #level-select-modal {
+    /* COMMAND DASHBOARD MODAL */
+    #dashboardModal {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(1, 8, 18, 0.96);
+      background: rgba(1, 7, 18, 0.94);
       backdrop-filter: blur(10px);
-      z-index: 60;
+      z-index: 90;
       display: none;
       flex-direction: column;
-      padding: 16px;
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      border-bottom: 1px solid rgba(0, 240, 255, 0.25);
-      padding-bottom: 8px;
-    }
-    .modal-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: #00f0ff;
-      letter-spacing: 1px;
-    }
-    .modal-close-btn {
-      background: transparent;
-      border: 1px solid #ff0055;
-      color: #ff0055;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .level-quick-nav {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-    .jump-input {
-      flex: 1;
-      background: rgba(3, 20, 42, 0.8);
-      border: 1px solid rgba(0, 240, 255, 0.4);
-      border-radius: 8px;
-      padding: 8px 12px;
-      color: #fff;
-      font-size: 13px;
-      outline: none;
-    }
-    .jump-btn {
-      background: #00f0ff;
-      color: #010814;
-      font-weight: 800;
-      border: none;
-      padding: 8px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .tier-tab-bar {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 10px;
-    }
-    .tier-tab {
-      background: rgba(2, 20, 40, 0.8);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      color: #88c0d8;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 12px;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .tier-tab.active {
-      background: #00f0ff;
-      color: #010814;
-      border-color: #00f0ff;
-    }
-    .levels-grid {
-      flex: 1;
-      overflow-y: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
-      gap: 8px;
-      padding-right: 4px;
-    }
-    .level-card-btn {
-      background: rgba(3, 20, 42, 0.7);
-      border: 1px solid rgba(0, 240, 255, 0.25);
-      border-radius: 8px;
-      padding: 10px 4px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 800;
-      transition: transform 0.15s, border-color 0.15s;
-    }
-    .level-card-btn.current {
-      border: 1.5px solid #00ff88;
-      background: rgba(0, 255, 136, 0.15);
-      color: #00ff88;
-    }
-    .level-card-btn.boss {
-      border: 1.5px solid #ff0055;
-      background: rgba(255, 0, 85, 0.15);
-      color: #ff3377;
-    }
-    .level-card-btn:active {
-      transform: scale(0.92);
-    }
-    .level-card-sub {
-      font-size: 9px;
-      color: #6495b8;
+      justify-content: center;
+      gap: 14px;
+      padding: 20px;
+      text-align: center;
     }
 
     /* GAME OVER & VICTORY MODALS */
@@ -521,6 +412,17 @@
       color: #00f0ff;
       box-shadow: none;
     }
+    .interstitial-badge {
+      background: #ffb703;
+      color: #010814;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      box-shadow: 0 0 12px rgba(255, 183, 3, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -528,30 +430,28 @@
 <div id="game-container">
   <canvas id="gameCanvas"></canvas>
 
-  <!-- 4. CORE TOP HUD -->
+  <!-- 4. CORE TOP HUD: Full Edge-to-Edge Minimal Bar -->
   <div id="top-hud">
-    <div class="hud-chip" id="btnOpenLevelSelect" title="Select from 500 Levels">
-      <span>🌊</span>
-      <span id="zoneLabel">ZONE 1 / 500</span>
-      <span style="font-size: 9px; opacity: 0.6;">▼</span>
-    </div>
-
-    <div class="hud-center">
+    <!-- LEFT: Zone badge & progress -->
+    <div class="hud-left">
+      <div class="hud-chip">
+        <span>🌊</span>
+        <span id="zoneLabel">ZONE 1 / 500</span>
+        <span style="opacity: 0.35;">•</span>
+        <span id="depthMeter" style="color: #7ec4e8;">124M</span>
+      </div>
       <div class="progress-bar-wrap">
         <div class="progress-fill" id="zoneProgressBar"></div>
       </div>
-      <span style="font-size: 10px; color: #84b6d4;" id="depthMeter">DEPTH: 124M</span>
     </div>
 
-    <!-- 10 Hearts -->
-    <div id="hearts-bar"></div>
-  </div>
-
-  <!-- BOSS HP BAR -->
-  <div id="boss-hud">
-    <div class="boss-hud-title" id="bossTitle">⚠️ ZONE 1 BIG BOSS HP: <span id="bossHpVal">50</span>/50 ⚠️</div>
-    <div class="boss-bar-wrap">
-      <div class="boss-bar-fill" id="bossHpFill"></div>
+    <!-- RIGHT: Player Health (Hearts) & Back Dashboard Button -->
+    <div class="hud-right">
+      <div id="hearts-bar" title="Submersible Hull Integrity"></div>
+      <button id="btnDashboard" class="dashboard-btn" onclick="openDashboard()" title="Open Command Dashboard">
+        <span>🏠</span>
+        <span>DASHBOARD</span>
+      </button>
     </div>
   </div>
 
@@ -587,7 +487,7 @@
     <div class="prompt-dismiss-hint">Tap anywhere to launch submarine...</div>
   </div>
 
-  <!-- 3. FIXED BOTTOM AD BANNER (Google AdMob Radar Support) -->
+  <!-- 3. ULTRA-COMPACT BOTTOM AD BANNER (Policy-Compliant Height 38px) -->
   <div id="bottom-ad-banner" title="AdMob Deep-Sea Radar Support">
     <div class="ad-content-wrapper">
       <span class="ad-badge">AdMob</span>
@@ -596,20 +496,28 @@
     </div>
   </div>
 
-  <!-- 500 LEVEL SELECT MODAL -->
-  <div id="level-select-modal">
-    <div class="modal-header">
-      <div class="modal-title">🧭 500 ABYSSAL ZONES DIRECTORY</div>
-      <button class="modal-close-btn" id="btnCloseLevelSelect">✕</button>
+  <!-- SUBMERSIBLE COMMAND DASHBOARD MODAL -->
+  <div id="dashboardModal">
+    <div style="font-size: 30px;">🧭</div>
+    <h1 style="color: #00f0ff; font-size: 20px; letter-spacing: 1.5px; text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);">COMMAND DASHBOARD</h1>
+    <div style="background: rgba(2, 20, 42, 0.88); border: 1.5px solid rgba(0, 240, 255, 0.4); border-radius: 14px; padding: 14px 18px; width: 88%; max-width: 320px; text-align: left; display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #a0cce8;">
+        <span>CURRENT ZONE:</span>
+        <strong style="color: #00f0ff;" id="dashZoneLabel">ZONE 1 / 500</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #a0cce8;">
+        <span>HULL INTEGRITY:</span>
+        <strong style="color: #00ff88;" id="dashHealthLabel">10 / 10 HP</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #a0cce8;">
+        <span>ENERGY SHIELD:</span>
+        <strong style="color: #ffd166;" id="dashShieldLabel">OFFLINE</strong>
+      </div>
     </div>
-
-    <div class="level-quick-nav">
-      <input type="number" id="inputJumpLevel" class="jump-input" min="1" max="500" placeholder="Jump to Zone (1 - 500)...">
-      <button class="jump-btn" id="btnJumpLevel">DEPLOY</button>
+    <div style="display: flex; flex-direction: column; gap: 10px; width: 88%; max-width: 320px; margin-top: 4px;">
+      <button class="modal-btn" onclick="closeDashboard()">RESUME GAME</button>
+      <button class="modal-btn secondary" onclick="restartCurrentZone()">RESTART ZONE</button>
     </div>
-
-    <div class="tier-tab-bar" id="tierTabBar"></div>
-    <div class="levels-grid" id="levelsGrid"></div>
   </div>
 
   <!-- GAME OVER SCREEN -->
@@ -618,7 +526,7 @@
     <p style="color: #8bbcd6; font-size: 13px;" id="gameOverDesc">Hull pressure breached.</p>
     <div style="display: flex; gap: 12px; margin-top: 10px;">
       <button class="modal-btn" onclick="retryLevel()">RETRY ZONE</button>
-      <button class="modal-btn secondary" onclick="openLevelSelect()">CHOOSE ZONE</button>
+      <button class="modal-btn secondary" onclick="openDashboard()">DASHBOARD</button>
     </div>
   </div>
 
@@ -628,7 +536,22 @@
     <p style="color: #8bbcd6; font-size: 13px;" id="victoryDesc">Deep-sea portal reached safely.</p>
     <div style="display: flex; gap: 12px; margin-top: 10px;">
       <button class="modal-btn" onclick="nextLevel()">NEXT ZONE ❯</button>
-      <button class="modal-btn secondary" onclick="openLevelSelect()">ZONE SELECT</button>
+      <button class="modal-btn secondary" onclick="openDashboard()">DASHBOARD</button>
+    </div>
+  </div>
+  <!-- ADMOB INTERSTITIAL SPONSOR MODAL -->
+  <div class="game-modal" id="interstitialModal">
+    <div class="interstitial-badge">GOOGLE ADMOB INTERSTITIAL</div>
+    <div style="font-size: 20px; font-weight: 800; color: #ffb703; margin-top: 6px;">DEEP-SEA SPONSOR BREAK</div>
+    <p style="color: #8bbcd6; font-size: 12px; max-width: 300px;">Official AdMob Sponsor support provides hull reinforcements and energy shield recharge.</p>
+    <div style="background: rgba(0, 240, 255, 0.1); border: 1.5px solid #00f0ff; border-radius: 12px; padding: 14px 20px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
+      <div style="font-size: 32px; margin-bottom: 6px;">🛡️⚡</div>
+      <div style="font-size: 13px; font-weight: 800; color: #00ff88;">+1 SHIELD & REPAIR BONUS</div>
+      <div style="font-size: 10px; color: #a0c8e0; margin-top: 4px;">Verified Google AdMob • pub-9786472984542330</div>
+    </div>
+    <div style="display: flex; gap: 12px; margin-top: 10px;">
+      <button class="modal-btn" onclick="claimInterstitialReward()">CLAIM BONUS & RESUME</button>
+      <button class="modal-btn secondary" onclick="closeInterstitial()">SKIP AD ❯</button>
     </div>
   </div>
 </div>
@@ -801,58 +724,58 @@
     }
   }
 
-  // Draw Exact Godot Yellow Submarine Scaled Compactly to ~45px x 20px
+  // Draw Exact Godot Yellow Submarine (Scaled visibly to ~72px x 32px with radiant beam)
   function drawCompactGodotYellowSubmarine(x, y, time) {
     ctx.save();
     ctx.translate(x, y);
 
     // 1. Dual Volumetric Headlamp Spotlight Beam Cone (Illuminates deep sea ahead)
-    const beamLength = Math.max(200, Math.min(650, canvas.width * 0.85));
-    const beamSpread = 120;
-    const beamGrad = ctx.createLinearGradient(18, 0, 18 + beamLength, 0);
-    beamGrad.addColorStop(0, "rgba(255, 248, 190, 0.65)");
-    beamGrad.addColorStop(0.18, "rgba(0, 240, 255, 0.35)");
-    beamGrad.addColorStop(0.7, "rgba(0, 70, 140, 0.12)");
+    const beamLength = Math.max(240, Math.min(700, canvas.width * 0.85));
+    const beamSpread = 135;
+    const beamGrad = ctx.createLinearGradient(20, 0, 20 + beamLength, 0);
+    beamGrad.addColorStop(0, "rgba(255, 248, 175, 0.9)");
+    beamGrad.addColorStop(0.18, "rgba(0, 240, 255, 0.45)");
+    beamGrad.addColorStop(0.65, "rgba(0, 80, 160, 0.18)");
     beamGrad.addColorStop(1, "rgba(0, 20, 40, 0.0)");
 
     ctx.fillStyle = beamGrad;
     ctx.beginPath();
-    ctx.moveTo(18, -4);
-    ctx.lineTo(18 + beamLength, -beamSpread);
-    ctx.lineTo(18 + beamLength, beamSpread);
-    ctx.lineTo(18, 4);
+    ctx.moveTo(20, -5);
+    ctx.lineTo(20 + beamLength, -beamSpread);
+    ctx.lineTo(20 + beamLength, beamSpread);
+    ctx.lineTo(20, 5);
     ctx.closePath();
     ctx.fill();
 
-    // Scale to exact compact size: original canvas was ~108px wide -> scale(0.42, 0.42) = ~45px width x 20px height
-    ctx.scale(0.42, 0.42);
+    // Scale to exact comfortable size: scale(0.65, 0.65) = ~72px width x 32px height
+    ctx.scale(0.65, 0.65);
 
     // 2. Rotating Propeller
     const propAngle = (time * 26) % (Math.PI * 2);
     const propX = -54;
     ctx.fillStyle = "#3a4a58";
-    ctx.fillRect(propX, -4, 8, 8);
+    ctx.fillRect(propX, -5, 8, 10);
     for (let i = 0; i < 3; i++) {
       const bladeA = propAngle + (i * Math.PI * 2 / 3);
-      const bladeSpread = Math.sin(bladeA) * 18;
+      const bladeSpread = Math.sin(bladeA) * 20;
       ctx.strokeStyle = "#ffd166";
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 4.5;
       ctx.lineCap = "round";
       ctx.beginPath();
       ctx.moveTo(propX + 2, 0);
-      ctx.lineTo(propX - 4, bladeSpread);
+      ctx.lineTo(propX - 6, bladeSpread);
       ctx.stroke();
     }
 
     // 3. Stabilizer Fins
     ctx.fillStyle = "#e6a100";
     ctx.beginPath();
-    ctx.moveTo(-42, -12); ctx.lineTo(-52, -24); ctx.lineTo(-38, -22); ctx.lineTo(-32, -12);
+    ctx.moveTo(-42, -12); ctx.lineTo(-54, -26); ctx.lineTo(-38, -24); ctx.lineTo(-32, -12);
     ctx.closePath();
     ctx.fill();
     ctx.fillStyle = "#b87c00";
     ctx.beginPath();
-    ctx.moveTo(-42, 12); ctx.lineTo(-52, 24); ctx.lineTo(-38, 22); ctx.lineTo(-32, 12);
+    ctx.moveTo(-42, 12); ctx.lineTo(-54, 26); ctx.lineTo(-38, 24); ctx.lineTo(-32, 12);
     ctx.closePath();
     ctx.fill();
 
@@ -870,21 +793,21 @@
     ctx.closePath();
 
     const yellowHullGrad = ctx.createLinearGradient(0, -28, 0, 20);
-    yellowHullGrad.addColorStop(0.0, "#ffe066");
+    yellowHullGrad.addColorStop(0.0, "#fff088");
     yellowHullGrad.addColorStop(0.35, "#ffb703");
     yellowHullGrad.addColorStop(0.75, "#d48b00");
     yellowHullGrad.addColorStop(1.0, "#8a5700");
     ctx.fillStyle = yellowHullGrad;
     ctx.fill();
-    ctx.strokeStyle = "#ffdd55";
-    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = "#ffe266";
+    ctx.lineWidth = 2.4;
     ctx.stroke();
 
     // 5. Armor Ribs & Brass Rivets
     const ribs = [-28, -10, 8, 26];
     for (let rx of ribs) {
-      ctx.strokeStyle = "rgba(160, 100, 0, 0.55)";
-      ctx.lineWidth = 1.8;
+      ctx.strokeStyle = "rgba(160, 100, 0, 0.65)";
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(rx, -13);
       ctx.lineTo(rx, 13);
@@ -892,8 +815,8 @@
 
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
-      ctx.arc(rx, -8, 1.6, 0, Math.PI * 2);
-      ctx.arc(rx, 8, 1.6, 0, Math.PI * 2);
+      ctx.arc(rx, -8, 2, 0, Math.PI * 2);
+      ctx.arc(rx, 8, 2, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -909,15 +832,15 @@
     ctx.fillStyle = domeGrad;
     ctx.fill();
     ctx.strokeStyle = "#00f0ff";
-    ctx.lineWidth = 1.8;
+    ctx.lineWidth = 2;
     ctx.stroke();
 
     // 7. Headlamp Spotlight Housing
     ctx.fillStyle = "#ffffff";
     ctx.shadowColor = "#ffea88";
-    ctx.shadowBlur = 14;
+    ctx.shadowBlur = 16;
     ctx.beginPath();
-    ctx.arc(58, 0, 5, 0, Math.PI * 2);
+    ctx.arc(58, 0, 6, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
@@ -925,17 +848,17 @@
     const strobe = (Math.floor(time * 6) % 2 === 0);
     ctx.fillStyle = strobe ? "#ff3355" : "#661122";
     ctx.beginPath();
-    ctx.arc(4, -30, 3.5, 0, Math.PI * 2);
+    ctx.arc(4, -30, 4, 0, Math.PI * 2);
     ctx.fill();
 
     // 9. Active Shield Aura
     if (player.shield) {
-      ctx.strokeStyle = "rgba(0, 255, 136, 0.9)";
+      ctx.strokeStyle = "rgba(0, 255, 136, 0.95)";
       ctx.lineWidth = 3.5;
       ctx.shadowColor = "#00ff88";
-      ctx.shadowBlur = 16;
+      ctx.shadowBlur = 18;
       ctx.beginPath();
-      ctx.ellipse(0, 0, 72, 38, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 76, 42, 0, 0, Math.PI * 2);
       ctx.stroke();
       ctx.shadowBlur = 0;
     }
@@ -1135,7 +1058,9 @@
   // =========================================================================
   function spawnEnemy(cfg) {
     if (!levelActive) return;
-    const y = 80 + Math.random() * Math.max(100, canvas.height - 210);
+    const playAreaTop = 140;
+    const playAreaBottom = canvas.height - 90;
+    const y = playAreaTop + Math.random() * Math.max(80, playAreaBottom - playAreaTop);
     const rand = Math.random();
 
     if (rand < 0.38) {
@@ -1185,18 +1110,14 @@
 
   function spawnBoss(cfg) {
     boss = {
-      x: Math.max(canvas.width * 0.65, canvas.width - 150),
-      y: Math.max(120, (canvas.height - 50) / 2),
+      x: Math.max(canvas.width * 0.72, canvas.width - 130),
+      y: Math.max(160, (canvas.height - 50) * 0.48),
       vy: 2.2,
       radius: 54,
       hp: cfg.bossHp,
       maxHp: cfg.bossHp,
       animTime: 0
     };
-    document.getElementById('boss-hud').style.display = 'flex';
-    document.getElementById('bossTitle').innerText = `⚠️ ZONE ${cfg.level} BIG BOSS HP: ${boss.hp}/${boss.maxHp} ⚠️`;
-    document.getElementById('bossHpFill').style.width = '100%';
-    document.getElementById('bossHpVal').innerText = boss.hp;
   }
 
   function spawnPowerUp(x, y) {
@@ -1212,76 +1133,62 @@
   }
 
   // =========================================================================
-  // 7. 500 LEVEL DIRECTORY & SELECTION UI
+  // 7. COMMAND DASHBOARD (PAUSE & SECTOR TELEMETRY)
   // =========================================================================
-  const levelSelectModal = document.getElementById('level-select-modal');
-  const levelsGrid = document.getElementById('levelsGrid');
-  const tierTabBar = document.getElementById('tierTabBar');
+  const dashboardModal = document.getElementById('dashboardModal');
 
-  document.getElementById('btnOpenLevelSelect').addEventListener('click', openLevelSelect);
-  document.getElementById('btnCloseLevelSelect').addEventListener('click', closeLevelSelect);
-
-  function openLevelSelect() {
+  function openDashboard() {
     levelActive = false;
-    levelSelectModal.style.display = 'flex';
-    renderTierTabs();
-    renderLevelsGrid(Math.floor((currentLevel - 1) / 50) * 50 + 1);
+    document.getElementById('dashZoneLabel').innerText = `ZONE ${currentLevel} / 500`;
+    document.getElementById('dashHealthLabel').innerText = `${player.hp} / ${player.maxHp} HP`;
+    document.getElementById('dashShieldLabel').innerText = player.shield ? 'ONLINE (ACTIVE)' : 'OFFLINE';
+    dashboardModal.style.display = 'flex';
   }
 
-  function closeLevelSelect() {
-    levelSelectModal.style.display = 'none';
+  function closeDashboard() {
+    dashboardModal.style.display = 'none';
     levelActive = true;
   }
 
-  function renderTierTabs() {
-    tierTabBar.innerHTML = '';
-    for (let start = 1; start <= 500; start += 50) {
-      const end = Math.min(500, start + 49);
-      const tab = document.createElement('div');
-      const isActive = currentLevel >= start && currentLevel <= end;
-      tab.className = `tier-tab ${isActive ? 'active' : ''}`;
-      tab.innerText = `${start}-${end}`;
-      tab.onclick = () => {
-        document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        renderLevelsGrid(start);
-      };
-      tierTabBar.appendChild(tab);
-    }
+  function restartCurrentZone() {
+    closeDashboard();
+    startLevel(currentLevel);
   }
-
-  function renderLevelsGrid(startLvl) {
-    levelsGrid.innerHTML = '';
-    const endLvl = Math.min(500, startLvl + 49);
-
-    for (let l = startLvl; l <= endLvl; l++) {
-      const btn = document.createElement('div');
-      const isBoss = (l % 10 === 0) || l === 500;
-      btn.className = `level-card-btn ${l === currentLevel ? 'current' : ''} ${isBoss ? 'boss' : ''}`;
-      btn.innerHTML = `
-        <span>${isBoss ? '👑' : '🌊'} ${l}</span>
-        <span class="level-card-sub">${100 + l * 24}m</span>
-      `;
-      btn.onclick = () => {
-        closeLevelSelect();
-        startLevel(l);
-      };
-      levelsGrid.appendChild(btn);
-    }
-  }
-
-  document.getElementById('btnJumpLevel').addEventListener('click', () => {
-    const val = parseInt(document.getElementById('inputJumpLevel').value);
-    if (val >= 1 && val <= 500) {
-      closeLevelSelect();
-      startLevel(val);
-    }
-  });
 
   // =========================================================================
   // 8. CORE GAME ENGINE LOOP
   // =========================================================================
   let lastSpawn = 0;
+
+  let interstitialCloseCb = null;
+
+  function triggerAdMobInterstitial(onDone) {
+    interstitialCloseCb = onDone;
+    const modal = document.getElementById('interstitialModal');
+    if (modal) {
+      modal.style.display = 'flex';
+    } else if (onDone) {
+      onDone();
+    }
+  }
+
+  function closeInterstitial() {
+    const modal = document.getElementById('interstitialModal');
+    if (modal) modal.style.display = 'none';
+    if (interstitialCloseCb) {
+      const cb = interstitialCloseCb;
+      interstitialCloseCb = null;
+      cb();
+    }
+  }
+
+  function claimInterstitialReward() {
+    player.shield = true;
+    player.hp = Math.min(player.maxHp, player.hp + 3);
+    renderHearts();
+    playSfx('powerup');
+    closeInterstitial();
+  }
 
   function startLevel(lvl) {
     currentLevel = Math.max(1, Math.min(500, lvl));
@@ -1293,7 +1200,7 @@
 
     player.hp = 10;
     player.x = 90;
-    player.y = Math.max(80, (canvas.height - 50) / 2);
+    player.y = Math.max(120, (canvas.height - 38) * 0.48);
     player.vx = 0;
     player.vy = 0;
     player.shield = false;
@@ -1307,26 +1214,42 @@
     bossDefeated = false;
     portal = null; // Exit portal NEVER appears at start! SAKA LALABAS PAG PATAY NA SI BIG BOSS
 
-    document.getElementById('boss-hud').style.display = 'none';
     document.getElementById('gameOverModal').style.display = 'none';
     document.getElementById('victoryModal').style.display = 'none';
+    const dashModal = document.getElementById('dashboardModal');
+    if (dashModal) dashModal.style.display = 'none';
+    const interModal = document.getElementById('interstitialModal');
+    if (interModal) interModal.style.display = 'none';
+
     document.getElementById('zoneLabel').innerText = `ZONE ${currentLevel} / 500`;
-    document.getElementById('depthMeter').innerText = `DEPTH: ${cfg.depth}M`;
+    document.getElementById('depthMeter').innerText = `${cfg.depth}M`;
     document.getElementById('zoneProgressBar').style.width = '0%';
     renderHearts();
 
     // Spawn Big Boss for this zone
     spawnBoss(cfg);
 
+    // Immediately spawn first enemy so ocean action begins right away
+    spawnEnemy(cfg);
+    lastSpawn = Date.now();
+
     showLevelStartPrompt(currentLevel);
   }
 
   function retryLevel() {
-    startLevel(currentLevel);
+    triggerAdMobInterstitial(() => {
+      startLevel(currentLevel);
+    });
   }
 
   function nextLevel() {
-    startLevel(currentLevel < 500 ? currentLevel + 1 : 1);
+    if (currentLevel % 3 === 0) {
+      triggerAdMobInterstitial(() => {
+        startLevel(currentLevel < 500 ? currentLevel + 1 : 1);
+      });
+    } else {
+      startLevel(currentLevel < 500 ? currentLevel + 1 : 1);
+    }
   }
 
   function hurtPlayer(amt) {
@@ -1354,22 +1277,22 @@
     const w = canvas.width;
     const h = canvas.height;
 
-    // Deep water vertical gradient
+    // Deep water vertical gradient (Rich abyssal sapphire into midnight depth)
     const waterGrad = ctx.createLinearGradient(0, 0, 0, h);
-    waterGrad.addColorStop(0, '#041c34');
-    waterGrad.addColorStop(0.35, '#021024');
-    waterGrad.addColorStop(0.75, '#010814');
-    waterGrad.addColorStop(1, '#000408');
+    waterGrad.addColorStop(0, '#06284a');
+    waterGrad.addColorStop(0.35, '#031933');
+    waterGrad.addColorStop(0.75, '#020f21');
+    waterGrad.addColorStop(1, '#010814');
     ctx.fillStyle = waterGrad;
     ctx.fillRect(0, 0, w, h);
 
-    // Subtle volumetric god rays streaming down from surface
+    // Volumetric god rays streaming down from surface
     ctx.save();
     for (let r = 0; r < 5; r++) {
       const rx = (w * 0.15) + r * (w * 0.2) + Math.sin(time * 0.3 + r) * 30;
-      const rGrad = ctx.createLinearGradient(rx, 0, rx + 140, h * 0.8);
-      rGrad.addColorStop(0, 'rgba(0, 240, 255, 0.08)');
-      rGrad.addColorStop(0.5, 'rgba(0, 160, 220, 0.03)');
+      const rGrad = ctx.createLinearGradient(rx, 0, rx + 140, h * 0.85);
+      rGrad.addColorStop(0, 'rgba(0, 240, 255, 0.16)');
+      rGrad.addColorStop(0.45, 'rgba(0, 180, 230, 0.08)');
       rGrad.addColorStop(1, 'rgba(0, 40, 80, 0.0)');
 
       ctx.fillStyle = rGrad;
@@ -1384,9 +1307,9 @@
     ctx.restore();
 
     // Ocean Seabed Terrain & Bioluminescent Flora at bottom (above Ad banner)
-    const seabedY = h - 50;
+    const seabedY = h - 38;
     ctx.save();
-    ctx.fillStyle = '#01050a';
+    ctx.fillStyle = '#020b18';
     ctx.beginPath();
     ctx.moveTo(0, seabedY);
     for (let x = 0; x <= w; x += 30) {
@@ -1399,24 +1322,35 @@
     ctx.fill();
 
     // Glowing Deep-Sea Bioluminescent Vents & Coral
-    for (let x = 40; x < w; x += 110) {
+    for (let x = 40; x < w; x += 90) {
       const ventPulse = Math.sin(time * 2 + x) * 0.3 + 0.7;
-      ctx.fillStyle = `rgba(0, 240, 255, ${0.4 * ventPulse})`;
+      ctx.fillStyle = `rgba(0, 240, 255, ${0.6 * ventPulse})`;
       ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 10;
+      ctx.shadowBlur = 12;
       ctx.beginPath();
-      ctx.arc(x, seabedY - 14, 3, 0, Math.PI * 2);
+      ctx.arc(x, seabedY - 14, 3.5, 0, Math.PI * 2);
       ctx.fill();
 
       // Rising thermal bubble from vent
-      const bubbleRise = ((time * 40 + x * 3) % (seabedY - 100));
-      ctx.fillStyle = 'rgba(0, 240, 255, 0.3)';
+      const bubbleRise = ((time * 45 + x * 3) % Math.max(100, seabedY - 120));
+      ctx.fillStyle = 'rgba(0, 240, 255, 0.45)';
       ctx.beginPath();
-      ctx.arc(x + Math.sin(time + x) * 4, seabedY - 16 - bubbleRise, 2, 0, Math.PI * 2);
+      ctx.arc(x + Math.sin(time + x) * 5, seabedY - 16 - bubbleRise, 2.5, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.shadowBlur = 0;
     ctx.restore();
+  }
+
+  function safeDraw(fn) {
+    ctx.save();
+    try {
+      fn();
+    } catch (err) {
+      console.warn("Render non-fatal caught:", err);
+    } finally {
+      ctx.restore();
+    }
   }
 
   let animTime = 0;
@@ -1457,9 +1391,9 @@
         player.x += player.vx;
         player.y += player.vy;
 
-        // Keep within bounds (accounting for top HUD and bottom Ad Banner)
-        player.x = Math.max(35, Math.min(canvas.width * 0.85, player.x));
-        player.y = Math.max(55, Math.min(canvas.height - 75, player.y));
+        // Full Edge-to-Edge Bounds (Max headroom at top, down to bottom 38px ad banner)
+        player.x = Math.max(25, Math.min(canvas.width - 25, player.x));
+        player.y = Math.max(34, Math.min(canvas.height - 48, player.y));
 
         if (player.invulnerableTimer > 0) player.invulnerableTimer--;
 
@@ -1578,101 +1512,125 @@
 
         let enemyDestroyed = false;
 
-        // Draw Enemy: Sprite or Canvas Vector
+        // Draw Enemy: Sprite or Canvas Vector (Protected by safeDraw)
         if (e.type === 'shark') {
           e.tailWiggle = (e.tailWiggle || 0) + 0.18;
-          ctx.save();
-          ctx.translate(e.x, e.y);
-          if (sprites['shark_predator'] && sprites['shark_predator'].complete && sprites['shark_predator'].naturalWidth > 0) {
-            ctx.drawImage(sprites['shark_predator'], -32, -18, 64, 36);
-          } else {
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2);
-            ctx.fillStyle = '#2f4858';
-            ctx.fill();
+          safeDraw(() => {
+            ctx.translate(e.x, e.y);
+            let spriteDrawn = false;
+            const spr = sprites['shark_predator'];
+            if (spr && spr.complete && spr.naturalWidth > 0) {
+              try {
+                ctx.drawImage(spr, -32, -18, 64, 36);
+                spriteDrawn = true;
+              } catch (err) {
+                spriteDrawn = false;
+              }
+            }
+            if (!spriteDrawn) {
+              ctx.beginPath();
+              ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2);
+              ctx.fillStyle = '#2f4858';
+              ctx.fill();
 
-            ctx.beginPath();
-            ctx.ellipse(0, 4, 20, 5, 0, 0, Math.PI);
-            ctx.fillStyle = '#c8d9e6';
-            ctx.fill();
+              ctx.beginPath();
+              ctx.ellipse(0, 4, 20, 5, 0, 0, Math.PI);
+              ctx.fillStyle = '#c8d9e6';
+              ctx.fill();
 
-            ctx.beginPath();
-            ctx.moveTo(-4, -12); ctx.lineTo(5, -20); ctx.lineTo(7, -12);
-            ctx.fillStyle = '#1e303d';
-            ctx.fill();
+              ctx.beginPath();
+              ctx.moveTo(-4, -12); ctx.lineTo(5, -20); ctx.lineTo(7, -12);
+              ctx.fillStyle = '#1e303d';
+              ctx.fill();
 
-            const tailY = Math.sin(e.tailWiggle) * 7;
-            ctx.beginPath();
-            ctx.moveTo(20, 0); ctx.lineTo(30, -9 + tailY); ctx.lineTo(26, tailY); ctx.lineTo(30, 9 + tailY);
-            ctx.fillStyle = '#1e303d';
-            ctx.fill();
+              const tailY = Math.sin(e.tailWiggle) * 7;
+              ctx.beginPath();
+              ctx.moveTo(20, 0); ctx.lineTo(30, -9 + tailY); ctx.lineTo(26, tailY); ctx.lineTo(30, 9 + tailY);
+              ctx.fillStyle = '#1e303d';
+              ctx.fill();
 
-            ctx.fillStyle = '#ff2200';
-            ctx.beginPath();
-            ctx.arc(-15, -2, 2.5, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          ctx.restore();
+              ctx.fillStyle = '#ff2200';
+              ctx.beginPath();
+              ctx.arc(-15, -2, 2.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
         } else if (e.type === 'jellyfish') {
           e.pulseAnim = (e.pulseAnim || 0) + 0.08;
-          ctx.save();
-          ctx.translate(e.x, e.y);
-          if (sprites['bioluminescent_jellyfish'] && sprites['bioluminescent_jellyfish'].complete && sprites['bioluminescent_jellyfish'].naturalWidth > 0) {
-            ctx.drawImage(sprites['bioluminescent_jellyfish'], -24, -24, 48, 48);
-          } else {
-            ctx.fillStyle = 'rgba(160, 60, 255, 0.75)';
-            ctx.shadowColor = '#cc44ff';
-            ctx.shadowBlur = 12;
-            ctx.beginPath();
-            ctx.arc(0, -2, 17, Math.PI * 0.9, Math.PI * 2.1);
-            ctx.fill();
-
-            ctx.strokeStyle = 'rgba(0, 240, 255, 0.7)';
-            ctx.lineWidth = 1.6;
-            for (let t = -10; t <= 10; t += 5) {
-              ctx.beginPath();
-              ctx.moveTo(t, 2);
-              ctx.quadraticCurveTo(t + Math.sin(e.pulseAnim + t) * 6, 14, t, 22);
-              ctx.stroke();
+          safeDraw(() => {
+            ctx.translate(e.x, e.y);
+            let spriteDrawn = false;
+            const spr = sprites['bioluminescent_jellyfish'];
+            if (spr && spr.complete && spr.naturalWidth > 0) {
+              try {
+                ctx.drawImage(spr, -24, -24, 48, 48);
+                spriteDrawn = true;
+              } catch (err) {
+                spriteDrawn = false;
+              }
             }
-          }
-          ctx.restore();
+            if (!spriteDrawn) {
+              ctx.fillStyle = 'rgba(160, 60, 255, 0.75)';
+              ctx.shadowColor = '#cc44ff';
+              ctx.shadowBlur = 12;
+              ctx.beginPath();
+              ctx.arc(0, -2, 17, Math.PI * 0.9, Math.PI * 2.1);
+              ctx.fill();
+
+              ctx.strokeStyle = 'rgba(0, 240, 255, 0.7)';
+              ctx.lineWidth = 1.6;
+              for (let t = -10; t <= 10; t += 5) {
+                ctx.beginPath();
+                ctx.moveTo(t, 2);
+                ctx.quadraticCurveTo(t + Math.sin(e.pulseAnim + t) * 6, 14, t, 22);
+                ctx.stroke();
+              }
+            }
+          });
         } else {
           // Anglerfish with glowing lure
           e.lureGlow = (e.lureGlow || 0) + 0.1;
-          ctx.save();
-          ctx.translate(e.x, e.y);
-          if (sprites['angler_fish'] && sprites['angler_fish'].complete && sprites['angler_fish'].naturalWidth > 0) {
-            ctx.drawImage(sprites['angler_fish'], -28, -20, 56, 40);
-          } else {
-            ctx.fillStyle = '#1c2833';
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 22, 14, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Teeth
-            ctx.fillStyle = '#fff';
-            for (let ti = -16; ti <= -4; ti += 4) {
-              ctx.fillRect(ti, 3, 2, 4);
+          safeDraw(() => {
+            ctx.translate(e.x, e.y);
+            let spriteDrawn = false;
+            const spr = sprites['angler_fish'];
+            if (spr && spr.complete && spr.naturalWidth > 0) {
+              try {
+                ctx.drawImage(spr, -28, -20, 56, 40);
+                spriteDrawn = true;
+              } catch (err) {
+                spriteDrawn = false;
+              }
             }
+            if (!spriteDrawn) {
+              ctx.fillStyle = '#1c2833';
+              ctx.beginPath();
+              ctx.ellipse(0, 0, 22, 14, 0, 0, Math.PI * 2);
+              ctx.fill();
 
-            // Glowing Lure bulb
-            ctx.strokeStyle = '#00f0ff';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            ctx.moveTo(-10, -10);
-            ctx.quadraticCurveTo(-18, -24, -22, -18);
-            ctx.stroke();
+              // Teeth
+              ctx.fillStyle = '#fff';
+              for (let ti = -16; ti <= -4; ti += 4) {
+                ctx.fillRect(ti, 3, 2, 4);
+              }
 
-            const lureBright = Math.sin(e.lureGlow) * 0.3 + 0.7;
-            ctx.fillStyle = `rgba(0, 240, 255, ${lureBright})`;
-            ctx.shadowColor = '#00f0ff';
-            ctx.shadowBlur = 14;
-            ctx.beginPath();
-            ctx.arc(-22, -18, 4.5, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          ctx.restore();
+              // Glowing Lure bulb
+              ctx.strokeStyle = '#00f0ff';
+              ctx.lineWidth = 1.5;
+              ctx.beginPath();
+              ctx.moveTo(-10, -10);
+              ctx.quadraticCurveTo(-18, -24, -22, -18);
+              ctx.stroke();
+
+              const lureBright = Math.sin(e.lureGlow) * 0.3 + 0.7;
+              ctx.fillStyle = `rgba(0, 240, 255, ${lureBright})`;
+              ctx.shadowColor = '#00f0ff';
+              ctx.shadowBlur = 14;
+              ctx.beginPath();
+              ctx.arc(-22, -18, 4.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
         }
 
         // Bullet collisions with Enemy
@@ -1785,45 +1743,65 @@
       if (boss) {
         boss.animTime = (boss.animTime || 0) + 0.05;
         boss.y += boss.vy;
-        if (boss.y < 90 || boss.y > canvas.height - 130) boss.vy *= -1;
+        if (boss.y < 60 || boss.y > canvas.height - 90) boss.vy *= -1;
 
-        ctx.save();
-        ctx.translate(boss.x, boss.y);
-
-        // Draw Boss Sprite or Procedural Kraken Leviathan
-        if (sprites['leviathan_boss'] && sprites['leviathan_boss'].complete && sprites['leviathan_boss'].naturalWidth > 0) {
-          ctx.drawImage(sprites['leviathan_boss'], -75, -45, 150, 90);
-        } else {
-          // Imposing Deep-Sea Kraken Body
-          ctx.fillStyle = '#6b0022';
-          ctx.shadowColor = '#ff0055';
-          ctx.shadowBlur = 24;
-          ctx.beginPath();
-          ctx.arc(0, 0, boss.radius, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Animated writhing tentacles
-          ctx.strokeStyle = '#990033';
-          ctx.lineWidth = 5;
-          for (let t = -3; t <= 3; t++) {
-            const wave = Math.sin(boss.animTime * 3 + t) * 16;
-            ctx.beginPath();
-            ctx.moveTo(t * 10, boss.radius * 0.7);
-            ctx.quadraticCurveTo(t * 12 + wave, boss.radius + 20, t * 10 + wave * 0.8, boss.radius + 38);
-            ctx.stroke();
+        safeDraw(() => {
+          ctx.translate(boss.x, boss.y);
+          let bossDrawn = false;
+          const spr = sprites['leviathan_boss'];
+          if (spr && spr.complete && spr.naturalWidth > 0) {
+            try {
+              ctx.drawImage(spr, -75, -45, 150, 90);
+              bossDrawn = true;
+            } catch (err) {
+              bossDrawn = false;
+            }
           }
+          if (!bossDrawn) {
+            // Imposing Deep-Sea Kraken / Leviathan Dreadnought
+            const pulse = Math.sin(boss.animTime * 2) * 3;
+            ctx.fillStyle = '#5c001e';
+            ctx.shadowColor = '#ff0055';
+            ctx.shadowBlur = 24;
+            ctx.beginPath();
+            ctx.arc(0, 0, boss.radius + pulse * 0.4, 0, Math.PI * 2);
+            ctx.fill();
 
-          // Glowing Menacing Eyes
-          ctx.fillStyle = '#ffcc00';
-          ctx.beginPath();
-          ctx.arc(-22, -10, 15, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#000';
-          ctx.beginPath();
-          ctx.arc(-24, -10, 6, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.restore();
+            // Glowing Bio-Mechanical Core
+            const coreGrad = ctx.createRadialGradient(0, 0, 4, 0, 0, boss.radius * 0.55);
+            coreGrad.addColorStop(0, '#ffffff');
+            coreGrad.addColorStop(0.35, '#00f0ff');
+            coreGrad.addColorStop(0.7, '#ff0055');
+            coreGrad.addColorStop(1, 'rgba(255, 0, 85, 0)');
+            ctx.fillStyle = coreGrad;
+            ctx.beginPath();
+            ctx.arc(0, 0, boss.radius * 0.55, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Animated writhing tentacles
+            ctx.strokeStyle = '#990033';
+            ctx.lineWidth = 5;
+            for (let t = -3; t <= 3; t++) {
+              const wave = Math.sin(boss.animTime * 3 + t) * 16;
+              ctx.beginPath();
+              ctx.moveTo(t * 10, boss.radius * 0.6);
+              ctx.quadraticCurveTo(t * 12 + wave, boss.radius + 20, t * 10 + wave * 0.8, boss.radius + 38);
+              ctx.stroke();
+            }
+
+            // Glowing Menacing Yellow Eyes
+            ctx.fillStyle = '#ffcc00';
+            ctx.shadowColor = '#ffea00';
+            ctx.shadowBlur = 12;
+            ctx.beginPath();
+            ctx.arc(-22, -10, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.arc(-24, -10, 6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
 
         // Boss Bullets Hit Detection
         for (let j = bullets.length - 1; j >= 0; j--) {
@@ -1833,17 +1811,12 @@
             playSfx('hit');
             bullets.splice(j, 1);
 
-            const hpPct = Math.max(0, (boss.hp / boss.maxHp) * 100);
-            document.getElementById('bossHpFill').style.width = `${hpPct}%`;
-            document.getElementById('bossHpVal').innerText = Math.max(0, boss.hp);
-
             if (boss.hp <= 0) {
               playSfx('explosion');
               const deadX = boss.x;
               const deadY = boss.y;
               boss = null;
               bossDefeated = true;
-              document.getElementById('boss-hud').style.display = 'none';
 
               // SAKA LALABAS ANG EXIT: Spawn the Exit Portal only once the Big Boss is killed!
               portal = {
@@ -1869,10 +1842,12 @@
         }
       }
 
-      // 1. Draw Compact Godot Yellow Submarine (Scaled ~45px width x 20px height)
-      if (player.invulnerableTimer === 0 || Math.floor(animTime * 15) % 2 === 0) {
-        drawCompactGodotYellowSubmarine(player.x, player.y, animTime);
-      }
+      // 1. Draw Compact Godot Yellow Submarine (Scaled ~45px width x 20px height, protected by safeDraw)
+      safeDraw(() => {
+        if (player.invulnerableTimer === 0 || Math.floor(animTime * 15) % 2 === 0) {
+          drawCompactGodotYellowSubmarine(player.x, player.y, animTime);
+        }
+      });
     } catch (err) {
       console.error("Game loop non-fatal error caught:", err);
     }

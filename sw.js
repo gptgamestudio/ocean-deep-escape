@@ -1,5 +1,5 @@
 // Ocean Deep Escape - PWA Service Worker
-const CACHE_NAME = 'ocean-deep-escape-v3';
+const CACHE_NAME = 'ocean-deep-escape-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
