@@ -1,54 +1,55 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 100" width="140" height="100">
     <defs>
-        <radialGradient id="anglerLureGlow" cx="50%" cy="50%" r="50%">
+        <radialGradient id="anglerLureGlowLeft" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#FFFFFF"/>
             <stop offset="35%" stop-color="#00F0FF"/>
             <stop offset="70%" stop-color="#0077B6" stop-opacity="0.8"/>
             <stop offset="100%" stop-color="#00F0FF" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="anglerBodyGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#0E273C"/>
-            <stop offset="50%" stop-color="#071724"/>
-            <stop offset="100%" stop-color="#020810"/>
+        <linearGradient id="anglerBodyGradVibrant" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0A9396"/>
+            <stop offset="40%" stop-color="#005F73"/>
+            <stop offset="80%" stop-color="#002933"/>
+            <stop offset="100%" stop-color="#001824"/>
         </linearGradient>
     </defs>
 
-    <!-- Esca (Antenna with glowing lure) -->
-    <path d="M 65 32 C 85 8, 105 10, 118 25" fill="none" stroke="#00D2FF" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="118" cy="25" r="14" fill="url(#anglerLureGlow)"/>
-    <circle cx="118" cy="25" r="5" fill="#FFFFFF"/>
+    <!-- Esca (Antenna pointing LEFT towards player submarine with glowing lure) -->
+    <path d="M 75 32 C 55 8, 35 10, 22 25" fill="none" stroke="#00F0FF" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="22" cy="25" r="16" fill="url(#anglerLureGlowLeft)"/>
+    <circle cx="22" cy="25" r="5.5" fill="#FFFFFF"/>
 
-    <!-- Tail Fin (Bioluminescent Rays) -->
-    <path d="M 28 55 L 4 38 L 12 55 L 4 72 Z" fill="#003554" stroke="#00F0FF" stroke-width="1.5"/>
-    <line x1="28" y1="55" x2="6" y2="44" stroke="#00F0FF" stroke-width="1.2"/>
-    <line x1="28" y1="55" x2="6" y2="66" stroke="#00F0FF" stroke-width="1.2"/>
+    <!-- Tail Fin on RIGHT (Bioluminescent Rays) -->
+    <path d="M 112 55 L 136 38 L 128 55 L 136 72 Z" fill="#005F73" stroke="#00F0FF" stroke-width="1.8"/>
+    <line x1="112" y1="55" x2="134" y2="44" stroke="#00F0FF" stroke-width="1.4"/>
+    <line x1="112" y1="55" x2="134" y2="66" stroke="#00F0FF" stroke-width="1.4"/>
 
-    <!-- Main Predatory Body -->
-    <path d="M 28 55 C 38 32, 70 30, 92 42 L 112 58 L 92 78 C 65 84, 38 74, 28 55 Z" 
-          fill="url(#anglerBodyGrad)" stroke="#00F0FF" stroke-width="2"/>
+    <!-- Main Predatory Body (Head pointing LEFT) -->
+    <path d="M 112 55 C 102 32, 70 30, 48 42 L 28 58 L 48 78 C 75 84, 102 74, 112 55 Z" 
+          fill="url(#anglerBodyGradVibrant)" stroke="#00F0FF" stroke-width="2"/>
 
     <!-- Luminous Ribbed Spines along back -->
-    <path d="M 45 42 L 40 32 L 52 40" stroke="#00F0FF" stroke-width="1.5" fill="none"/>
-    <path d="M 60 38 L 56 26 L 68 37" stroke="#00F0FF" stroke-width="1.5" fill="none"/>
-    <path d="M 75 39 L 72 28 L 82 40" stroke="#00F0FF" stroke-width="1.5" fill="none"/>
+    <path d="M 95 42 L 100 32 L 88 40" stroke="#00F0FF" stroke-width="1.6" fill="none"/>
+    <path d="M 80 38 L 84 26 L 72 37" stroke="#00F0FF" stroke-width="1.6" fill="none"/>
+    <path d="M 65 39 L 68 28 L 58 40" stroke="#00F0FF" stroke-width="1.6" fill="none"/>
 
-    <!-- Wide Gaping Jaw & Needle Fangs -->
-    <path d="M 78 58 L 108 58 L 88 74 Z" fill="#030E18" stroke="#00F0FF" stroke-width="1.4"/>
-    <!-- Top Fangs -->
-    <polygon points="90,58 92,66 94,58" fill="#FFFFFF"/>
-    <polygon points="96,58 98,68 100,58" fill="#FFFFFF"/>
-    <polygon points="102,58 104,66 106,58" fill="#FFFFFF"/>
+    <!-- Wide Gaping Jaw & Needle Fangs (Facing LEFT) -->
+    <path d="M 62 58 L 32 58 L 52 74 Z" fill="#030E18" stroke="#00F0FF" stroke-width="1.5"/>
+    <!-- Top Needle Fangs -->
+    <polygon points="50,58 48,66 46,58" fill="#FFFFFF"/>
+    <polygon points="44,58 42,68 40,58" fill="#FFFFFF"/>
+    <polygon points="38,58 36,66 34,58" fill="#FFFFFF"/>
     <!-- Bottom Needle Teeth -->
-    <polygon points="86,70 88,61 90,70" fill="#FFFFFF"/>
-    <polygon points="92,68 94,57 96,68" fill="#FFFFFF"/>
-    <polygon points="98,66 100,56 102,66" fill="#FFFFFF"/>
-    <polygon points="104,63 106,55 108,63" fill="#FFFFFF"/>
+    <polygon points="54,70 52,61 50,70" fill="#FFFFFF"/>
+    <polygon points="48,68 46,57 44,68" fill="#FFFFFF"/>
+    <polygon points="42,66 40,56 38,66" fill="#FFFFFF"/>
+    <polygon points="36,63 34,55 32,63" fill="#FFFFFF"/>
 
-    <!-- Glowing Cyan Eye -->
-    <circle cx="82" cy="46" r="6" fill="#00F0FF"/>
-    <circle cx="83" cy="46" r="2.5" fill="#001824"/>
-    <circle cx="84" cy="45" r="1.2" fill="#FFFFFF"/>
+    <!-- Glowing Menacing Eye -->
+    <circle cx="58" cy="46" r="6.5" fill="#FFD166"/>
+    <circle cx="57" cy="46" r="3" fill="#001824"/>
+    <circle cx="56" cy="45" r="1.3" fill="#FFFFFF"/>
 
     <!-- Pectoral Fin -->
-    <path d="M 52 62 C 45 74, 55 82, 64 72 Z" fill="rgba(0, 240, 255, 0.25)" stroke="#00F0FF" stroke-width="1.2"/>
+    <path d="M 88 62 C 95 74, 85 82, 76 72 Z" fill="rgba(0, 240, 255, 0.35)" stroke="#00F0FF" stroke-width="1.4"/>
 </svg>
